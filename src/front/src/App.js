@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Subscribe from './Subscribe';
+import { Container } from 'reactstrap';
 
 class App extends Component {
     constructor(props) {
@@ -17,11 +18,10 @@ class App extends Component {
     }
     render() {
         return (
-            <div>
-              
-              <Subscribe></Subscribe>
+              <Container className="themed-container">
+              <Subscribe />
+              </Container>
                
-            </div>
         );
     }
 }
