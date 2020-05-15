@@ -15,6 +15,7 @@ import ch.qos.logback.core.net.server.Client;
 
 @RestController
 @RequestMapping("/members")
+@CrossOrigin(origins = "http://localhost:3000")
 public class MemberController {
 	
 	private final MemberService service;
@@ -22,7 +23,7 @@ public class MemberController {
 	protected MemberController(MemberService service) {
 		this.service = service;
 	}
-	@CrossOrigin(origins = "http://localhost:3000")
+	
 	@PostMapping
 	protected void create(@Valid @RequestBody MemberDto dto) {
 		

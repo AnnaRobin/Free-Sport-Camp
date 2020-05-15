@@ -17,6 +17,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void create(MemberDto dto) {
+		
+		
+		
 		Member member = new Member();
 		populateAndSave(dto, member);
 		

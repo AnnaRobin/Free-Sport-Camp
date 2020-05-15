@@ -1,46 +1,80 @@
 package com.masterpiece.FreeSportCamp.entities;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Tables;
 
 @Entity
 public class Member {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(length=50, nullable=false)
+
+	@Column(length = 50, nullable = false, unique = true)
 	private String userName;
-	
-	
-	@Column(length=50, nullable=false)
+
+	@Column(length = 255, nullable = false)
 	private String password;
-	
+
+	@Column(nullable = false, unique = false)
+	private boolean enabled;
+
+	@ManyToMany
+	private Set<Role> roles;
 
 	
+
+	public Member() {
+		//
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getUserName() {
 		return userName;
 	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
 
 }
