@@ -24,35 +24,36 @@ const Subscribe = (props) => {
       
       <Col md={6}>
         <FormGroup>
-          <Label for="nomComplet">Nom complet*</Label>
-          <Input type="nom" name="nom" id="nomComplet" placeholder="John Connor" required/>
+          <Label for="fullName">Nom complet*</Label>
+          <Input type="text" name="fullName" id="fullName" placeholder="John Connor" required/>
         </FormGroup>
       </Col>
       
       <Col md={6}>
         <FormGroup>
           <Label for="userName">Nom d'utilisateur*</Label>
-          <Input type="nom" name="userName" id="userName" placeholder="Jonny" required/>
+          <Input type="text" name="userName" id="userName" placeholder="Jonny" required/>
         </FormGroup>
       </Col>
     </Row>
     <Col md={6}>
     
     <FormGroup>
-      <Label for="Email">Email*</Label>
-      <Input type="email" name="Email" id="Email" placeholder="john.connor@myemail.com" required/>
+      <Label for="email">Email*</Label>
+      <Input type="email" name="email" id="email" placeholder="john.connor@myemail.com" required />
     </FormGroup>
     
     <FormGroup>
-      <Label for="MotDePasse">Mot de passe*</Label>
-      <Input type="password" name="password" id="MotDePasse" placeholder="Mot de passe" required/>
+      <Label for="motDePasse">Mot de passe*</Label>
+      <Input type="password" name="password" id="motDePasse" placeholder="Mot de passe" pattern="^(?=.{4,50})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$" required/>
+
     </FormGroup>
     </Col>
     
     <Col md={6}>
       
         <FormGroup>
-          <Label for="ConfMotDePasse">Confirmation de mot de passe*</Label>
+          <Label for="confMotDePasse">Confirmation de mot de passe*</Label>
           <Input type="password" name="ConfMotDePasse" id="examplConfMotDePasseeCity" placeholder="Confirmation de mot de passe" required/>
         </FormGroup>
       

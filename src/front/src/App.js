@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component }  from 'react';
 import Subscribe from './Subscribe';
 import { Container } from 'reactstrap';
 
