@@ -24,6 +24,12 @@ public class Member {
 
 	@Column(length = 255, nullable = false)
 	private String password;
+	
+	@Column(length = 255, nullable = false)
+	private String fullName;
+	
+	@Column(length = 50, nullable = false)
+	private String email;
 
 	@Column(nullable = false, unique = false)
 	private boolean enabled;
@@ -32,6 +38,21 @@ public class Member {
 	private Set<Role> roles;
 
 	
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public Member() {
 		//

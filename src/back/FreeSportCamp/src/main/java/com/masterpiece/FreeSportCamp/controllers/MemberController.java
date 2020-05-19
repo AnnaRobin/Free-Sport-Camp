@@ -26,7 +26,9 @@ public class MemberController {
 	
 	@PostMapping
 	protected void create(@Valid @RequestBody MemberDto dto) {
-		
+		if(service.alreadyExistsUserName(dto.getUserName())) {
+			return;
+		}
 		service.create(dto);
 		
 	}

@@ -17,16 +17,19 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void create(MemberDto dto) {
-		
-		
-		
 		Member member = new Member();
 		populateAndSave(dto, member);
-		
 	}
+	
+	public Boolean alreadyExistsUserName(String userName) {
+		return memberRepository.countByUserName(userName)>0;
+	}
+	
 	private void populateAndSave (MemberDto dto, Member member) {
 		member.setUserName(dto.getUserName());
 		member.setPassword(dto.getPassword());
+		member.setFullName(dto.getFullName());
+		member.setEmail(dto.getEmail());
 		memberRepository.save(member);
 		
 	}
