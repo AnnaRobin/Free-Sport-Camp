@@ -1,2 +1,4 @@
-Setting up a React app with Typescript, Bootstrap and Webpack
+npx create-react-app fsc --template typescript --use-npm
+
+npm install --save reactstrap react react-dom
 
