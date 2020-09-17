@@ -1,4 +1,2 @@
-Le sport en entreprise
+Setting up a React app with Typescript, Bootstrap and Webpack
 
-Source: https://journals.openedition.org/communication/2075
-![Philadelphia's Magic Gardens. This place was so cool!](/wiki_assets/actionsSportives.PNG "Philadelphia's Magic Gardens")
