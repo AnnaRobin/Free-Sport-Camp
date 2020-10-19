@@ -4,3 +4,4 @@ npx create-react-app fsc --template typescript --use-npm
 
 npm install --save reactstrap react react-dom
 
+npm install @types/reactstrap
