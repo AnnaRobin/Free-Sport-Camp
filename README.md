@@ -8,4 +8,6 @@ npm install @types/reactstrap
 
 npm i bootstrap
 
+npm install bootstrap-icons
+
 import 'bootstrap/dist/css/bootstrap.css';
