@@ -3,8 +3,8 @@ package com.masterpiece.FreeSportCamp.services;
 import org.springframework.stereotype.Service;
 
 import com.masterpiece.FreeSportCamp.dtos.MemberDto;
-import com.masterpiece.FreeSportCamp.entities.Member;
-import com.masterpiece.FreeSportCamp.repositoires.MemberRepository;
+import com.masterpiece.FreeSportCamp.entities.User;
+import com.masterpiece.FreeSportCamp.repositories.MemberRepository;
 	@Service
 
 public class MemberServiceImpl implements MemberService {
@@ -17,15 +17,18 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void create(MemberDto dto) {
-		Member member = new Member();
+		User member = new User();
 		populateAndSave(dto, member);
 	}
 	
 	public Boolean alreadyExistsUserName(String userName) {
 		return memberRepository.countByUserName(userName)>0;
 	}
+	public Boolean alreadyExistsEmail(String Email) {
+		return memberRepository.countByEmail(Email)>0;
+	}
 	
-	private void populateAndSave (MemberDto dto, Member member) {
+	private void populateAndSave (MemberDto dto, User member) {
 		member.setUserName(dto.getUserName());
 		member.setPassword(dto.getPassword());
 		member.setFullName(dto.getFullName());

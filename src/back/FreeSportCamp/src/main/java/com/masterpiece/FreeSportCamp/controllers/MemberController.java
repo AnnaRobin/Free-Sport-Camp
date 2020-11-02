@@ -1,6 +1,9 @@
 package com.masterpiece.FreeSportCamp.controllers;
 
 import javax.validation.Valid;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,13 +28,19 @@ public class MemberController {
 	}
 	
 	@PostMapping
-	protected void create(@Valid @RequestBody MemberDto dto) {
+	protected ResponseEntity create(@Valid @RequestBody MemberDto dto) {
 		if(service.alreadyExistsUserName(dto.getUserName())) {
-			return;
+			return new ResponseEntity(HttpStatus.CONFLICT);
+		}
+
+		if(service.alreadyExistsEmail(dto.getEmail())) {
+			return new ResponseEntity(HttpStatus.CONFLICT);
 		}
 		service.create(dto);
+		return new ResponseEntity(HttpStatus.CREATED);
 		
 	}
-	
+
+
 
 }

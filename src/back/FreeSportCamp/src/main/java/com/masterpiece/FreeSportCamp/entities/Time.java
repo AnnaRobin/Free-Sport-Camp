@@ -8,19 +8,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="roles")
-public class Role {
-
+@Table(name="times")
+public class Time {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id", columnDefinition = "INT UNSIGNED")
 	private Long id;
-
+	
 	@Column(name="name", nullable = false, length=45)
 	private String name;
 
-	public Role() {
-		
+	public Time() {
+	
 	}
 
 	public Long getId() {
@@ -38,7 +38,7 @@ public class Role {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
+	
+	
 
 }
