@@ -1,10 +1,13 @@
 import React from 'react';
+//import { Route, Switch } from 'react-router-dom';
 import logo from './logo.svg';
-import './App.css';
+
 
 import Header from './components/Header';
 import MiniFooter from './components/MiniFooter';
 import SearchBar from './components/SearchBar';
+ 
+import './App.css';
 
 
 function App() {
@@ -13,9 +16,10 @@ function App() {
     <Header/>
     <SearchBar/>
 
-<p>Votre allié</p><p>pour trouver vos partenaires de sport</p>
+<p className="text-xl-center font-weight-bolder">Votre allié <br/> pour trouver vos partenaires de sport</p>
     
-    <MiniFooter/>
+    
+    <MiniFooter />
     
     </>
     // <div className="App">

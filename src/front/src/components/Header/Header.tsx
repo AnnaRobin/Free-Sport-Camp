@@ -34,16 +34,16 @@ const Header: FunctionComponent<{}> = () => {
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
               <NavItem>
-                <NavLink className="font-weight-bolder" href="#">Trouvez vos partenaires</NavLink>
+                <NavLink className="font-weight-bolder alert-link color='primary'" href="#"  margin id="navpartners">Trouvez vos partenaires</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink className="font-weight-bolder" href="#">Publiez vos annonces</NavLink>
+                <NavLink className="font-weight-bolder" href="#" id="navads">Publiez vos annonces</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink className="font-weight-bolder" href="#">Notre mission</NavLink>
+                <NavLink className="font-weight-bolder" href="#" id="navmission">Notre mission</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink className="font-weight-bolder" href="#">Connexion </NavLink>
+                <NavLink className="font-weight-bolder" href="#" id="connection">Connexion </NavLink>
               </NavItem>
              
             </Nav>
