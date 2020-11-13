@@ -40,8 +40,6 @@ const SearchBar: FunctionComponent<{}> = () => {
 
   const {sportOptions, cityOptions, timeOptions, levelOptions} = useOptions();
   
- 
-  
     
   return (
         <Jumbotron className="mt-5">  

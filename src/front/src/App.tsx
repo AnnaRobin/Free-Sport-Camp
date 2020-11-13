@@ -1,44 +1,47 @@
-import React from 'react';
-//import { Route, Switch } from 'react-router-dom';
-import logo from './logo.svg';
+import React, { Suspense, lazy } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
 
 import Header from './components/Header';
 import MiniFooter from './components/MiniFooter';
 import SearchBar from './components/SearchBar';
+
+// import ErrorBoundary from './components/ErrorBoundary';
+import AppLayout from './components/AppLayout';
  
 import './App.css';
+// import Search from './pages/Mission';
+// import Search from './pages/Search';
+// import Search from './pages/Creation';
 
+//const GettingStarted = React.lazy(() => import('./pages/GettingStarted'));
+//const NotFound = lazy(() => import('./pages/NotFound'));
+//const Unauthorized = lazy(() => import('./pages/Unauthorized'));
 
-function App() {
+const App: React.FunctionComponent<{}> = () => {
   return (
-    <>
-    <Header/>
-    <SearchBar/>
-
-<p className="text-xl-center font-weight-bolder">Votre allié <br/> pour trouver vos partenaires de sport</p>
+      <AppLayout
+        header={<Header />}
+        content={<SearchBar/>}
+     
     
+        footer={<MiniFooter />}
+      />
     
-    <MiniFooter />
-    
-    </>
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.tsx</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
   );
-}
+};
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+

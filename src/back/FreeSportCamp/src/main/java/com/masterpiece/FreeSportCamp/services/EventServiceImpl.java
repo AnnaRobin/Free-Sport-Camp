@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.masterpiece.FreeSportCamp.dtos.CriteriaViewDto;
+import com.masterpiece.FreeSportCamp.dtos.EventViewDto;
+import com.masterpiece.FreeSportCamp.dtos.SearchDto;
 import com.masterpiece.FreeSportCamp.repositories.CityRepository;
 import com.masterpiece.FreeSportCamp.repositories.EventRepository;
 import com.masterpiece.FreeSportCamp.repositories.LevelRepository;
@@ -18,20 +20,23 @@ public class EventServiceImpl implements EventService{
 	private final LevelRepository levelRepository;
 	private final SportRepository sportRepository;
 	private final TimeRepository timeRepository;
+	private final EventRepository eventRepository;
 	
     protected EventServiceImpl(CityRepository cityRepository,
     		LevelRepository levelRepository,
     		SportRepository sportRepository, 
-    		TimeRepository timeRepository ) {
+    		TimeRepository timeRepository, 
+    		EventRepository eventRepository) {
     	this.cityRepository = cityRepository;
     	this.levelRepository = levelRepository;
     	this.sportRepository = sportRepository;
     	this.timeRepository = timeRepository;
+    	this.eventRepository = eventRepository;
         }
 	
 
 	public CriteriaViewDto get() {
-		timeRepository.getAllProjectedBy();
+	
 		
 		CriteriaViewDto criterias = new CriteriaViewDto();
 
@@ -43,4 +48,12 @@ public class EventServiceImpl implements EventService{
 		return criterias;
 	
 	}
+	
+ public List<EventViewDto> getAll(SearchDto dto){
+	 return eventRepository.findProjectedByCityIdAndSportIdAndLevelIdAndTimeId(dto.getCityId(), dto.getSportId(), dto.getLevelId(), dto.getTimeId());
+ 
+ }
+	
+	
+	
 }

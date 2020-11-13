@@ -1,9 +1,7 @@
 import React,  { FunctionComponent } from 'react';
 
 
-
 const MiniFooter: FunctionComponent<{}> = () => {
-  
   
     return (
       <>

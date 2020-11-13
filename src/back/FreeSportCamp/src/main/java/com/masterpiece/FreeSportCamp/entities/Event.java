@@ -34,24 +34,94 @@ public class Event {
 	@Column(name="description", length=1000)
 	private String description;
 	
-	@OneToOne
+	@OneToOne(optional=false)
 	@JoinColumn(nullable = false, name="city_id", foreignKey = @ForeignKey(name= "events_city_id_FK"))
 	private City city;
 	
-	@OneToOne
+	@OneToOne(optional=false)
 	@JoinColumn(nullable = false, name="time_id", foreignKey = @ForeignKey(name= "events_time_id_FK"))
 	private Time time;
 	
-	@OneToOne
+	@OneToOne(optional=false)
 	@JoinColumn(nullable = false, name="level_id", foreignKey = @ForeignKey(name= "events_level_id_FK"))
 	private Level level;
 	
-	@OneToOne
+	@OneToOne(optional=false)
 	@JoinColumn(nullable = false, name="sport_id", foreignKey = @ForeignKey(name= "events_sport_id_FK"))
 	private Sport sport;
 	
-	@OneToOne
+	@OneToOne(optional=false)
 	@JoinColumn(nullable = false, name="organizer_id", foreignKey = @ForeignKey(name= "events_organizer_id_FK"))
 	private User organizer;
+
+	public Event() {
+		
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getAppointment() {
+		return appointment;
+	}
+
+	public void setAppointment(LocalDateTime appointment) {
+		this.appointment = appointment;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
+
+	public Time getTime() {
+		return time;
+	}
+
+	public void setTime(Time time) {
+		this.time = time;
+	}
+
+	public Level getLevel() {
+		return level;
+	}
+
+	public void setLevel(Level level) {
+		this.level = level;
+	}
+
+	public Sport getSport() {
+		return sport;
+	}
+
+	public void setSport(Sport sport) {
+		this.sport = sport;
+	}
+
+	public User getOrganizer() {
+		return organizer;
+	}
+
+	public void setOrganizer(User organizer) {
+		this.organizer = organizer;
+	}
+	
+	
 
 }
