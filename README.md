@@ -13,3 +13,5 @@ npm install bootstrap-icons
 import 'bootstrap/dist/css/bootstrap.css';
 
 npm install react-router-dom
+
+npm install @types/react-router-dom
