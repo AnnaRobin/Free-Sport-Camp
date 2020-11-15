@@ -1,109 +1,165 @@
-import React,  { FunctionComponent, useState,useEffect}  from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Jumbotron, Button } from 'reactstrap';
+import { useForm } from "react-hook-form";
+import Select from '../../components/Select';
+import Result from '../../components/Result';
 
-interface Option{
+interface Option {
   id: number;
   name: string;
 }
 
-export function useOptions(){
-  const [sports,setSports] = useState<Option[]>([]);
+export function useOptions() {
+  const [sports, setSports] = useState<Option[]>([]);
   const [cities, setCities] = useState<Option[]>([]);
-  const [times,setTimes] = useState<Option[]>([]);
+  const [times, setTimes] = useState<Option[]>([]);
   const [levels, setLevels] = useState<Option[]>([]);
 
-  useEffect(()=> {
+
+
+  useEffect(() => {
     fetch('http://localhost:8585/event/options', {
       method: 'GET',
     })
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(data) {
-      setSports(data['sports']);
-      setCities(data['cities']);
-      setTimes(data['times']);
-      setLevels(data['levels']);
-    })
-    },[])
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        setSports(data['sports']);
+        setCities(data['cities']);
+        setTimes(data['times']);
+        setLevels(data['levels']);
+      })
+  }, [])
 
-    return {
-      sportOptions: sports,
-      cityOptions: cities,
-      timeOptions: times,
-      levelOptions: levels
+  return {
+    sportOptions: sports,
+    cityOptions: cities,
+    timeOptions: times,
+    levelOptions: levels
+  }
+}
+interface Event {
+  id: number;
+  appointment: any;
+  description: string;
+  cityName: string;
+  timeName: string;
+  levelName: string;
+  sportName: string;
+  organizerUserName: string;
+  organizerPhoneNumber: string;
+}
+
+export function useSearch() {
+  const [events, setEvents] = useState<Event[]>([]);
+  const [error, setError] = useState<string | undefined>();
+
+  async function _search(cityId: number, sportId: number, levelId: number, timeId: number): Promise<void> {
+    try {
+      const response = await fetch(`http://localhost:8585/event/search/${cityId}/${sportId}/${levelId}/${timeId}`, {
+        method: 'GET',
+      });
+      if (response.status !== 200) throw new Error(response.statusText);
+      const results = await response.json();
+
+      setEvents(results);
+      if (results.length == 0) {
+        setError("Ooops, visiblement vous êtes la première personne avec ces besoins. Mais ce n'est pas grave, vous pouvez organizer un événement, si vous le souhaitez!");
+      }
+      else {
+        setError(undefined);
+      }
+
+    } catch (err) {
+      setEvents([]);
+      setError(err.message)
     }
+  }
+
+  return {
+    search: (cityId: number, sportId: number, levelId: number, timeId: number) => _search(cityId, sportId, levelId, timeId),
+    events,
+    error,
+  }
+}
+
+interface SearchParams {
+  city: number;
+  time: number;
+  level: number;
+  sport: number;
 }
 
 
 const SearchBar: FunctionComponent<{}> = () => {
 
-  const {sportOptions, cityOptions, timeOptions, levelOptions} = useOptions();
-  
-    
+  const { search, events, error } = useSearch();
+  const { sportOptions, cityOptions, timeOptions, levelOptions } = useOptions();
+
+
+
+  //react hook form
+  const { register, setValue, handleSubmit, errors } = useForm<SearchParams>();
+  const onSubmit = handleSubmit(({ city, time, level, sport }) => {
+    search(city, sport, level, time)
+  });
+
+  function handleChange(e: React.FormEvent<HTMLSelectElement>) {
+    console.log(e.currentTarget.value);
+  }
+
   return (
-        <Jumbotron className="mt-5">  
-      <form className="container">  
-      <div className="row">
-          
-      <div className="col-sm text-center" >
-      <select className="form-control" id="sport">
-      <option value="" disabled selected>Sport</option>
-      {sportOptions.map((option)=>{
-        return (
-          <option value={option.id}>{option.name}</option>
-        )
-      })}
-    
-      
-      </select>
+    <>
+      <div>
+        <Jumbotron className="mt-5">
+          <form className="container" onSubmit={onSubmit}>
+            <div className="row">
+
+              <div className="col-sm text-center" >
+                <Select name="sport" label="Sport" options={sportOptions} register={register} />
+
+              </div>
+              <div className="col-sm text-center">
+                <Select name="city" label="Ville" options={cityOptions} register={register} />
+
+              </div>
+              <div className="col-sm text-center">
+                <Select name="level" label="Level" options={levelOptions} register={register} />
+
+              </div>
+              <div className="col-sm text-center">
+                <Select name="time" label="Time" options={timeOptions} register={register} />
+
+              </div>
+
+
+              <div className="col-sm text-center">
+                <Button type="submit" color="secondary">Recherche</Button>{' '}
+              </div>
+            </div>
+          </form>
+        </Jumbotron>
       </div>
-      <div className="col-sm text-center">
-           <select className="form-control" id="city">
-           <option value="" disabled selected>City</option>
-      {cityOptions.map((option)=>{
-        return (
-          <option value={option.id}>{option.name}</option>
-        )
-      })}
-        
-       </select>
-       </div>
-       <div className="col-sm text-center">
-       <select className="form-control" id="time">
-       <option value="" disabled selected>Time</option>
-       {timeOptions.map((option)=>{
-        return (
-          <option value={option.id}>{option.name}</option>
-        )
-      })}
-          
-       </select>
-       </div>
-       <div className="col-sm text-center">
-       <select className="form-control" id="level">
-       <option value="" disabled selected>Level</option>
-       {levelOptions.map((option)=>{
-        return (
-          <option value={option.id}>{option.name}</option>
-        )
-      })}
-          
-       </select>
-       </div>
-       
-       <div className="col-sm text-center">
-       <Button color="secondary" >Rechercher</Button>{' '}
-       </div>
-       </div>
-</form>
-</Jumbotron>
-     );
-   };
+
+      <div>
+
+        <Jumbotron fluid className="alert-light results" id="resultContainer">
+          {events.length?events.map((event) => {
+            return (<Result event={event} />)
+
+          }):
+          <h2 id="defaultMessage">Votre allié pour trouver des partenaires de sport</h2>
+        }
+        </Jumbotron>
+      </div>
+    </>
+  );
+};
 
 
 
- export default SearchBar;
+export default SearchBar;
 
 
 

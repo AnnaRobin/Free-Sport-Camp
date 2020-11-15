@@ -1,22 +1,19 @@
 import React,  { FunctionComponent } from 'react';
+import { Container, Jumbotron,Row,Col } from 'reactstrap';
 
 
 const MiniFooter: FunctionComponent<{}> = () => {
   
     return (
       <>
-     
-<div className="bg-light"> 
+     <Jumbotron className="bg-light p-3 m-0">
+         <Row>
+           <Col className="text-left font-weight-bolder">Masterpiece, 2021.</Col>
+           <Col className="text-right font-weight-bolder">Anna Cuilhé</Col>
+         </Row>
+       
+     </Jumbotron>
 
-  <div className="row justify-content-between">
-    <div className="col-4 text-left font-weight-bolder d-inline-block m-3">
-    Masterpiece, 2021.
-    </div>
-    <div className="col-4 text-right font-weight-bolder d-inline-block m-3">
-    Anna Cuilhé
-    </div>
-  </div>
-</div>
     </>
     );
   };

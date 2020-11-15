@@ -40,3 +40,18 @@ code {
   margin: 20px;
 
 }
+
+#resultContainer{
+  padding: 10px;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+#defaultMessage{
+  text-align: center;
+  font-family: 'Cambria', Cochin, Georgia, Times, Times New Roman, serif;
+}
+
+.results{
+  min-height: 300px;
+}
