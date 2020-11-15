@@ -15,3 +15,5 @@ import 'bootstrap/dist/css/bootstrap.css';
 npm install react-router-dom
 
 npm install @types/react-router-dom
+
+npm install react-hook-form
