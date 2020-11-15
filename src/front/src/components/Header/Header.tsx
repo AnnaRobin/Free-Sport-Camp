@@ -37,7 +37,7 @@ const Header: FunctionComponent<{}> = () => {
               <NavLink className="font-weight-bolder alert-link color='primary'" href="/search"  id="navpartners">Trouvez vos partenaires</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="font-weight-bolder" href="#" id="navads">Publiez vos annonces</NavLink>
+              <NavLink className="font-weight-bolder" href="/ad" id="navads">Publiez vos annonces</NavLink>
             </NavItem>
             <NavItem>
               <NavLink className="font-weight-bolder" href="#" id="navmission">Notre mission</NavLink>

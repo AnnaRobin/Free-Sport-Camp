@@ -53,7 +53,7 @@ interface Event {
 
 export function useSearch() {
   const [events, setEvents] = useState<Event[]>([]);
-  const [error, setError] = useState<string | undefined>();
+  const [error, setError] = useState<string | undefined>("Votre allié pour trouver des partenaires de sport");
 
   async function _search(cityId: number, sportId: number, levelId: number, timeId: number): Promise<void> {
     try {
@@ -65,7 +65,7 @@ export function useSearch() {
 
       setEvents(results);
       if (results.length == 0) {
-        setError("Ooops, visiblement vous êtes la première personne avec ces besoins. Mais ce n'est pas grave, vous pouvez organizer un événement, si vous le souhaitez!");
+        setError("Ooops, visiblement vous êtes la première personne avec ces besoins. Mais ce n'est pas grave, vous pouvez <a href='/ad'>organiser</a> un événement, si vous le souhaitez!");
       }
       else {
         setError(undefined);
@@ -113,7 +113,7 @@ const SearchBar: FunctionComponent<{}> = () => {
     <>
       <div>
         <Jumbotron className="mt-5">
-          <form className="container" onSubmit={onSubmit}>
+          <form className="container -xl" onSubmit={onSubmit}>
             <div className="row">
 
               <div className="col-sm text-center" >
@@ -144,12 +144,13 @@ const SearchBar: FunctionComponent<{}> = () => {
 
       <div>
 
-        <Jumbotron fluid className="alert-light results" id="resultContainer">
+        <Jumbotron fluid className="alert-light results container" id="resultContainer">
           {events.length?events.map((event) => {
             return (<Result event={event} />)
 
           }):
-          <h2 id="defaultMessage">Votre allié pour trouver des partenaires de sport</h2>
+        
+         <h2 id="defaultMessage">{error}</h2>
         }
         </Jumbotron>
       </div>
