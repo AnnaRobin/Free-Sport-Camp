@@ -30,4 +30,6 @@ public interface EventViewDto {
 	
 	String getOrganizerPhoneNumber();
 	
+	
+	
 }

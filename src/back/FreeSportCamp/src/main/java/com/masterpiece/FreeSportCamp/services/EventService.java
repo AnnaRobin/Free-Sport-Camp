@@ -12,5 +12,7 @@ public interface EventService {
 	CriteriaViewDto get();
 	
 	 List<EventViewDto> getAll(SearchDto dto);
+	 
+	 List<EventViewDto> getAll(Long cityId, Long sportId, Long levelId, Long timeId);
 
 }

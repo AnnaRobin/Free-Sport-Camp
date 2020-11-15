@@ -50,10 +50,12 @@ public class EventServiceImpl implements EventService{
 	}
 	
  public List<EventViewDto> getAll(SearchDto dto){
-	 return eventRepository.findProjectedByCityIdAndSportIdAndLevelIdAndTimeId(dto.getCityId(), dto.getSportId(), dto.getLevelId(), dto.getTimeId());
+	 return getAll(dto.getCityId(), dto.getSportId(), dto.getLevelId(), dto.getTimeId());
  
  }
 	
-	
+ public List<EventViewDto> getAll(Long cityId, Long sportId, Long levelId, Long timeId){
+	return eventRepository.findProjectedByCityIdAndSportIdAndLevelIdAndTimeId(cityId, sportId, levelId, timeId); 
+ }
 	
 }
