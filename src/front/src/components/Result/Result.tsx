@@ -19,65 +19,33 @@ interface Event {
 
     const toggle = () => setOpen(!dropdownOpen);
       return (
-          <Jumbotron className="p-1 container">
+          <Jumbotron className="p-1 container shadow-lg p-3 mb-5 bg-white rounded ">
 
 
-  <div className="row">
-    <div className="col">
+  <Row>
+    <Col className="col">
             <p>Organisateur:{event.organizerUserName}</p>
-            
-    </div>
-    <div className="col">
-    <p>Téléphone:{event.organizerPhoneNumber}</p>
-             
-    </div>
-    <div className="col">
-            
-    </div>
-    <div className="w-100"></div>
-    <div className="col">
-    <p>Quand:{new Intl.DateTimeFormat('fr-FR').format(new Date(event.appointment))} {event.timeName}</p>
-    </div>
-    <div className="col">
-     <ButtonDropdown isOpen={dropdownOpen} ontoggle={ontoggle}>
-      <DropdownToggle caret size="sm">
-        Participants
-      </DropdownToggle>
-      </ButtonDropdown >
-    </div>
-    <div className="col">
-    <Button size="sm">S'inscrire</Button>
-    </div>
-    <div className="w-100"></div>
-    <div className="col">
-    <p>à savoir:{event.description}</p>
-    </div>
-    <div className="col">
-             
-    </div>
-    <div className="col">
-             
-    </div>
-  </div>
+            <p>Téléphone:{event.organizerPhoneNumber}</p>    
+            <p>à savoir:{event.description}</p>    
+    </Col>       
+    <Col className="w-100"></Col>
 
-
-              
-                {/* <Row>
-                    <Col className="col-5">
-                        <p>Organisateur:{event.organizerUserName}</p>
-                        <p>Quand:{event.appointment}</p>
-                    </Col>
-                    <Col className="col-5">
-                        <p>Téléphone:{event.organizerPhoneNumber}</p>
-                        <p>à savoir:{event.description}</p>
-                    </Col>
-                    <Col className="col-2 text-right">
-                        <Button>S'inscrire</Button>
-                    </Col>
-                </Row> */}
-
-
-              
+    <Col className="col">
+            <p>Quand:{new Intl.DateTimeFormat('fr-FR').format(new Date(event.appointment))}</p>
+            <ButtonDropdown isOpen={dropdownOpen} ontoggle={ontoggle}>
+           <DropdownToggle caret size="sm">
+             Participants
+            </DropdownToggle>
+            </ButtonDropdown >
+           
+    </Col>
+    <Col className="w-100"></Col>
+    <Col className="col">
+      <p></p>
+      <p></p>
+    <Button size="sm">Inscription</Button>
+    </Col>
+  </Row>   
           </Jumbotron>
           
       )

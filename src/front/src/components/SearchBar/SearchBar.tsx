@@ -65,7 +65,7 @@ export function useSearch() {
 
       setEvents(results);
       if (results.length == 0) {
-        setError("Ooops, visiblement vous êtes la première personne avec ces besoins. Mais ce n'est pas grave, vous pouvez <a href='/ad'>organiser</a> un événement, si vous le souhaitez!");
+        setError("Ooops, visiblement vous êtes la première personne avec ces besoins. Mais ce est pas grave, vous pouvez organiser un événement, si vous le souhaitez!");
       }
       else {
         setError(undefined);
@@ -134,7 +134,7 @@ const SearchBar: FunctionComponent<{}> = () => {
               </div>
 
 
-              <div className="col-sm text-center">
+              <div className="col-sm text-center ">
                 <Button type="submit" color="secondary">Recherche</Button>{' '}
               </div>
             </div>

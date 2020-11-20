@@ -19,11 +19,13 @@ code {
 .select{
   min-width:150px;
 }
-
+/* 
 #navpartners{
+
   margin: 20px;
   margin-left: 50px;
   margin-right: 80px;
+ 
 }
 
 #navads{
@@ -39,8 +41,11 @@ code {
 #connection{
   margin: 20px;
 
-}
+} */
 
+#navpartners:hover, #navads:hover, #navmission:hover, #inscription:hover, #connexion:hover  {
+  color: red;
+}
 
 
 #defaultMessage{
@@ -51,3 +56,5 @@ code {
 .results{
   min-height: 300px;
 }
+
+
