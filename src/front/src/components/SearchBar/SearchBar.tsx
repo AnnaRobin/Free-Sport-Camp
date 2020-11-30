@@ -125,11 +125,11 @@ const SearchBar: FunctionComponent<{}> = () => {
 
               </div>
               <div className="col-sm text-center">
-                <Select name="level" label="Level" options={levelOptions} register={register} />
+                <Select name="level" label="Niveau" options={levelOptions} register={register} />
 
               </div>
               <div className="col-sm text-center">
-                <Select name="time" label="Time" options={timeOptions} register={register} />
+                <Select name="time" label="Créneau" options={timeOptions} register={register} />
 
               </div>
 

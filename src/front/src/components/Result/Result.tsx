@@ -19,7 +19,7 @@ interface Event {
 
     const toggle = () => setOpen(!dropdownOpen);
       return (
-          <Jumbotron className="p-1 container shadow-lg p-3 mb-5 bg-white rounded ">
+          <Jumbotron className="p-1 container shadow-lg p-3 mb-5 bg-white rounded np">
 
 
   <Row>

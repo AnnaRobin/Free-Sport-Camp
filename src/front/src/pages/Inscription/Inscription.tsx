@@ -5,8 +5,9 @@ import { useForm } from "react-hook-form";
 
 const Inscription = (props: any) => {
     return (
-        <Container className="mt-5 pt-5">
-      <Form>      
+        <Container className="mt-5">
+      <Form> 
+      <h5 className="text-right">Vous posédez déjà un compte?  <a href="/connexion">Connectez-vous !</a> </h5>     
         <FormGroup>
           <Label for="name" className="font-weight-bold">Nom  complet *</Label>
           <Input type="text" name="name" id="name" placeholder="Arnold Smith" className="shadow p-3 mb-5 bg-white rounded" />
@@ -29,7 +30,7 @@ const Inscription = (props: any) => {
         </FormGroup>
         <Button color="warning" className="shadow-lg p-3 mb-5 bg-white rounded font-weight-bold  justify-content-center align-items-center d-block ml-auto mr-auto" >Inscription</Button>
         <h6 className="text-danger">* Champs obligatoires</h6>
-        <h5 className="text-right">Vous posédez déjà un compte?  <a href="/connexion">Connectez-vous !</a> </h5>
+        
         </Form>
         </Container>
         

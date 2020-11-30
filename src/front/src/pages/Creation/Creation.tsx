@@ -57,7 +57,7 @@ const Creation = (props: any) => {
       </FormGroup>
     
       <FormGroup row>
-        <Label for="datetime" sm={2} className="font-weight-bold">Date  & time *</Label>
+        <Label for="datetime" sm={2} className="font-weight-bold">Date  & time de début *</Label>
         <Col sm={10}>
         <Input type="datetime" name="datetime" id="datetime" placeholder="datetime"className="shadow p-3 mb-5 bg-white rounded"/>
         </Col>

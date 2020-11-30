@@ -15,7 +15,7 @@ import './App.css';
 // import Search from './pages/Mission';
 import Search from './pages/Search';
 import Inscription from './pages/Inscription';
-import Connection from './pages/Connexion';
+import Connection from './pages/Connection';
 import Mission from './pages/Mission';
 
 import Creation from './pages/Creation';
@@ -37,7 +37,7 @@ const App: React.FunctionComponent<{}> = () => {
           <Switch>
           <Route exact={true} path="/search" component={Search} />
           <Route exact={true} path="/inscription" component={Inscription} />
-          <Route exact={true} path="/connexion" component={Connection} />
+          <Route exact={true} path="/connection" component={Connection} />
           <Route exact={true} path="/ad" component={Creation} />
           <Route exact={true} path="/mission" component={Mission} />
           </Switch>
