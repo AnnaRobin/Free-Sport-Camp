@@ -45,3 +45,11 @@
   display: inline;
   content: "⚠ ";
 }
+
+#checkbox{
+  margin-top: 35px;
+}
+
+#labelId{
+  margin-top: 30px;
+}

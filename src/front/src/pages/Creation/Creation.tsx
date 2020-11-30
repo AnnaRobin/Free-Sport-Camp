@@ -10,77 +10,99 @@ const Creation = (props: any) => {
   return (
     <Container className="mt-5 pt-5">
     <Form>
-      <FormGroup row>
-        
-      <Label for="activity" sm={2} className="font-weight-bold">Activité *</Label>
-        <Col sm={10}>
+      <Row>
+        <Col md={6}>
+          <FormGroup >
+            <Label for="activity"  className="font-weight-bold">Activité *</Label>
+      
         <Input type="select" name="activity" id="activity" className="shadow p-3 mb-5 bg-white rounded">
             <option>1</option>
             <option>2</option>
             <option>3</option>
             <option>4</option>
         </Input>
-        </Col>
+        
         </FormGroup>
-        <FormGroup row>
-        <Label for="level" sm={2} className="font-weight-bold">Niveau *</Label>
-        <Col sm={10}>
+      </Col>
+      
+      <Col md={6}>
+        <FormGroup >
+        <Label for="level" className="font-weight-bold">Niveau *</Label>
+       
         <Input type="select" name="activity" id="activity" className="shadow p-3 mb-5 bg-white rounded">
             <option>1</option>
             <option>2</option>
             <option>3</option>
         </Input>
-        </Col>
+      
       </FormGroup>
-    
-      <FormGroup row>
-        <Label for="city" sm={2} className="font-weight-bold">Ville *</Label>
-        <Col sm={10}>
+    </Col>
+    </Row>
+
+    <Row>
+    <Col md={6}>
+      <FormGroup>
+        <Label for="city" className="font-weight-bold">Ville *</Label>
+        
           <Input type="select" name="city" id="city" className="shadow p-3 mb-5 bg-white rounded">
             <option>1</option>
             <option>2</option>
-            <option>3</option>
-            
+            <option>3</option> 
           </Input>
-        </Col>
+        
       </FormGroup>
-      <FormGroup row>
-        <Label for="timeSlot" sm={2} className="font-weight-bold">Créneau *</Label>
-        <Col sm={10}>
+      </Col>
+      <Col>
+      <FormGroup>
+        <Label for="timeSlot"  className="font-weight-bold">Créneau *</Label>
+        
           <Input type="select" name="timeSlot" id="timeSlot" className="shadow p-3 mb-5 bg-white rounded">
             <option>1</option>
             <option>2</option>
             <option>3</option>
             
           </Input>
-        </Col>
-      </FormGroup>
+         </FormGroup>
+         </Col>
+         </Row>
     
       <FormGroup row>
-        <Label for="datetime" sm={2} className="font-weight-bold">Date  & time de début *</Label>
-        <Col sm={10}>
-        <Input type="datetime" name="datetime" id="datetime" placeholder="datetime"className="shadow p-3 mb-5 bg-white rounded"/>
-        </Col>
+        <Label for="datetime"  className="font-weight-bold">Date  & time de début *</Label>
+        
+        <Input type="text" name="datetime" id="datetime" placeholder="datetime"className="shadow p-3 mb-5 bg-white rounded"/>
+        
       </FormGroup>
-      <FormGroup row>
-     
-       
-        <Col sm={{ size: 10 }}>
+
+
+      <Row>
+        <Col md={6}>
+
+        <FormGroup>
+        <Label for="telephone"  className="font-weight-bold">Numéro de téléphone *</Label>
+        
+        <Input type="text" name="telephone" id="telephone" placeholder=""className="shadow p-3 mb-5 bg-white rounded"/>
+        </FormGroup>
+        </Col>
+      
+      <Col>
+      <FormGroup>
+        
           <FormGroup check>
-            <Label check className="font-weight-bold">
-              <Input type="checkbox" id="checkbox" className="shadow p-3 mb-5 bg-white rounded"/>{' '}
-              Afficher mon numéro dans l'annonce
-            </Label>
+          <Input type="checkbox" id="checkbox" className="shadow p-3 mb-5 bg-white rounded"/>
+            <Label id="labelId" for="checkbox" check className="font-weight-bold">Afficher mon numéro dans l'annonce</Label>
+           
           </FormGroup>
-        </Col>
-     
-      </FormGroup>
-      <FormGroup row>
-       
-      </FormGroup>
-      <FormGroup row>
-        <Label for="infos" sm={2} className="font-weight-bold">à savoir</Label>
-        <Col sm={10}>
+        
+        </FormGroup>
+     </Col>
+      </Row>
+
+
+
+  
+      <FormGroup>
+        <Label for="infos"  className="font-weight-bold">Information</Label>
+        <Col >
           <Input type="textarea" name="infos" id="infos" className="shadow p-3 mb-5 bg-white rounded" />
         </Col>
       </FormGroup>
@@ -106,8 +128,5 @@ const Creation = (props: any) => {
 }
 
 
-    
-
-
-
+  
 export default Creation;
