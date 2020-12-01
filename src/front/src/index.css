@@ -43,8 +43,14 @@ code {
 
 } */
 
-#navpartners:hover, #navads:hover, #navmission:hover, #inscription:hover, #connexion:hover  {
-  color: red;
+
+
+#main_menu .alert-link:hover{
+color: orangered;
+}
+
+#sub_menu .list-group-item-action:hover{
+  color: orangered;
 }
 
 

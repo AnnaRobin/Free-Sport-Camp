@@ -107,8 +107,21 @@ const Creation = (props: any) => {
         </Col>
       </FormGroup>
   
-      <Row form>
+      <Row>
+
+
+      <FormGroup>
+        
+        <FormGroup check>
+        <Input type="checkbox" id="checkbox" className="shadow p-3 mb-5 bg-white rounded"/>
+          <Label id="labelId" for="checkbox" check className="font-weight-bold">J'ai lu et j'accepte les conditions générales *</Label>
+         
+        </FormGroup>
       
+      </FormGroup>
+
+
+      <Row>
         <Col md={6}>
         <FormGroup>
         <Button color="warning" className="shadow-lg p-3 mb-5 bg-white rounded font-weight-bold d-block ml-auto mr-auto">Envoyer</Button>
@@ -119,7 +132,7 @@ const Creation = (props: any) => {
         <Button color="warning" className="shadow-lg p-3 mb-5 bg-white rounded font-weight-bold d-block ml-auto mr-auto">Annuler</Button>
         </FormGroup>
         </Col>
-       
+       </Row>
       </Row>
       <h6 className="text-danger mt-5 pt-5">* Champs obligatoires</h6>
     </Form>

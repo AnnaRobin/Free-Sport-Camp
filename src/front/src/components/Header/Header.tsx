@@ -35,27 +35,27 @@ const Header: FunctionComponent<{}> = () => {
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
+          <Nav className="mr-auto" navbar id="main_menu">
            
           <NavItem>
-              <NavLink className="font-weight-bolder alert-link color='primary'" href="/mission" id="navmission">Notre mission</NavLink>
+              <NavLink className="font-weight-bolder alert-link color='primary'" href="/mission" >Notre mission</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="font-weight-bolder alert-link color='primary'" href="/search"  id="navpartners">Trouvez vos partenaires</NavLink>
-            </NavItem>
-            
-            <NavItem>
-              <NavLink className="font-weight-bolder alert-link color='primary'" href="/ad" id="navads">Publiez vos annonces</NavLink>
+              <NavLink className="font-weight-bolder alert-link color='primary'" href="/search" >Trouvez vos partenaires</NavLink>
             </NavItem>
             
             <NavItem>
-              <NavLink className="font-weight-bolder alert-link color='primary'" href="#" id="account">Compte </NavLink>
+              <NavLink className="font-weight-bolder alert-link color='primary'" href="/ad">Publiez vos annonces</NavLink>
+            </NavItem>
+            
+            <NavItem>
+              <NavLink className="font-weight-bolder alert-link color='primary'" href="/account" >Compte </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="font-weight-bolder alert-link color='primary'" href="/inscription" id="inscription">Inscription </NavLink>
+              <NavLink className="font-weight-bolder alert-link color='primary'" href="/inscription" >Inscription </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="font-weight-bolder alert-link color='primary'" href="/connection" id="connection">Connexion </NavLink>
+              <NavLink className="font-weight-bolder alert-link color='primary'" href="/connection">Connexion </NavLink>
             </NavItem>
           </Nav>
 

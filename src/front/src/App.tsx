@@ -19,6 +19,7 @@ import Connection from './pages/Connection';
 import Mission from './pages/Mission';
 
 import Creation from './pages/Creation';
+import Account from './pages/Account';
 
 //const GettingStarted = React.lazy(() => import('./pages/GettingStarted'));
 //const NotFound = lazy(() => import('./pages/NotFound'));
@@ -40,6 +41,7 @@ const App: React.FunctionComponent<{}> = () => {
           <Route exact={true} path="/connection" component={Connection} />
           <Route exact={true} path="/ad" component={Creation} />
           <Route exact={true} path="/mission" component={Mission} />
+          <Route exact={true} path="/account" component={Account} />
           </Switch>
           </ScrollToTop>
           </BrowserRouter>
