@@ -1,13 +1,17 @@
 package com.masterpiece.FreeSportCamp.config;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 
 import com.masterpiece.FreeSportCamp.dtos.CustomUserAuthDto;
+
 import com.masterpiece.FreeSportCamp.entities.Role;
-import com.masterpiece.FreeSportCamp.entities.User;
+
 
 public class CustomUserDetails extends User {
 
@@ -16,12 +20,11 @@ public class CustomUserDetails extends User {
     private Long id;
 
     public CustomUserDetails(CustomUserAuthDto user) {
-	super(user.getUsername(), user.getPassword(), user.isEnabled(),
-		user.isAccountNonExpired(), user.isCredentialsNonExpired(),
-		user.isAccountNonLocked(), buildAuthorities(user.getRoles()));
+    	super(user.getUserName(), user.getPassword(), user.isEnabled(),
+    			true,true,true, buildAuthorities(user.getRoles()));
 	id = user.getId();
     }
-
+ 
     private static Set<GrantedAuthority> buildAuthorities(Set<Role> roles) {
 	return roles.stream().map(r -> new SimpleGrantedAuthority(r.getCode()))
 		.collect(Collectors.toUnmodifiableSet());
@@ -35,9 +38,6 @@ public class CustomUserDetails extends User {
     public String toString() {
 	return "{id=" + id + ", authorities=" + getAuthorities()
 		+ ", password=[PROTECTED], username=" + getUsername()
-		+ ", enabled=" + isEnabled() + ", accountNonExpired="
-		+ isAccountNonExpired() + ", accountNonLocked="
-		+ isAccountNonLocked() + ", credentialsNonExpired="
-		+ isCredentialsNonExpired() + "}";
+		+ ", enabled=" + isEnabled() +  "}";
     }
 }

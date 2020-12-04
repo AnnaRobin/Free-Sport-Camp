@@ -25,13 +25,8 @@ public class Role {
     private boolean defaultRole = false;
 
 
-	@Column(name="name", nullable = false, length=45)
-	private String name;
-	
-
-	
 	  protected Role() {
-			// Empty no-arg constructor for JPA
+			
 		    }
 
 		    public Role(String code) {
@@ -46,21 +41,7 @@ public class Role {
 			return code;
 		    }
 		    
-			public String getName() {
-				return name;
-			}
-
 			
-			public void setId(Long id) {
-				this.id = id;
-			}
-
-
-			public void setName(String name) {
-				this.name = name;
-			}
-
-
 		    private void setCode(String code) {
 			this.code = code;
 		    }

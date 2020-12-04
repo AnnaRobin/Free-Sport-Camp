@@ -3,13 +3,15 @@ package com.masterpiece.FreeSportCamp.dtos;
 import java.util.Set;
 
 import com.masterpiece.FreeSportCamp.entities.Role;
-
+/**
+ * A projection of a {@code CustomUser} for authentication.
+ */
 public interface CustomUserAuthDto {
 
 
     Long getId();
 
-    String getUsername();
+    String getUserName();
 
     String getPassword();
 
@@ -17,10 +19,5 @@ public interface CustomUserAuthDto {
 
     boolean isEnabled();
 
-    boolean isAccountNonExpired();
-
-    boolean isAccountNonLocked();
-
-    boolean isCredentialsNonExpired();
 	
 }

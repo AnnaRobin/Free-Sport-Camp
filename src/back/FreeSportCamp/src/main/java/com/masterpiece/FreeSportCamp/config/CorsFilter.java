@@ -16,11 +16,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class CrossFilter implements Filter {
+public class CorsFilter implements Filter {
 	
 	@Value("${jwt-auth-server.allowedOrigin}")
 	private String allowedOrigin;
 	
+	@Override
 	public void doFilter(ServletRequest servletRequest, 
 			ServletResponse servletResponse, FilterChain chain)
 			throws IOException, ServletException {

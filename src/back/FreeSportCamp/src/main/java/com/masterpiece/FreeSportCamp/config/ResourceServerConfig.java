@@ -26,18 +26,22 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	// Disable CSRF, no need with JWT if not cookie-based.
 	// Disable CORS if API is public, better to enable in general.
 	// Anonymous is enabled by default.
-	http.httpBasic().disable().csrf().disable().cors().disable()
+	http.httpBasic().disable().csrf().disable()
+		//.cors().disable()
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-		.authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll().and()
+		.authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
+		.and().authorizeRequests().antMatchers("/api/public/**").permitAll();
+		
+		//.and()
 		// "/api/public/**" for anyone even anonymous
-		.authorizeRequests().antMatchers("/api/public/**").permitAll()
+		//.authorizeRequests().antMatchers("/api/event/**,/api/public/**").permitAll()
 		/*
 		 * "/api/userInfo", "/api/private/**" for fully authenticated
 		 * (not anonymous)
 		 */
-		.antMatchers("/api/userInfo", "/api/private/**")
-		.authenticated();
+		//.antMatchers("/api/userInfo", "/api/private/**")
+		//.authenticated();
     }
 
 }

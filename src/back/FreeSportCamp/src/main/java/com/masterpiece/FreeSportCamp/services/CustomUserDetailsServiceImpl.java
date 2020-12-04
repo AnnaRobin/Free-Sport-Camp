@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.masterpiece.FreeSportCamp.config.CustomUserDetails;
+import com.masterpiece.FreeSportCamp.config.ResourceNotFoundException;
 import com.masterpiece.FreeSportCamp.dtos.CustomUserAuthDto;
 import com.masterpiece.FreeSportCamp.dtos.CustomUserInfoDto;
 import com.masterpiece.FreeSportCamp.repositories.CustomUserJpaRepository;
@@ -22,7 +23,7 @@ public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
 	    @Override
 	    public UserDetails loadUserByUsername(String username)
 		    throws UsernameNotFoundException {
-		CustomUserAuthDto user = repo.findByUsername(username)
+		CustomUserAuthDto user = repo.findByUserName(username)
 			.orElseThrow(() -> new UsernameNotFoundException(
 				"no user found with username: " + username));
 		return new CustomUserDetails(user);

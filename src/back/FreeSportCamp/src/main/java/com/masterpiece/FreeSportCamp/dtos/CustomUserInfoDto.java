@@ -1,12 +1,12 @@
 package com.masterpiece.FreeSportCamp.dtos;
 
 public interface CustomUserInfoDto {
-	  Long getId();
+	  	Long getId();
 
-	    String getUsername();
+	    String getUserName();
 
-	    String getFirstname();
+	    String getFullName();
 
-	    String getLastname();
+	    
 	
 }

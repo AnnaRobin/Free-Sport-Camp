@@ -16,7 +16,9 @@ import com.masterpiece.FreeSportCamp.dtos.EventViewDto;
 import com.masterpiece.FreeSportCamp.dtos.SearchDto;
 import com.masterpiece.FreeSportCamp.services.EventService;
 
-@CrossOrigin(origins="http://localhost:3000")
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import com.masterpiece.FreeSportCamp.config.ResourceServerConfig;
+
 @RestController
 @RequestMapping("/event")
 public class EventController {
@@ -26,7 +28,8 @@ public class EventController {
 	  protected EventController(EventService service) {
 			this.service = service;
 		    }
-	
+
+
 @GetMapping("/options")
 protected CriteriaViewDto getOptions() {
 	

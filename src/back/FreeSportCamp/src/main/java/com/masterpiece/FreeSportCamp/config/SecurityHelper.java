@@ -2,7 +2,8 @@ package com.masterpiece.FreeSportCamp.config;
 
 import java.util.Map;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 
 public class SecurityHelper {
