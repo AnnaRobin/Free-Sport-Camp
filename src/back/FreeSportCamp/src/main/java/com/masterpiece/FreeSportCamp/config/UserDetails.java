@@ -8,18 +8,18 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import com.masterpiece.FreeSportCamp.dtos.CustomUserAuthDto;
+import com.masterpiece.FreeSportCamp.dtos.UserAuthDto;
 
 import com.masterpiece.FreeSportCamp.entities.Role;
 
 
-public class CustomUserDetails extends User {
+public class UserDetails extends User {
 
 	private static final long serialVersionUID = 5803283930339051994L;
 
     private Long id;
 
-    public CustomUserDetails(CustomUserAuthDto user) {
+    public UserDetails(UserAuthDto user) {
     	super(user.getUserName(), user.getPassword(), user.isEnabled(),
     			true,true,true, buildAuthorities(user.getRoles()));
 	id = user.getId();

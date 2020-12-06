@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 
-public class SecurityHelper {
+public final class SecurityHelper {
 	 private SecurityHelper() {
 			// Ensure non-instantiability, helper class with static methods only
 		    }

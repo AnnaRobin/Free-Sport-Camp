@@ -30,7 +30,7 @@ public class CorsFilter implements Filter {
 		
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 		
-		response.setHeader("Access-Control-Allow-Headers", "x-requested-with, Authorization");
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with, Authorization, Content-Type");
 		
 		chain.doFilter(servletRequest, servletResponse);
 		

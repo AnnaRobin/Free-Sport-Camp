@@ -27,21 +27,20 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	// Disable CORS if API is public, better to enable in general.
 	// Anonymous is enabled by default.
 	http.httpBasic().disable().csrf().disable()
-		//.cors().disable()
+		.cors().disable()
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		.authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
-		.and().authorizeRequests().antMatchers("/api/public/**").permitAll();
-		
-		//.and()
+		.and().authorizeRequests().antMatchers(HttpMethod.POST, "/api/users").permitAll()
+		.and().authorizeRequests().antMatchers("/api/public/**").permitAll().and()
 		// "/api/public/**" for anyone even anonymous
-		//.authorizeRequests().antMatchers("/api/event/**,/api/public/**").permitAll()
+		.authorizeRequests().antMatchers("/api/event/**,/api/public/**").permitAll()
 		/*
 		 * "/api/userInfo", "/api/private/**" for fully authenticated
 		 * (not anonymous)
 		 */
-		//.antMatchers("/api/userInfo", "/api/private/**")
-		//.authenticated();
+		.antMatchers("/api/userInfo", "/api/private/**")
+		.authenticated();
     }
 
 }

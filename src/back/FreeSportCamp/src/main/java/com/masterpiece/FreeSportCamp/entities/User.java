@@ -23,7 +23,7 @@ import javax.persistence.Table;
 		@Index(name = "users_city_id_IDX", columnList = "city_id" )
 		
 })
-public class CustomUser {
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,7 +71,7 @@ public class CustomUser {
 	    inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
     
-	public CustomUser() {
+	public User() {
 		
 	}
 	
@@ -182,7 +182,7 @@ public class CustomUser {
      * @param username a unique userName
      * @param roles    some roles
      */
-    public CustomUser(String password, String userName, Set<Role> roles) {
+    public User(String password, String userName, Set<Role> roles) {
 	this(password, userName, roles, true);
     }
 
@@ -194,7 +194,7 @@ public class CustomUser {
      * @param roles    some roles
      * @param enabled  {@code true} if enabled; {@code false} otherwise
      */
-    public CustomUser(String password, String userName, Set<Role> roles,
+    public User(String password, String userName, Set<Role> roles,
     		boolean enabled) {
 	this.password = password;
 	this.userName = userName;

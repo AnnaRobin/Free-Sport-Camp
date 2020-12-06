@@ -2,13 +2,13 @@ package com.masterpiece.FreeSportCamp.config;
 
 import java.util.Arrays;
 
-import org.springframework.core.io.Resource;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -25,8 +25,7 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.masterpiece.FreeSportCamp.dtos.CustomUserInfoDto;
-import com.masterpiece.FreeSportCamp.services.CustomUserDetailsService;
+import com.masterpiece.FreeSportCamp.dtos.UserInfoDto;
 
 @Configuration
 @EnableAuthorizationServer
@@ -50,24 +49,27 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Value("${jwt-auth-server.refreshTokenValiditySeconds}")
     private int refreshTokenValiditySeconds;
     
-    private final PasswordEncoder passwordEncoder;
+    //@Value("${jwt-auth-server.clientId}")
+    //private String clientId;
+    
+    private final PasswordEncoder encoder;
 
     // Defined as Spring bean in WebSecurity
     private final AuthenticationManager authenticationManager;
 
     // Custom user details service to authenticate users with username and
     // password from the database
-    private final CustomUserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     // Custom token converter to store custom info within access token
     private final CustomAccessTokenConverter customAccessTokenConverter;
 
     protected AuthorizationServerConfig(
-    		PasswordEncoder passwordEncoder,
+    	PasswordEncoder encoder,
 	    AuthenticationManager authenticationManagerBean,
-	    CustomUserDetailsService userDetailsService,
+	    UserDetailsService userDetailsService,
 	    CustomAccessTokenConverter customAccessTokenConverter) {
-    this.passwordEncoder = passwordEncoder;
+    this.encoder = encoder;
 	authenticationManager = authenticationManagerBean;
 	this.userDetailsService = userDetailsService;
 	this.customAccessTokenConverter = customAccessTokenConverter;
@@ -107,9 +109,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
 	tokenEnhancerChain.setTokenEnhancers(
 		Arrays.asList(tokenEnhancer(), accessTokenConverter()));
-	configurer.tokenStore(tokenStore()).tokenEnhancer(tokenEnhancerChain)
-		.authenticationManager(authenticationManager)
-		.userDetailsService(userDetailsService);
+	configurer.tokenStore(tokenStore())
+				.tokenEnhancer(tokenEnhancerChain)
+				.authenticationManager(authenticationManager)
+				.userDetailsService(userDetailsService);
     }
 
     /**
@@ -151,11 +154,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(ClientDetailsServiceConfigurer clients)
 	    throws Exception {
 	clients.inMemory().withClient("my-client-app")
-		.secret(passwordEncoder.encode("")).scopes("trusted")
+		.secret(encoder.encode("")).scopes("trusted")
 		.authorizedGrantTypes("password", "refresh_token")
-		.accessTokenValiditySeconds(accessTokenValiditySeconds)
-		.refreshTokenValiditySeconds(refreshTokenValiditySeconds);
+		.accessTokenValiditySeconds(accessTokenValiditySeconds);
     }
+    
+   
+    
 
     /**
      * Standard enpoint returning a view of the current authenticated user.
@@ -165,10 +170,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      * @param authentication injected authentication object
      * @return a view of the current authenticated user
      */
-    @GetMapping("/userInfo")
-    public CustomUserInfoDto userInfo() {
+    /*@GetMapping("/userInfo")
+    public UserInfoDto userInfo() {
 	Long userId = SecurityHelper.getUserId();
 	return userDetailsService.getCurrentUserInfo(userId);
     }
-
+*/
 }

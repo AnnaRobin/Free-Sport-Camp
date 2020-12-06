@@ -4,43 +4,36 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masterpiece.FreeSportCamp.dtos.UserDto;
-import com.masterpiece.FreeSportCamp.services.MemberService;
-
-import ch.qos.logback.core.net.server.Client;
+import com.masterpiece.FreeSportCamp.services.UserService;
 
 @RestController
-@RequestMapping("/members")
-@CrossOrigin(origins = "http://localhost:3000")
-public class MemberController {
+@RequestMapping("/user")
+public class UserController {
 	
-	private final MemberService service;
 	
-	protected MemberController(MemberService service) {
-		this.service = service;
+	private final UserService userService;
+	
+	protected UserController(UserService userService) {
+		this.userService = userService;
 	}
-	
+
 	@PostMapping
-	protected ResponseEntity create(@Valid @RequestBody UserDto dto) {
-		if(service.alreadyExistsUserName(dto.getUserName())) {
+	public ResponseEntity create(@Valid @RequestBody UserDto userDto) {
+		if(userService.alreadyExistsUserName(userDto.getUserName())) {
 			return new ResponseEntity(HttpStatus.CONFLICT);
 		}
 
-		if(service.alreadyExistsEmail(dto.getEmail())) {
+		if(userService.alreadyExistsEmail(userDto.getEmail())) {
 			return new ResponseEntity(HttpStatus.CONFLICT);
 		}
-		service.create(dto);
+		userService.create(userDto);
 		return new ResponseEntity(HttpStatus.CREATED);
-		
 	}
-
-
-
+	
 }

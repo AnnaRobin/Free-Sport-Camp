@@ -2,8 +2,8 @@ package com.masterpiece.FreeSportCamp.services;
 
 import org.springframework.stereotype.Service;
 
-import com.masterpiece.FreeSportCamp.dtos.MemberDto;
-import com.masterpiece.FreeSportCamp.entities.CustomUser;
+import com.masterpiece.FreeSportCamp.dtos.UserDto;
+import com.masterpiece.FreeSportCamp.entities.User;
 import com.masterpiece.FreeSportCamp.repositories.MemberRepository;
 	@Service
 
@@ -16,8 +16,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void create(MemberDto dto) {
-		CustomUser member = new CustomUser();
+	public void create(UserDto dto) {
+		User member = new User();
 		populateAndSave(dto, member);
 	}
 	
@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.countByEmail(Email)>0;
 	}
 	
-	private void populateAndSave (MemberDto dto, CustomUser member) {
+	private void populateAndSave (UserDto dto, User member) {
 		member.setUserName(dto.getUserName());
 		member.setPassword(dto.getPassword());
 		member.setFullName(dto.getFullName());

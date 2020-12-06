@@ -4,7 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-public class MemberDto {
+public class UserDto {
 	@NotEmpty
 	@Size(min=4, max=50)
 private String userName;

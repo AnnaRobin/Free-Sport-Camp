@@ -6,7 +6,7 @@ import com.masterpiece.FreeSportCamp.entities.Role;
 /**
  * A projection of a {@code CustomUser} for authentication.
  */
-public interface CustomUserAuthDto {
+public interface UserAuthDto {
 
 
     Long getId();

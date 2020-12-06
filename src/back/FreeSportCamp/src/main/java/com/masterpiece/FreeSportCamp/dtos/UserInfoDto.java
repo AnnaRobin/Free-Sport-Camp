@@ -1,6 +1,6 @@
 package com.masterpiece.FreeSportCamp.dtos;
 
-public interface CustomUserInfoDto {
+public interface UserInfoDto {
 	  	Long getId();
 
 	    String getUserName();

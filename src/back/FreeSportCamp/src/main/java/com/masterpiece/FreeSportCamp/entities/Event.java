@@ -52,7 +52,7 @@ public class Event {
 	
 	@OneToOne(optional=false)
 	@JoinColumn(nullable = false, name="organizer_id", foreignKey = @ForeignKey(name= "events_organizer_id_FK"))
-	private CustomUser organizer;
+	private User organizer;
 
 	public Event() {
 		
@@ -114,11 +114,11 @@ public class Event {
 		this.sport = sport;
 	}
 
-	public CustomUser getOrganizer() {
+	public User getOrganizer() {
 		return organizer;
 	}
 
-	public void setOrganizer(CustomUser organizer) {
+	public void setOrganizer(User organizer) {
 		this.organizer = organizer;
 	}
 	

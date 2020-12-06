@@ -9,7 +9,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
-	 @Override
+		/**
+	   * Defines as Spring bean the authentication manager for this application.
+	   *
+	   * @return the authentication manager
+	   * @see AuthenticationManager#authenticate(org.springframework.security.core.Authentication)
+	   */
+	
+	 	@Override
 	    @Bean
 	    public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
