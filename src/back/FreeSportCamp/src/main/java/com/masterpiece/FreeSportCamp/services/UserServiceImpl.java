@@ -55,15 +55,21 @@ public class UserServiceImpl implements UserService {
 		  users.save(user);
 	  }
 	    
-	  @Override
-	  public  boolean alreadyExistsUserName(String userName) {
-		  return userName != null && !users.existsByUserName(userName);
-	  }
+	
 	  
-	  public  boolean alreadyExistsEmail(String email) {
-		  return email !=null && !users.existsByEmail(email);
-	  }
-	    
+	  @Override
+	    public boolean uniqueName(String userName) {
+	    	return !users.existsByUserName(userName);
+	    	
+	    }
+	  
+	  @Override
+	    public boolean uniqueMail(String email) {
+	    	return !users.existsByEmail(email);
+	    	
+	    }
+	  
+	
 
 	    // Throws UsernameNotFoundException (Spring contract)
 	    
@@ -87,5 +93,6 @@ public class UserServiceImpl implements UserService {
 			() -> new ResourceNotFoundException("with id:" + id));
 	    }
 	    */
+	  
 
 }

@@ -20,7 +20,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="users", indexes = {
-		@Index(name = "users_city_id_IDX", columnList = "city_id" )
+		@Index(name = "users_city_id_IDX", columnList = "city_id_FK" )
 		
 })
 public class User {
@@ -51,7 +51,7 @@ public class User {
     @Column(name="sex")
     private Sex sex;
     
-    @Column(name="presentation")
+    @Column(name="presentation", length = 500)
     private String presentation;
     
     @Convert(converter = BooleanConverter.class)
@@ -61,7 +61,7 @@ public class User {
 
 
 	@OneToOne
-    @JoinColumn(nullable = false, name="city_id", foreignKey = @ForeignKey(name= "users_city_id_FK"))
+    @JoinColumn(nullable = true, name="city_id_FK", foreignKey = @ForeignKey(name= "users_city_id_FK"))
     private City city;
 	
 	

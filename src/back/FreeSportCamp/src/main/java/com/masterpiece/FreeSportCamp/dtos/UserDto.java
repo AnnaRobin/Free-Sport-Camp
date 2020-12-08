@@ -1,22 +1,36 @@
 package com.masterpiece.FreeSportCamp.dtos;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.masterpiece.FreeSportCamp.validation.UniqueMail;
+import com.masterpiece.FreeSportCamp.validation.UniqueName;
+
 
 public class UserDto {
-	@NotEmpty
-	@Size(min=4, max=50)
-private String userName;
-	@NotEmpty
-	@Size(min=4, max=50)
-	@Pattern(regexp = "^(?=.{4,50})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$")
-private String password;
-	@NotEmpty
-private String fullName;
-	@NotEmpty
-	@Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$")
-private String email;
+	@NotBlank
+	@Length(max=45)
+	@UniqueName
+	private String userName;
+	
+	@NotBlank
+	@Length(max=45)	
+	private String password;
+	
+	@NotBlank
+	@Length(max=45)
+	@Pattern(regexp = "[a-zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ]+\\s[a-zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ]+$", flags=Pattern.Flag.CASE_INSENSITIVE) 
+	private String fullName;
+	
+	@NotBlank
+	@Length(max=45)
+	@Email
+	@UniqueMail
+	private String email;
+	
 	public String getUserName() {
 		return userName;
 	}

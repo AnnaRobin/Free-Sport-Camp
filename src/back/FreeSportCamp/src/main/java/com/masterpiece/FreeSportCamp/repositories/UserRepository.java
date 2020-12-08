@@ -3,6 +3,7 @@ package com.masterpiece.FreeSportCamp.repositories;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.masterpiece.FreeSportCamp.dtos.UserAuthDto;
 import com.masterpiece.FreeSportCamp.dtos.UserInfoDto;
@@ -28,8 +29,12 @@ public interface UserRepository extends JpaRepository<User, Long>{
      */
     Optional<UserInfoDto> getById(Long id);
     
-    boolean existsByUserName(String username);
+    boolean existsByUserName(String userName);
     boolean existsByEmail(String email);
+
+	
+    
+   
 }
 
 

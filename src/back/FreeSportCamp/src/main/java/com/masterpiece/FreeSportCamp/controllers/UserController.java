@@ -25,13 +25,7 @@ public class UserController {
 
 	@PostMapping
 	public ResponseEntity create(@Valid @RequestBody UserDto userDto) {
-		if(userService.alreadyExistsUserName(userDto.getUserName())) {
-			return new ResponseEntity(HttpStatus.CONFLICT);
-		}
-
-		if(userService.alreadyExistsEmail(userDto.getEmail())) {
-			return new ResponseEntity(HttpStatus.CONFLICT);
-		}
+	
 		userService.create(userDto);
 		return new ResponseEntity(HttpStatus.CREATED);
 	}
