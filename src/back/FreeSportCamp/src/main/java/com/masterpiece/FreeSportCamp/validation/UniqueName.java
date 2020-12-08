@@ -13,7 +13,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = UniqueNameValidator.class)
 public @interface UniqueName {
 	
-	String message() default "Désolé, cet nom d'utilisateur est déjè pris.";
+	String message() default "{errors.user.userName.notUnique}";
 
 	Class<?>[] groups() default { };
 

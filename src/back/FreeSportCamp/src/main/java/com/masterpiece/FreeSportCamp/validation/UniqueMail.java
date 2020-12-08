@@ -13,7 +13,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = UniqueMailValidator.class)
 public @interface UniqueMail {
 	
-	String message() default "Désolé, cette addresse mail est déjà prise.";
+	String message() default "{errors.user.mail.notUnique}";
 
 	Class<?>[] groups() default { };
 
