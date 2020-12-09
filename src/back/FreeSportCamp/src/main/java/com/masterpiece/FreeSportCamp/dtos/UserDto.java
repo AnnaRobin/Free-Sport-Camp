@@ -6,10 +6,12 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 
+
+import com.masterpiece.FreeSportCamp.validation.PwConfirmation;
 import com.masterpiece.FreeSportCamp.validation.UniqueMail;
 import com.masterpiece.FreeSportCamp.validation.UniqueName;
 
-
+@PwConfirmation
 public class UserDto {
 	@NotBlank
 	@Length(max=45)
@@ -17,8 +19,11 @@ public class UserDto {
 	private String userName;
 	
 	@NotBlank
-	@Length(max=45)	
+	@Length(max=45)
 	private String password;
+	
+	@NotBlank
+	private String confirmation;
 	
 	@NotBlank
 	@Length(max=45)
@@ -30,6 +35,8 @@ public class UserDto {
 	@Email
 	@UniqueMail
 	private String email;
+	
+	
 	
 	public String getUserName() {
 		return userName;
@@ -55,6 +62,13 @@ public class UserDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public String getConfirmation() {
+		return confirmation;
+	}
+	public void setConfirmation(String confirmation) {
+		this.confirmation = confirmation;
+	}
+	
 
 }
 	

@@ -1,8 +1,8 @@
 package com.masterpiece.FreeSportCamp.services;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,79 +20,72 @@ import com.masterpiece.FreeSportCamp.repositories.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
-	
-	
-	  private final PasswordEncoder encoder;
-	  
-	  private final UserRepository users;
-	  
-	//  private final RoleJpaRepository roles;
-	  
-	  
-	 
-	  public UserServiceImpl (PasswordEncoder encoder,
-			  UserRepository users//, RoleJpaRepository roles
-			  ) {
-		  this.encoder = encoder;
-		  this.users = users;
-		//  this.roles = roles;
-	  }
-	  
-	  @Override
-	  public void create(UserDto userDto) {
-		 
-		  User user = new User();
-		  user.setUserName(userDto.getUserName());
-		  user.setFullName(userDto.getFullName());
-		  user.setEmail(userDto.getEmail());
-		  String raw = userDto.getPassword();
-		  String encoded =encoder.encode(raw);
-		  user.setPassword(encoded);
-		 /* Role role = roles.findByDefaultRoleTrue();
-		  user.setRole(role); // role par défaut*/
-		  user.setEnabled(true);
-		  users.save(user);
-	  }
-	    
-	
-	  
-	  @Override
-	    public boolean uniqueName(String userName) {
-	    	return !users.existsByUserName(userName);
-	    	
-	    }
-	  
-	  @Override
-	    public boolean uniqueMail(String email) {
-	    	return !users.existsByEmail(email);
-	    	
-	    }
-	  
+
+	private final ModelMapper mapper;
+
+	private final PasswordEncoder encoder;
+
+	private final UserRepository users;
+
+	// private final RoleJpaRepository roles;
+
+	public UserServiceImpl(ModelMapper mapper, PasswordEncoder encoder, UserRepository users// , RoleJpaRepository roles
+	) {
+		this.mapper = mapper;
+		this.encoder = encoder;
+		this.users = users;
+		// this.roles = roles;
+	}
+
+	@Override
+	public void create(UserDto userDto) {
+		User user =  mapper.map(userDto, User.class);
+
+		String raw = userDto.getPassword();
+		String encoded = encoder.encode(raw);
+		user.setPassword(encoded);
+		/*
+		 * Role role = roles.findByDefaultRoleTrue(); user.setRole(role); // role par
+		 * défaut
+		 */
+		user.setEnabled(true);
+		users.save(user);
+	}
+
+	@Override
+	public boolean uniqueName(String userName) {
+		return !users.existsByUserName(userName);
+
+	}
+
+	@Override
+	public boolean uniqueMail(String email) {
+		return !users.existsByEmail(email);
+
+	}
 	
 
-	    // Throws UsernameNotFoundException (Spring contract)
-	    
-	    @Override
-	    public UserDetails loadUserByUsername(String username)
-		    throws UsernameNotFoundException {
-	    	/*
-		UserAuthDto user = repo.findByUserName(username)
-			.orElseThrow(() -> new UsernameNotFoundException(
-				"no user found with username: " + username));
-		return new UserDetails(user);
-		*/
-	    	return null;
-	    }
+	
+	
+	
+	
+	// Throws UsernameNotFoundException (Spring contract)
 
-	    // Throws ResourceNotFoundException (restful practice)
-	    /*
-	    @Override
-	    public UserInfoDto getCurrentUserInfo(Long id) {
-		return repo.getById(id).orElseThrow(
-			() -> new ResourceNotFoundException("with id:" + id));
-	    }
-	    */
-	  
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		/*
+		 * UserAuthDto user = repo.findByUserName(username) .orElseThrow(() -> new
+		 * UsernameNotFoundException( "no user found with username: " + username));
+		 * return new UserDetails(user);
+		 */
+		return null;
+	}
+
+	// Throws ResourceNotFoundException (restful practice)
+	/*
+	 * @Override public UserInfoDto getCurrentUserInfo(Long id) { return
+	 * repo.getById(id).orElseThrow( () -> new ResourceNotFoundException("with id:"
+	 * + id)); }
+	 */
 
 }

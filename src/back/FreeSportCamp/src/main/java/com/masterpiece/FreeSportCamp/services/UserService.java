@@ -11,4 +11,5 @@ public interface UserService extends UserDetailsService {
 	
 	 boolean uniqueName(String userName);
 	 boolean uniqueMail(String email);
+	 
 }

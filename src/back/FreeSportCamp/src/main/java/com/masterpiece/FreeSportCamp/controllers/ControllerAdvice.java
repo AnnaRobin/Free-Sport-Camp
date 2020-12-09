@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -31,6 +32,14 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 			String code = fieldError.getCode();
 			ValidationError validationError = new ValidationError(object, attribute, code);
 			validationErrors.add(validationError);
+		}
+		
+		List<ObjectError> globalErrors = result.getGlobalErrors();
+		for (ObjectError globalError : globalErrors) {
+		    String object = globalError.getObjectName();
+		    String code = globalError.getCode();
+		    ValidationError validationError = new ValidationError(object, code);
+		    validationErrors.add(validationError);
 		}
 		
 		return super.handleExceptionInternal(ex, validationErrors, headers, status, request);
