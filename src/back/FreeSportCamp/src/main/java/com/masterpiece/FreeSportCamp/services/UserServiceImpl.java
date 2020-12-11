@@ -1,5 +1,8 @@
 package com.masterpiece.FreeSportCamp.services;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +20,7 @@ import com.masterpiece.FreeSportCamp.dtos.UserAuthDto;
 import com.masterpiece.FreeSportCamp.dtos.UserInfoDto;
 */
 import com.masterpiece.FreeSportCamp.repositories.UserRepository;
+import com.masterpiece.FreeSportCamp.repositories.RoleRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,27 +31,30 @@ public class UserServiceImpl implements UserService {
 
 	private final UserRepository users;
 
-	// private final RoleJpaRepository roles;
+	private final RoleRepository roles;
 
-	public UserServiceImpl(ModelMapper mapper, PasswordEncoder encoder, UserRepository users// , RoleJpaRepository roles
-	) {
+	public UserServiceImpl(ModelMapper mapper, PasswordEncoder encoder, UserRepository users, RoleRepository roles) {
 		this.mapper = mapper;
 		this.encoder = encoder;
 		this.users = users;
-		// this.roles = roles;
+		this.roles = roles;
 	}
 
 	@Override
 	public void create(UserDto userDto) {
-		User user =  mapper.map(userDto, User.class);
+		User user = mapper.map(userDto, User.class);
 
 		String raw = userDto.getPassword();
 		String encoded = encoder.encode(raw);
 		user.setPassword(encoded);
-		/*
-		 * Role role = roles.findByDefaultRoleTrue(); user.setRole(role); // role par
-		 * défaut
-		 */
+
+		Role role = roles.findByDefaultRoleTrue();
+
+		Set<Role> roles = new HashSet<>();
+		roles.add(role);
+
+		user.setRoles(roles); // role par défaut
+
 		user.setEnabled(true);
 		users.save(user);
 	}
@@ -63,12 +70,7 @@ public class UserServiceImpl implements UserService {
 		return !users.existsByEmail(email);
 
 	}
-	
 
-	
-	
-	
-	
 	// Throws UsernameNotFoundException (Spring contract)
 
 	@Override

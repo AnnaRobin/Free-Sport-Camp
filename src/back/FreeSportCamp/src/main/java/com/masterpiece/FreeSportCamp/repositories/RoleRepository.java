@@ -6,4 +6,6 @@ import com.masterpiece.FreeSportCamp.entities.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
+	Role findByDefaultRoleTrue();
+
 }

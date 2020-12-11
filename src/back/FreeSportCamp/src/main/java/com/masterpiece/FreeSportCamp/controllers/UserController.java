@@ -1,5 +1,7 @@
 package com.masterpiece.FreeSportCamp.controllers;
 
+import java.util.HashMap;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -27,7 +29,9 @@ public class UserController {
 	public ResponseEntity create(@Valid @RequestBody UserDto userDto) {
 	
 		userService.create(userDto);
-		return new ResponseEntity(HttpStatus.CREATED);
+		HashMap<String, String> response = new HashMap<String, String>();
+		response.put("message","success");
+		return new ResponseEntity(response, HttpStatus.CREATED);
 	}
 	
 }
