@@ -17,3 +17,5 @@ npm install react-router-dom
 npm install @types/react-router-dom
 
 npm install react-hook-form
+
+npm install jwt-decode
