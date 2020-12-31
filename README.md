@@ -19,3 +19,6 @@ npm install @types/react-router-dom
 npm install react-hook-form
 
 npm install jwt-decode
+
+npm install react-phone-input-2 --save
+
