@@ -22,3 +22,4 @@ npm install jwt-decode
 
 npm install react-phone-input-2 --save
 
+npm install @hookform/devtools -D
