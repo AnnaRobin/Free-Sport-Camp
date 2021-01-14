@@ -4,10 +4,9 @@ import java.util.Set;
 
 import com.masterpiece.FreeSportCamp.entities.Role;
 /**
- * A projection of a {@code CustomUser} for authentication.
+ * A projection of a {@code User} for authentication.
  */
 public interface UserAuthDto {
-
 
     Long getId();
 

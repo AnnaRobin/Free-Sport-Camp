@@ -1,22 +1,28 @@
 package com.masterpiece.FreeSportCamp.entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
+import java.time.LocalTime;
+import java.util.List;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="events", indexes = {
 	@Index(name = "events_city_id_IDX", columnList = "city_id" ),
-	@Index(name = "events_time_id_IDX", columnList = "time_id" ),
 	@Index(name = "events_level_id_IDX", columnList = "level_id" ),
 	@Index(name = "events_sport_id_IDX", columnList = "sport_id" ),
 	@Index(name = "events_organizer_id_IDX", columnList = "organizer_id")	
@@ -29,7 +35,10 @@ public class Event {
 	private Long id;
 	
 	@Column(name="appointment",  nullable = false)
-	private LocalDateTime appointment;
+	private LocalDate appointment;
+	
+	@Column(name="time",  nullable = false)
+	private LocalTime time;
 	
 	@Column(name="description", length=1000)
 	private String description;
@@ -37,10 +46,6 @@ public class Event {
 	@OneToOne(optional=false)
 	@JoinColumn(nullable = false, name="city_id", foreignKey = @ForeignKey(name= "events_city_id_FK"))
 	private City city;
-	
-	@OneToOne(optional=false)
-	@JoinColumn(nullable = false, name="time_id", foreignKey = @ForeignKey(name= "events_time_id_FK"))
-	private Time time;
 	
 	@OneToOne(optional=false)
 	@JoinColumn(nullable = false, name="level_id", foreignKey = @ForeignKey(name= "events_level_id_FK"))
@@ -53,9 +58,20 @@ public class Event {
 	@OneToOne(optional=false)
 	@JoinColumn(nullable = false, name="organizer_id", foreignKey = @ForeignKey(name= "events_organizer_id_FK"))
 	private User organizer;
-
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+	  name = "participations", 
+	  joinColumns = @JoinColumn(name = "event_id"), 
+	  inverseJoinColumns = @JoinColumn(name = "user_id"))
+	List<User> subscribers;
+	
 	public Event() {
 		
+	}
+	
+	public Event(Long eventId) {
+		this.id = eventId;
 	}
 
 	public Long getId() {
@@ -66,11 +82,11 @@ public class Event {
 		this.id = id;
 	}
 
-	public LocalDateTime getAppointment() {
+	public LocalDate getAppointment() {
 		return appointment;
 	}
 
-	public void setAppointment(LocalDateTime appointment) {
+	public void setAppointment(LocalDate appointment) {
 		this.appointment = appointment;
 	}
 
@@ -90,11 +106,11 @@ public class Event {
 		this.city = city;
 	}
 
-	public Time getTime() {
+	public LocalTime getTime() {
 		return time;
 	}
 
-	public void setTime(Time time) {
+	public void setTime(LocalTime time) {
 		this.time = time;
 	}
 
@@ -122,6 +138,13 @@ public class Event {
 		this.organizer = organizer;
 	}
 	
+	public List<User> getSubscribers(){
+		return this.subscribers;
+	}
+	
+	public void setSubscribers(List<User> subscribers) {
+		this.subscribers = subscribers;
+	}
 	
 
 }

@@ -174,10 +174,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      * @param authentication injected authentication object
      * @return a view of the current authenticated user
      */
-    /*@GetMapping("/userInfo")
+    /*
+    @GetMapping("/userInfo")
     public UserInfoDto userInfo() {
 	Long userId = SecurityHelper.getUserId();
 	return userDetailsService.getCurrentUserInfo(userId);
     }
-*/
+    */
+
 }

@@ -17,7 +17,7 @@ public class PrivateController {
     @PreAuthorize("hasRole('USER')") // == @Secured("ROLE_USER")
     @GetMapping("/user")
     public String user() {
-	return "Hello user!";
+    	return "Hello user!";
     }
 
     /**

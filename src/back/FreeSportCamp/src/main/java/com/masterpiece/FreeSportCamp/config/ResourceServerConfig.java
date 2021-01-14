@@ -32,14 +32,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		.authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
 		.and().authorizeRequests().antMatchers(HttpMethod.POST, "/api/users").permitAll()
-		.and().authorizeRequests().antMatchers("/api/public/**").permitAll().and()
+		//.and().authorizeRequests().antMatchers("/api/public/**").permitAll().and()
 		// "/api/public/**" for anyone even anonymous
-		.authorizeRequests().antMatchers("/api/event/**,/api/public/**").permitAll()
+		//.and().authorizeRequests().antMatchers("/api/event/options").permitAll()
 		/*
 		 * "/api/userInfo", "/api/private/**" for fully authenticated
 		 * (not anonymous)
 		 */
-		.antMatchers("/api/userInfo", "/api/private/**")
+		.antMatchers("/api/event/**")
 		.authenticated();
     }
 

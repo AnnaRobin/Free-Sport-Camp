@@ -1,26 +1,24 @@
 package com.masterpiece.FreeSportCamp.dtos;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Set;
 
-import com.masterpiece.FreeSportCamp.entities.City;
-import com.masterpiece.FreeSportCamp.entities.Level;
-import com.masterpiece.FreeSportCamp.entities.Sport;
-import com.masterpiece.FreeSportCamp.entities.Time;
 import com.masterpiece.FreeSportCamp.entities.User;
-
 
 
 public interface EventViewDto {
 	
 	Long getId(); 
 	
-	LocalDateTime getAppointment();
+	LocalDate getAppointment();
 	
 	String getDescription(); 
 	
-	String getCityName();
+	//String getCityName();
 	
-	String getTimeName();
+	LocalTime getTime();
 	
 	String getLevelName();
 	

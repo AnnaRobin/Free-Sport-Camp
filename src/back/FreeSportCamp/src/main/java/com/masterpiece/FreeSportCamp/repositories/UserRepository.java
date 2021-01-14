@@ -1,5 +1,6 @@
 package com.masterpiece.FreeSportCamp.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.masterpiece.FreeSportCamp.dtos.UserAuthDto;
 import com.masterpiece.FreeSportCamp.dtos.UserInfoDto;
-import com.masterpiece.FreeSportCamp.entities.User;
 import com.masterpiece.FreeSportCamp.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
@@ -31,10 +31,6 @@ public interface UserRepository extends JpaRepository<User, Long>{
     
     boolean existsByUserName(String userName);
     boolean existsByEmail(String email);
-
-	
-    
-   
 }
 
 

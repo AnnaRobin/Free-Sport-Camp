@@ -1,6 +1,10 @@
 package com.masterpiece.FreeSportCamp.config;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.method.HandlerTypePredicate;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
@@ -25,6 +29,21 @@ public class WebConfig implements WebMvcConfigurer{
 	    public void configurePathMatch(PathMatchConfigurer configurer) {
 		configurer.addPathPrefix("/api",
 			HandlerTypePredicate.forAnnotation(RestController.class));
+	    }
+	 
+	 /**
+	     * The password encoder bean for the application.
+	     *
+	     * @return a password encoder
+	     */
+	    @Bean
+	    protected PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	    }
+	    
+	    @Bean
+	    public ModelMapper mapper() {
+	    	return new ModelMapper();
 	    }
 
 }

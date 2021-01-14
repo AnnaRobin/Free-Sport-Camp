@@ -5,8 +5,6 @@ public interface UserInfoDto {
 
 	    String getUserName();
 
-	    String getFullName();
-
-	    
+	    String getFullName();    
 	
 }

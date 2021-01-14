@@ -9,7 +9,6 @@ import com.masterpiece.FreeSportCamp.entities.Time;
 
 public interface TimeRepository extends JpaRepository<Time, Long>{
 	
-	 
+	 Time getById(Long id);
 	 List<TimeViewDto> getAllProjectedBy();
-
 }

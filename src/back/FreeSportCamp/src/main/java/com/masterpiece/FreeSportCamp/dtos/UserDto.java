@@ -36,8 +36,6 @@ public class UserDto {
 	@UniqueMail
 	private String email;
 	
-	
-	
 	public String getUserName() {
 		return userName;
 	}

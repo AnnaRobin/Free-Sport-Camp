@@ -1,16 +1,19 @@
 package com.masterpiece.FreeSportCamp.services;
 
+import com.masterpiece.FreeSportCamp.config.ResourceNotFoundException;
+import com.masterpiece.FreeSportCamp.config.UserDetails;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.masterpiece.FreeSportCamp.dtos.UserAuthDto;
 import com.masterpiece.FreeSportCamp.dtos.UserDto;
+import com.masterpiece.FreeSportCamp.dtos.UserInfoDto;
 import com.masterpiece.FreeSportCamp.entities.Role;
 import com.masterpiece.FreeSportCamp.entities.User;
 /*
@@ -75,19 +78,21 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		/*
-		 * UserAuthDto user = repo.findByUserName(username) .orElseThrow(() -> new
-		 * UsernameNotFoundException( "no user found with username: " + username));
-		 * return new UserDetails(user);
-		 */
-		return null;
+		
+		  UserAuthDto user = users.findByUserName(username) .orElseThrow(() -> new
+		  UsernameNotFoundException( "Ce n'est pas votre nom d'utilisateur: " + username));
+		 return new UserDetails(user);
+		 
+		
 	}
 
 	// Throws ResourceNotFoundException (restful practice)
-	/*
-	 * @Override public UserInfoDto getCurrentUserInfo(Long id) { return
-	 * repo.getById(id).orElseThrow( () -> new ResourceNotFoundException("with id:"
-	 * + id)); }
-	 */
+	
+	  @Override 
+	  public UserInfoDto getCurrentUserInfo(Long id) { 
+	  return users.getById(id).orElseThrow(
+	   () -> new ResourceNotFoundException("with id:"+ id)); 
+	   }
+	 
 
 }

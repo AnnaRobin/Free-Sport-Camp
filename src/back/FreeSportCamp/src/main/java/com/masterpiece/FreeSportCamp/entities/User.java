@@ -1,6 +1,7 @@
 package com.masterpiece.FreeSportCamp.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -64,13 +65,25 @@ public class User {
     @JoinColumn(nullable = true, name="city_id", foreignKey = @ForeignKey(name= "users_city_id_FK"))
     private City city;
 	
+	@ManyToMany
+	@JoinTable(
+	  name = "participations", 
+	  joinColumns = @JoinColumn(name = "user_id"), 
+	  inverseJoinColumns = @JoinColumn(name = "event_id"))
+	List<Event> subscribedEvents;
+	
+	
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles", 
+	@JoinTable(name = "users_roles", 
 	    joinColumns = @JoinColumn(name = "user_id"),
 	    inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
     
+	
+	
+	
+	
 	public User() {
 		
 	}
@@ -174,7 +187,14 @@ public class User {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-
+	
+	public List<Event> getSubscribedEvents(){
+		return this.subscribedEvents;
+	}
+	
+	public User(Long id) {
+		this.id=id;
+	}
 	  /**
      * Creates a new enabled custom user.
      *
