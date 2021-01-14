@@ -2,137 +2,123 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Jumbotron, Button } from 'reactstrap';
 import { useForm } from "react-hook-form";
 import Select from '../../components/Select';
-import Result from '../../components/Result';
+import Event from '../../components/Event';
+import useOptions from '../../components/Options';
+import UserHelper from '../UserHelper';
+import AjaxHelper from '../AjaxHelper';
 
-interface Option {
-  id: number;
-  name: string;
-}
+// Custom Hook
+function useSearch() {
 
-export function useOptions() {
-  const [sports, setSports] = useState<Option[]>([]);
-  const [cities, setCities] = useState<Option[]>([]);
-  const [times, setTimes] = useState<Option[]>([]);
-  const [levels, setLevels] = useState<Option[]>([]);
-
-
-
-  useEffect(() => {
-    fetch('http://localhost:8585/event/options', {
-      method: 'GET',
-    })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        setSports(data['sports']);
-        setCities(data['cities']);
-        setTimes(data['times']);
-        setLevels(data['levels']);
-      })
-  }, [])
-
-  return {
-    sportOptions: sports,
-    cityOptions: cities,
-    timeOptions: times,
-    levelOptions: levels
-  }
-}
-interface Event {
-  id: number;
-  appointment: any;
-  description: string;
-  cityName: string;
-  timeName: string;
-  levelName: string;
-  sportName: string;
-  organizerUserName: string;
-  organizerPhoneNumber: string;
-}
-
-export function useSearch() {
+  // *************  State Hooks *************//
   const [events, setEvents] = useState<Event[]>([]);
-  const [error, setError] = useState<string | undefined>("Votre allié pour trouver des partenaires de sport");
+  const [error, setError] = useState<string | undefined>("Votre allié pour trouver vos partenaires de sport !");
+  // ****************************************//
 
   async function _search(cityId: number, sportId: number, levelId: number, timeId: number): Promise<void> {
     try {
-      const response = await fetch(`http://localhost:8585/event/search/${cityId}/${sportId}/${levelId}/${timeId}`, {
-        method: 'GET',
+      AjaxHelper.fetch(`http://localhost:8585/api/event/search?cityId=${cityId}&sportId=${sportId}&levelId=${levelId}&timeId=${timeId}`,'GET',true,{})
+      .then(function(response){
+        if (response.status !== 200) {
+          throw new Error(response.statusText);
+        }
+        return response.json()
+      })
+      .then(function(results){
+        setEvents(results);
+        if (results.length == 0) {
+          setError("Ooops, visiblement vous êtes la première personne avec ces besoins. Mais ce est pas grave, vous pouvez organiser un événement, si vous le souhaitez!");
+        }
+        else {
+          setError(undefined);
+        }
       });
-      if (response.status !== 200) throw new Error(response.statusText);
-      const results = await response.json();
-
-      setEvents(results);
-      if (results.length == 0) {
-        setError("Ooops, visiblement vous êtes la première personne avec ces besoins. Mais ce est pas grave, vous pouvez organiser un événement, si vous le souhaitez!");
-      }
-      else {
-        setError(undefined);
-      }
-
     } catch (err) {
       setEvents([]);
       setError(err.message)
     }
   }
-
+  // search : returns a function _search defined in hook
+  // events : contains a list of events
+  // error : contains errors (eventually populated in _search function)
   return {
     search: (cityId: number, sportId: number, levelId: number, timeId: number) => _search(cityId, sportId, levelId, timeId),
     events,
     error,
   }
 }
+/////////////////////////////
 
-interface SearchParams {
+
+
+
+type SearchParams = {
   city: number;
   time: number;
   level: number;
   sport: number;
 }
 
-
+//React Component
 const SearchBar: FunctionComponent<{}> = () => {
 
+  //****************************   Custom Hooks ********************************//
+
+  // hook Search
   const { search, events, error } = useSearch();
+
+  // hook option
   const { sportOptions, cityOptions, timeOptions, levelOptions } = useOptions();
 
-
-
-  //react hook form
+  // React Hook Form
   const { register, setValue, handleSubmit, errors } = useForm<SearchParams>();
+
+  //****************************************************************************//
+
+
+  //**************************** Event Handlers ********************************//
+
+
+  //handle form submission
   const onSubmit = handleSubmit(({ city, time, level, sport }) => {
     search(city, sport, level, time)
   });
+ 
+  //****************************************************************************//
 
-  function handleChange(e: React.FormEvent<HTMLSelectElement>) {
-    console.log(e.currentTarget.value);
-  }
+
+  //****************** React Component returned code ***************************//
 
   return (
     <>
       <div>
         <Jumbotron className="mt-5">
-          <form className="container -xl" onSubmit={onSubmit}>
+          <form className="container -xl" onSubmit={onSubmit}>{/* subscribe function handleSubmit() referenced by const onSubmit (Event Handlers) to submit event*/}
             <div className="row">
 
               <div className="col-sm text-center" >
+                {/* sportOptions reference options list defined by UseOptions Hook */}
+                {/* register reference register function defined by UseForm Hook */}
                 <Select name="sport" label="Sport" options={sportOptions} register={register} />
-
               </div>
+
               <div className="col-sm text-center">
+                {/* cityOptions reference options list defined by UseOptions Hook */}
+                {/* register reference register function defined by UseForm Hook */}
                 <Select name="city" label="Ville" options={cityOptions} register={register} />
-
               </div>
+
               <div className="col-sm text-center">
+                {/* levelOptions reference options list defined by UseOptions Hook */}
+                {/* register reference register function defined by UseForm Hook */}
                 <Select name="level" label="Niveau" options={levelOptions} register={register} />
-
               </div>
+
               <div className="col-sm text-center">
+                {/* timeOptions reference options list defined by UseOptions Hook */}
+                {/* register reference register function defined by UseForm Hook */}
                 <Select name="time" label="Créneau" options={timeOptions} register={register} />
-
               </div>
-
 
               <div className="col-sm text-center ">
                 <Button type="submit" color="secondary">Recherche</Button>{' '}
@@ -145,20 +131,19 @@ const SearchBar: FunctionComponent<{}> = () => {
       <div>
 
         <Jumbotron fluid className="alert-light results container" id="resultContainer">
-          {events.length?events.map((event) => {
-            return (<Result event={event} />)
-
-          }):
-        
-         <h2 id="defaultMessage">{error}</h2>
-        }
+          {/* events contains list of events found by useSearch Custom Hook*/}
+          {/* [TRUE|FALSE]? (then) : (else) */}
+          {events.length ? events.map((event) => {
+            return (<Event event={event} />)
+          }) :
+            <h2 id="defaultMessage">{error}</h2>
+          }
         </Jumbotron>
       </div>
     </>
   );
+  //****************************************************************************//
 };
-
-
 
 export default SearchBar;
 

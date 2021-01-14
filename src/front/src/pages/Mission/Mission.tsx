@@ -9,19 +9,20 @@ import {
       
       const items = [
         {
-          src: 'https://d19m59y37dris4.cloudfront.net/sell/1-4/img/united-kingdom.svg',
-          altText: 'english',
-          caption: 'Slide 1'
+          src: '/caroussel1.jpg',
+          altText: '',
+          caption: 'Avez-vous envie de dépasser vos limites ?'
         },
         {
-          src: 'https://d19m59y37dris4.cloudfront.net/sell/1-4/img/france.svg',
+          src: '/caroussel2.jpeg',
+         
           altText: 'french',
-          caption: 'Slide 2'
+          caption: 'Avez-vous envie de bien s\'amuser avec vos collègues ?'
         },
         {
-          src: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tousvoisins.fr%2Fdecines-charpieu%2Fgymnase-stade&psig=AOvVaw2DSiS5dKRFdEcu3loqSSbM&ust=1605907937881000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLCBkrXHj-0CFQAAAAAdAAAAABAJ',
-          altText: 'Slide 3',
-          caption: 'Slide 3'
+          src: '/caroussel3.jpg',
+          altText: 'aaa',
+          caption: 'Ou les 2 ? ... Pourquoi pas ! ;) '
         }
       ];
       
@@ -54,12 +55,13 @@ import {
               key={item.src}
             >
               <img src={item.src} alt={item.altText} />
-              <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
+              <CarouselCaption captionText={""} captionHeader={item.caption} />
             </CarouselItem>
           );
         });
       
         return (
+          <>
           <Carousel
             activeIndex={activeIndex}
             next={next}
@@ -70,6 +72,25 @@ import {
             <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
             <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
           </Carousel>
+        
+        <div id="mission">
+        Bienvenue chez Free-Sport-Camp!<br/><br/>
+
+        Faire du sport est essentiel pour notre santé physique et mentale, pour se sentir bien au quotidien, 
+        mais beaucoup de personnes ne trouvent pas la motivation de les pratiquer seul.<br/>
+
+        Vous venez de découvrir une application gratuite, qui facilite la mise en relation entre collègues souhaitant pratiquer une activité sportive de n'importe quelle niveau.
+
+        Selon votre emploi du temps, pour matin, midi ou soir, vous pouvez
+
+        chercher / proposer un activité pour s'amuser avec vos collègues à côté de votre bureau, organiser des compétitions "maison", ou aller plus loin et se préparer ensemble aux compétitions plus ambitieuses (comme le marathon, par exemple ;)
+        seulement en quelque clics.<br/>
+
+        Selon vos centres d’intérêts sportif, vos objectifs et votre disponibilité, il devient plus facile !<br/>
+        C’EST DONC L’APPLICATION IDÉALE POUR UN SPORTIF OCCASIONNEL, QUI A SOUVENT DU MAL À SE MOTIVER À BOUGER D SON FOTEUIL. 
+        </div>
+        </>
+
         );
       }
       

@@ -37,6 +37,55 @@
   }
 }
 
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.logo {
+  width : 200px;
+}
+
+.select{
+  min-width:150px;
+}
+
+
+#main_menu .alert-link:hover{
+color: orangered;
+}
+
+#sub_menu .list-group-item-action:hover{
+  color: orangered;
+}
+
+
+#defaultMessage, #mission{
+  text-align: center;
+  font-family: 'Cambria', Cochin, Georgia, Times, Times New Roman, serif;
+}
+
+.results{
+  min-height: 300px;
+}
+
+.menu_color{
+  color:#212529;
+}
+.pointer{
+  cursor: pointer;
+}
+
 .error{
   color: red;
 }
@@ -52,4 +101,51 @@
 
 #labelId{
   margin-top: 30px;
+}
+
+#mission{
+font-size: large;
+font-weight: 600;
+margin: 3% 8%;
+}
+
+#bonjour{
+  font-weight: 800;
+  font-size: large;
+  color: brown;
+}
+
+.navtuning{
+  width: 20%;
+  display: inline-block;
+}
+.navborder{
+  border:1px solid #000;
+  border-radius: 3px;
+  margin-right: 10px;
+  text-align: center;
+}
+
+@media (max-width: 564px){
+  #account{
+    margin-top:18px;
+  }
+}
+@media (max-width: 768px){
+  #account{
+    margin-right:80px;
+  }
+}
+#account{
+  position: absolute;
+  top:0;
+  right:0;
+  margin-top:32px;
+  margin-right:10px;
+}
+
+@media (max-width:1132px){
+  #bonjour{
+    display: none;
+  }
 }

@@ -9,16 +9,17 @@ import ScrollToTop from './components/ScrollToTop';
 
 // import ErrorBoundary from './components/ErrorBoundary';
 import AppLayout from './components/AppLayout';
-import SearchBar from './components/SearchBar'
+
  
 import './App.css';
-// import Search from './pages/Mission';
+
 import Search from './pages/Search';
 import Inscription from './pages/Inscription';
 import Connection from './pages/Connection';
 import Mission from './pages/Mission';
+import Activities from './pages/Activities';
 
-import Creation from './pages/Creation';
+import EventCreator from './pages/EventCreator';
 import Account from './pages/Account';
 
 //const GettingStarted = React.lazy(() => import('./pages/GettingStarted'));
@@ -38,9 +39,10 @@ const App: React.FunctionComponent<{}> = () => {
           <Switch>
           <Route exact={true} path="/search" component={Search} />
           <Route exact={true} path="/inscription" component={Inscription} />
+          <Route exact={true} path="/activities" component={Activities} />
           <Route exact={true} path="/connection" component={Connection} />
-          <Route exact={true} path="/ad" component={Creation} />
-          <Route exact={true} path="/mission" component={Mission} />
+          <Route exact={true} path="/ad" component={EventCreator} />
+          <Route exact={true} path="/" component={Mission} />
           <Route exact={true} path="/account" component={Account} />
           </Switch>
           </ScrollToTop>
