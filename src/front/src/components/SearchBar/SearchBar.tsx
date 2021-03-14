@@ -1,54 +1,11 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { FunctionComponent} from 'react';
 import { Jumbotron, Button } from 'reactstrap';
 import { useForm } from "react-hook-form";
 import Select from '../../components/Select';
-import Event from '../../components/Event';
+import EventView from '../../components/Event';
 import useOptions from '../../components/Options';
-import UserHelper from '../UserHelper';
-import AjaxHelper from '../AjaxHelper';
-
-// Custom Hook
-function useSearch() {
-
-  // *************  State Hooks *************//
-  const [events, setEvents] = useState<Event[]>([]);
-  const [error, setError] = useState<string | undefined>("Votre allié pour trouver vos partenaires de sport !");
-  // ****************************************//
-
-  async function _search(cityId: number, sportId: number, levelId: number, timeId: number): Promise<void> {
-    try {
-      AjaxHelper.fetch(`http://localhost:8585/api/event/search?cityId=${cityId}&sportId=${sportId}&levelId=${levelId}&timeId=${timeId}`,'GET',true,{})
-      .then(function(response){
-        if (response.status !== 200) {
-          throw new Error(response.statusText);
-        }
-        return response.json()
-      })
-      .then(function(results){
-        setEvents(results);
-        if (results.length == 0) {
-          setError("Ooops, visiblement vous êtes la première personne avec ces besoins. Mais ce est pas grave, vous pouvez organiser un événement, si vous le souhaitez!");
-        }
-        else {
-          setError(undefined);
-        }
-      });
-    } catch (err) {
-      setEvents([]);
-      setError(err.message)
-    }
-  }
-  // search : returns a function _search defined in hook
-  // events : contains a list of events
-  // error : contains errors (eventually populated in _search function)
-  return {
-    search: (cityId: number, sportId: number, levelId: number, timeId: number) => _search(cityId, sportId, levelId, timeId),
-    events,
-    error,
-  }
-}
-/////////////////////////////
-
+import useSearch from '../../components/Search';
+import Paging from '../Paging';
 
 
 
@@ -65,14 +22,16 @@ const SearchBar: FunctionComponent<{}> = () => {
   //****************************   Custom Hooks ********************************//
 
   // hook Search
-  const { search, events, error } = useSearch();
+  const { search, events, total, currentPage, error } = useSearch();
 
   // hook option
   const { sportOptions, cityOptions, timeOptions, levelOptions } = useOptions();
 
   // React Hook Form
-  const { register, setValue, handleSubmit, errors } = useForm<SearchParams>();
+  const { register, watch, handleSubmit, errors } = useForm<SearchParams>();
 
+
+  const pageSize = 2;
   //****************************************************************************//
 
 
@@ -81,7 +40,8 @@ const SearchBar: FunctionComponent<{}> = () => {
 
   //handle form submission
   const onSubmit = handleSubmit(({ city, time, level, sport }) => {
-    search(city, sport, level, time)
+    console.log(city);
+    search(city, sport, level, time, 0, pageSize);
   });
  
   //****************************************************************************//
@@ -129,15 +89,20 @@ const SearchBar: FunctionComponent<{}> = () => {
       </div>
 
       <div>
-
         <Jumbotron fluid className="alert-light results container" id="resultContainer">
           {/* events contains list of events found by useSearch Custom Hook*/}
           {/* [TRUE|FALSE]? (then) : (else) */}
           {events.length ? events.map((event) => {
-            return (<Event event={event} />)
-          }) :
+            return (<EventView key={event.id} event={event} />)
+          })  :
             <h2 id="defaultMessage">{error}</h2>
           }
+          
+            
+              <Paging totalCount={total} pageSize={pageSize} currentPage={currentPage} handleClick={(pageNumber:number)=>{search(watch("city"), watch("sport"), watch("level"), watch("time"), pageNumber, pageSize);}} scrollTo="#resultContainer" />
+            
+          
+          
         </Jumbotron>
       </div>
     </>

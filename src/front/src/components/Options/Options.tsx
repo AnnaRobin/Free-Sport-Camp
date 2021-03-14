@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import AjaxHelper from '../AjaxHelper';
-interface Option {
-    id: number;
-    name: string;
+import {Option, EventService} from '../../services/event.service';
+
+interface OptionAdapter {
+    value:number,
+    label:string
 }
 
 export default function useOptions() {
@@ -10,20 +11,18 @@ export default function useOptions() {
     const [cities, setCities] = useState<Option[]>([]);
     const [times, setTimes] = useState<Option[]>([]);
     const [levels, setLevels] = useState<Option[]>([]);
-
-
+    const eventService = new EventService();
+    
+    async function _getOptions(){
+        const results = await eventService.getOptions();
+        setSports(results.sports);
+        setCities(results.cities);
+        setTimes(results.times);
+        setLevels(results.levels);
+    }
 
     useEffect(() => {
-        AjaxHelper.fetch('http://localhost:8585/api/event/options','GET',true,{})
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            setSports(data['sports']);
-            setCities(data['cities']);
-            setTimes(data['times']);
-            setLevels(data['levels']);
-        })
+        _getOptions();
     }, [])
 
     return {

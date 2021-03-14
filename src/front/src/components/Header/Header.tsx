@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import Logout from './../Logout';
-import UserHelper from '../UserHelper';
+import { Link } from 'react-router-dom';
+import UserHelper from '../../helpers/UserHelper';
 import Account from '../Account';
 
 import {
@@ -39,37 +39,41 @@ const Header: FunctionComponent<{}> = () => {
     <Container className="themed-container p-0" fluid={true}>
 
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">
+        <NavbarBrand tag={Link} to="/">
           <img src={logo} alt="Logo Free Sport Camp" className="d-none d-sm-block logo" />
           <img src={logo_mobile} alt="Logo Free Sport Camp" className="d-block d-sm-none" />
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar id="main_menu">
-
+            {!userName &&
             <NavItem>
-              <NavLink className="font-weight-bolder alert-link color='primary' pointer" href="/" >Notre mission</NavLink>
+              <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/" >Notre mission</NavLink>
             </NavItem>
+            }
             <NavItem>
-              <NavLink className="font-weight-bolder alert-link color='primary'pointer" href="/search" >Trouvez vos partenaires</NavLink>
-            </NavItem>
-
-            <NavItem>
-              <NavLink className="font-weight-bolder alert-link color='primary' pointer" href="/ad">Publiez vos annonces</NavLink>
+              <NavLink tag={Link} className="font-weight-bolder alert-link color='primary'pointer" to="/search" >Trouvez vos partenaires</NavLink>
             </NavItem>
 
             <NavItem>
-              <NavLink className="font-weight-bolder alert-link color='primary' pointer" href="/account" >Compte </NavLink>
+              <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/event/create">Publiez vos annonces</NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/account" >Compte </NavLink>
             </NavItem>
 
             {!userName &&
               <NavItem>
-                <NavLink className="font-weight-bolder alert-link color='primary' pointer" href="/connection">Connexion </NavLink>
+                <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/connection">Connexion </NavLink>
               </NavItem>}
             {userName &&
             <NavItem>
-              <NavLink className="font-weight-bolder alert-link color='primary' pointer" href="/activities">Mes Activités </NavLink>
+              <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/activities">Mes Activités </NavLink>
             </NavItem>}
+            <NavItem>
+              <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/publications">Mes Publications </NavLink>
+            </NavItem>
           </Nav>
 
           

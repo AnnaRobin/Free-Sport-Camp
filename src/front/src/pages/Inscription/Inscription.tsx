@@ -81,7 +81,7 @@ const Inscription: FunctionComponent<{}> = () => {
               defaultValue=""
               as={<Input type="text" name="fullName" id="fullName" placeholder="Prénom Nom" className="shadow p-3 mb-5 bg-white rounded" />}
             />
-            {errors.name && errors.name.message != '' && <p className="error">{errors.name.message}</p>}
+            {errors.name && errors.name.message !== '' && <p className="error">{errors.name.message}</p>}
           </FormGroup>
           <FormGroup>
             <Label for="userName" className="font-weight-bold">Nom d'utilisateur *</Label>
@@ -92,7 +92,7 @@ const Inscription: FunctionComponent<{}> = () => {
               defaultValue=""
               as={<Input type="text" id="userName" placeholder="Soyez créatifs ! ;)" className="shadow p-3 mb-5 bg-white rounded" />}
             />
-            {errors.userName && errors.userName.message != '' && <p className="error">{errors.userName.message}</p>}
+            {errors.userName && errors.userName.message !== '' && <p className="error">{errors.userName.message}</p>}
           </FormGroup>
           <FormGroup>
             <Label for="email" className="font-weight-bold">Email *</Label>
@@ -109,7 +109,7 @@ const Inscription: FunctionComponent<{}> = () => {
               defaultValue=""
               as={<Input type="email" name="email" id="email" placeholder="Faites attention au format !" className="shadow p-3 mb-5 bg-white rounded" />}
             />
-            {errors.email && errors.email.message != '' && <p className="error">{errors.email.message}</p>}
+            {errors.email && errors.email.message !== '' && <p className="error">{errors.email.message}</p>}
           </FormGroup>
           <FormGroup>
             <Label for="password" className="font-weight-bold">Mot de passe *</Label>
@@ -120,7 +120,7 @@ const Inscription: FunctionComponent<{}> = () => {
               defaultValue=""
               as={<Input type="password" id="password" placeholder="Le mot de passe doit contenir au moins 5 caractères !" className="shadow p-3 mb-5 bg-white rounded" />}
             />
-            {errors.password && errors.password.message != '' && <p className="error">{errors.password.message}</p>}
+            {errors.password && errors.password.message !== '' && <p className="error">{errors.password.message}</p>}
           </FormGroup>
           <FormGroup>
             <Label for="confirmation" className="font-weight-bold">Confirmation de mot de passe *</Label>
@@ -140,7 +140,7 @@ const Inscription: FunctionComponent<{}> = () => {
               defaultValue=""
               as={<Input type="password" id="confirmation" placeholder="Confirmez votre mot de passe !" className="shadow p-3 mb-5 bg-white rounded" />}
             />
-            {errors.confirmation && errors.confirmation.message != '' && <p className="error">{errors.confirmation.message}</p>}
+            {errors.confirmation && errors.confirmation.message !== '' && <p className="error">{errors.confirmation.message}</p>}
 
           </FormGroup>
 

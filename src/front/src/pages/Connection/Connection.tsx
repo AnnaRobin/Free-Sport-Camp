@@ -1,10 +1,8 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Button, Form, FormGroup, Label, Input, Container } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Container,Alert } from 'reactstrap';
 import { useForm, Controller } from "react-hook-form";
-import { access } from 'fs';
-import { AsyncLocalStorage } from 'async_hooks';
-import UserHelper from '../../components/UserHelper';
-import AjaxHelper from '../../components/AjaxHelper';
+import UserHelper from '../../helpers/UserHelper';
+import AjaxHelper from '../../helpers/AjaxHelper';
 type Inputs = {
   client_id: any,
   grant_type: any,
@@ -13,7 +11,7 @@ type Inputs = {
 };
 
 const Connection: FunctionComponent<{}> = () => {
-  const [submitStatus, setSubmitStatus] = useState<any | undefined>(undefined);
+  const [submitStatus, setSubmitStatus] = useState<Error | undefined>(undefined);
   const { register, control, handleSubmit, errors } = useForm<Inputs>({
     mode: "onBlur"
   });
@@ -31,12 +29,11 @@ const Connection: FunctionComponent<{}> = () => {
       + "&grant_type=" + data.grant_type)
       .then(function (response) {
         if (response.ok) {
-
-          // setSubmitStatus({ status: 'success', message: "" })
+          setSubmitStatus(undefined);
           return response.json();
         }
         else {
-          setSubmitStatus({ status: 'error', message: ' !' });
+          throw new Error("erreur d'authentification");
         }
 
       })
@@ -44,6 +41,9 @@ const Connection: FunctionComponent<{}> = () => {
         const token = json.access_token;
         UserHelper.connect(token);
         window.location.href = "/search";
+      })
+      .catch(error => {
+        setSubmitStatus(error);
       });
   }
 
@@ -52,6 +52,7 @@ const Connection: FunctionComponent<{}> = () => {
     <Container className="mt-5">
       <Form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
         <h5 className="text-right mt-5 pt-5" >Vous n'avez pas encore de compte? <a href="/inscription">Inscrivez-vous !</a></h5>
+        {submitStatus && <Alert color="danger">{submitStatus.message}</Alert>}
         <FormGroup>
           <input type="hidden" name="client_id" value="my-client-app" id="clientId" ref={register} />
           <input type="hidden" name="grant_type" value="password" id="grantType" ref={register} />

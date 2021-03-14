@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import UserHelper from '../UserHelper';
+import UserHelper from '../../helpers/UserHelper';
 
 type LogoutProps = {
     className: string,

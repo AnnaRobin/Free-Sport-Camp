@@ -1,8 +1,7 @@
 
 import React, { FunctionComponent, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavLink } from 'reactstrap';
-import UserHelper from '../UserHelper'
 import Logout from '../Logout';
 
 const Account: FunctionComponent<{userName : string}> = ({userName}) => {
@@ -27,9 +26,9 @@ const Account: FunctionComponent<{userName : string}> = ({userName}) => {
       </DropdownToggle>
             <DropdownMenu className="mt-3">
             
-                <NavLink className="font-weight-bolder alert-link color='primary' menu_color pointer" href="/profile" >Mon profil</NavLink>
+                <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' menu_color pointer" to="/profile" >Mon profil</NavLink>
 
-                <NavLink className="font-weight-bolder alert-link color='primary' menu_color pointer" href="/password_change" >Mot de passe</NavLink>
+                <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' menu_color pointer" to="/password_change" >Mot de passe</NavLink>
                 <Logout className="font-weight-bolder alert-link color='primary' nav-link pointer" text="Deconnexion" />
             </DropdownMenu>
             <span id="bonjour" className="ml-3">Bonjour {userName} !</span>  

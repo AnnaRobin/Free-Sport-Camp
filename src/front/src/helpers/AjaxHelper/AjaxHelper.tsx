@@ -8,12 +8,12 @@ class AjaxHelper{
 
     static fetch(url:string,method:string,auth:boolean,headers?:Dictionary<string>,body?:string):Promise<Response>{
         let options:Dictionary<any> = {};
-        if(headers == undefined){
+        if(headers === undefined){
             headers = {};
         }
-        if(body == undefined){
-            body = '';
-        }
+        // if(body === undefined){
+        //     body = '';
+        // }
         if(auth){
             headers['Authorization'] = 'Bearer ' + UserHelper.getToken()
         }
@@ -27,7 +27,7 @@ class AjaxHelper{
                     options
                     )
                     .then(function (response){
-                        if(auth && response.status == 401){
+                        if(auth && response.status === 401){
                             UserHelper.disconnect();
                             window.location.replace('/connection');
                         }

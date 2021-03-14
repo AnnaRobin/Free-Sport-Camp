@@ -1,2 +1,2 @@
-import Event from './Event'
-export default Event;
+import EventView from './View'
+export default EventView;

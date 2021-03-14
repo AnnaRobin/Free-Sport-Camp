@@ -18,9 +18,13 @@ import Inscription from './pages/Inscription';
 import Connection from './pages/Connection';
 import Mission from './pages/Mission';
 import Activities from './pages/Activities';
-
-import EventCreator from './pages/EventCreator';
+import Publications from './pages/Publications'
+import Create from './pages/Event';
+import Edit from './pages/Event/Edit';
 import Account from './pages/Account';
+import {View}  from './pages/Profile/View';
+import {Edit as ProfileEdit}  from './pages/Profile/Edit';
+import {Public}  from './pages/Profile/Public';
 
 //const GettingStarted = React.lazy(() => import('./pages/GettingStarted'));
 //const NotFound = lazy(() => import('./pages/NotFound'));
@@ -28,35 +32,32 @@ import Account from './pages/Account';
 
 const App: React.FunctionComponent<{}> = () => {
   return (
+    <BrowserRouter>
       <AppLayout
         header={<Header />}
-
-
-        content={
-         
-        <BrowserRouter>
+        content={       
          <ScrollToTop>
           <Switch>
           <Route exact={true} path="/search" component={Search} />
           <Route exact={true} path="/inscription" component={Inscription} />
           <Route exact={true} path="/activities" component={Activities} />
+          <Route exact={true} path="/publications" component={Publications} />
           <Route exact={true} path="/connection" component={Connection} />
-          <Route exact={true} path="/ad" component={EventCreator} />
+          <Route exact={true} path="/event/create" component={Create} />
+          <Route exact={true} path="/event/edit/:eventId" component={Edit} />
           <Route exact={true} path="/" component={Mission} />
           <Route exact={true} path="/account" component={Account} />
+          <Route exact={true} path="/profile" component={View} />
+          <Route exact={true} path="/profile/edit" component={ProfileEdit} />
+          <Route exact={true} path="/profile/:userId" component={Public} />
           </Switch>
           </ScrollToTop>
-          </BrowserRouter>
-          
-        }
-     
-    
+        }   
         footer={<MiniFooter />}
-      />
-    
+      />  
+      </BrowserRouter> 
   );
 };
-
 export default App;
 
 

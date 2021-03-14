@@ -1,18 +1,15 @@
 .App {
   text-align: center;
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -23,11 +20,9 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
 .App-link {
   color: #61dafb;
 }
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,8 +31,6 @@
     transform: rotate(360deg);
   }
 }
-
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -46,75 +39,58 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
 .logo {
   width : 200px;
 }
-
 .select{
   min-width:150px;
 }
-
-
 #main_menu .alert-link:hover{
 color: orangered;
 }
-
 #sub_menu .list-group-item-action:hover{
   color: orangered;
 }
-
-
 #defaultMessage, #mission{
   text-align: center;
   font-family: 'Cambria', Cochin, Georgia, Times, Times New Roman, serif;
 }
-
 .results{
   min-height: 300px;
 }
-
 .menu_color{
   color:#212529;
 }
 .pointer{
   cursor: pointer;
 }
-
 .error{
   color: red;
 }
-
 .error::before {
   display: inline;
   content: "⚠ ";
 }
-
 #checkbox{
   margin-top: 35px;
 }
-
 #labelId{
   margin-top: 30px;
 }
-
 #mission{
 font-size: large;
 font-weight: 600;
 margin: 3% 8%;
 }
-
 #bonjour{
   font-weight: 800;
   font-size: large;
   color: brown;
 }
-
 .navtuning{
   width: 20%;
   display: inline-block;
@@ -125,7 +101,6 @@ margin: 3% 8%;
   margin-right: 10px;
   text-align: center;
 }
-
 @media (max-width: 564px){
   #account{
     margin-top:18px;
@@ -143,7 +118,6 @@ margin: 3% 8%;
   margin-top:32px;
   margin-right:10px;
 }
-
 @media (max-width:1132px){
   #bonjour{
     display: none;

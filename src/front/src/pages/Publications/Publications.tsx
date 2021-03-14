@@ -1,18 +1,18 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent, useEffect, useState} from 'react';
 import { Jumbotron } from 'reactstrap';
-import Paging from '../../components/Paging';
 import EventView from '../../components/Event';
 import useSearch from '../../components/Search';
+import Paging from '../../components/Paging';
 
 
-const Activities: FunctionComponent<{}> = () => {
+const Publications: FunctionComponent<{}> = () => {
   
     // hook Search
-    const { getSubscribed, events, total, currentPage, error } = useSearch();
-    const pageSize = 2;
+    const { getCreated, events, total, currentPage, error } = useSearch();
+    const pageSize = 10;
   
     useEffect(() => {
-      getSubscribed(0, pageSize);
+      getCreated(0, pageSize);
     }, [])
     return (
       <>
@@ -24,7 +24,7 @@ const Activities: FunctionComponent<{}> = () => {
           }) :
             <h2 id="defaultMessage">{error}</h2>
           }
-          <Paging totalCount={total} pageSize={pageSize} currentPage={currentPage} handleClick={(pageNumber:number)=>{getSubscribed(pageNumber, pageSize);}} scrollTo="#resultContainer" />
+          <Paging totalCount={total} pageSize={pageSize} currentPage={currentPage} handleClick={(pageNumber:number)=>{getCreated(pageNumber, pageSize);}} scrollTo="#resultContainer" />
         </Jumbotron>
       
     </>
@@ -32,4 +32,4 @@ const Activities: FunctionComponent<{}> = () => {
         
   }
   
-  export default Activities;
+  export default Publications;
