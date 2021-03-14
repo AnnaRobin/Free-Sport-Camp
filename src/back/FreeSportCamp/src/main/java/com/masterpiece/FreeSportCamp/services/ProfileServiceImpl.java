@@ -1,0 +1,45 @@
+package com.masterpiece.FreeSportCamp.services;
+
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.masterpiece.FreeSportCamp.config.SecurityHelper;
+import com.masterpiece.FreeSportCamp.dtos.ProfileDto;
+import com.masterpiece.FreeSportCamp.dtos.ProfileViewDto;
+import com.masterpiece.FreeSportCamp.dtos.PublicProfileViewDto;
+import com.masterpiece.FreeSportCamp.entities.City;
+import com.masterpiece.FreeSportCamp.entities.User;
+import com.masterpiece.FreeSportCamp.repositories.UserRepository;
+
+@Service
+public class ProfileServiceImpl implements ProfileService {
+
+	private final UserRepository userRepository;
+	
+    protected ProfileServiceImpl(UserRepository userRepository) {
+    	this.userRepository = userRepository;
+        }
+    
+    public ProfileViewDto get() {
+    	return userRepository.getProfileById(SecurityHelper.getUserId());
+    }
+    
+    public PublicProfileViewDto getPublic(Long id) {
+    	return userRepository.getPublicProfileById(id);
+    }
+	public void update(ProfileDto dto) {
+		Optional<User> optional = this.userRepository.findById(SecurityHelper.getUserId());
+		if(optional.isEmpty()) {
+			throw new NullPointerException();
+		}
+		else {
+			User user = optional.get();
+			user.setCity(new City(dto.getCityId()));
+			user.setPresentation(dto.getPresentation());
+			user.setPhoneNumber(dto.getPhoneNumber());
+			this.userRepository.save(user);
+		}
+		
+	}
+}

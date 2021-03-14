@@ -25,11 +25,7 @@ public class EventCreatorDto {
 	
 	@NotNull
 	private  LocalTime time;
-	
-	@NotBlank
-	@Pattern(regexp = "^33[0-9]{9}$")
-	private String phoneNumber;
-	
+		
 	private String description;
 
 	public Long getSportId() {
@@ -70,14 +66,6 @@ public class EventCreatorDto {
 
 	public void setTime(LocalTime time) {
 		this.time = time;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
 	}
 
 	public String getDescription() {

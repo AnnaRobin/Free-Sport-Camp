@@ -10,7 +10,7 @@ public class Level extends AbstractEntity {
 
 	public Level() {}
 	public Level(Long id) {
-		this.setId(id); 
+		this.setId(id);
 		
 	}
 	
