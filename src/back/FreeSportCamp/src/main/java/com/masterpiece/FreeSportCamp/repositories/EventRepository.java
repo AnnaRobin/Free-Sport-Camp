@@ -33,16 +33,16 @@ public interface EventRepository extends JpaRepository<Event, Long>{
 	@Query("SELECT new com.masterpiece.FreeSportCamp.dtos.EventDto(e.id,e.appointment,e.time,e.sport.name,e.level.name,e.city.name,o.phoneNumber,o.id, o.userName,e.description,me) FROM Event e INNER JOIN e.organizer o LEFT JOIN e.subscribers me WHERE (e.city.id = :cityId) and (e.sport.id = :sportId) and (e.level.id = :levelId) and (e.time <= :maxTime) and (e.time >= :minTime) AND (me IS NULL OR me.id = :userId) ORDER BY e.appointment ASC")
 	List<EventDto> findProjectedBy(@Param("cityId") Long cityId,@Param("sportId") Long sportId, @Param("levelId")Long levelId, @Param("minTime") LocalTime minTime, @Param("maxTime") LocalTime maxTime, @Param("userId") Long userId);
 	
-	@Query("SELECT new com.masterpiece.FreeSportCamp.dtos.EventDto(e.id,e.appointment,e.time,e.sport.name,e.level.name,e.city.name,o.phoneNumber,o.id, o.userName,e.description,me) FROM Event e INNER JOIN e.organizer o LEFT JOIN e.subscribers me WHERE (e.city.id = :cityId) and (e.sport.id = :sportId) and (e.level.id = :levelId) and (e.time <= :maxTime) and (e.time >= :minTime) AND (me IS NULL OR me.id = :userId) ORDER BY e.appointment ASC")
-	Page<EventDto> findProjectedBy(@Param("cityId") Long cityId,@Param("sportId") Long sportId, @Param("levelId")Long levelId, @Param("minTime") LocalTime minTime, @Param("maxTime") LocalTime maxTime, @Param("userId") Long userId, Pageable pageable);
+	@Query("SELECT new com.masterpiece.FreeSportCamp.dtos.EventDto(e.id,e.appointment,e.time,e.sport.name,e.level.name,e.city.name,o.phoneNumber,o.id, o.userName,e.description,me) FROM Event e INNER JOIN e.organizer o LEFT JOIN e.subscribers me WHERE (e.city.id = :cityId) and (e.sport.id = :sportId) and (e.level.id = :levelId) and (e.time <= :maxTime) and (e.time >= :minTime) AND (e.appointment >= :minDate) AND (me IS NULL OR me.id = :userId) ORDER BY e.appointment ASC")
+	Page<EventDto> findProjectedBy(@Param("minDate") LocalDate minDate, @Param("cityId") Long cityId,@Param("sportId") Long sportId, @Param("levelId")Long levelId, @Param("minTime") LocalTime minTime, @Param("maxTime") LocalTime maxTime, @Param("userId") Long userId, Pageable pageable);
 	
-	@Query("SELECT new com.masterpiece.FreeSportCamp.dtos.EventDto(e.id,e.appointment,e.time,e.sport.name,e.level.name,e.city.name,o.phoneNumber,o.id,o.userName,e.description,me) FROM Event e INNER JOIN e.organizer o INNER JOIN e.subscribers me WHERE (me.id = :userId) ORDER BY e.appointment ASC")
+	@Query("SELECT new com.masterpiece.FreeSportCamp.dtos.EventDto(e.id,e.appointment,e.time,e.sport.name,e.level.name,e.city.name,o.phoneNumber,o.id,o.userName,e.description,me) FROM Event e INNER JOIN e.organizer o INNER JOIN e.subscribers me WHERE (me.id = :userId) ORDER BY e.appointment DESC")
 	List<EventDto> findSubscribedBy(@Param("userId") Long userId);
 	
-	@Query("SELECT new com.masterpiece.FreeSportCamp.dtos.EventDto(e.id,e.appointment,e.time,e.sport.name,e.level.name,e.city.name,o.phoneNumber,o.id,o.userName,e.description,me) FROM Event e INNER JOIN e.organizer o INNER JOIN e.subscribers me WHERE (me.id = :userId) ORDER BY e.appointment ASC")
+	@Query("SELECT new com.masterpiece.FreeSportCamp.dtos.EventDto(e.id,e.appointment,e.time,e.sport.name,e.level.name,e.city.name,o.phoneNumber,o.id,o.userName,e.description,me) FROM Event e INNER JOIN e.organizer o INNER JOIN e.subscribers me WHERE (me.id = :userId) ORDER BY e.appointment DESC")
 	Page<EventDto> findSubscribedBy(@Param("userId") Long userId, Pageable pageable);
 	
-	@Query("SELECT new com.masterpiece.FreeSportCamp.dtos.EventDto(e.id,e.appointment,e.time,e.sport.name,e.level.name,e.city.name,o.phoneNumber,o.id,o.userName,e.description, o) FROM Event e INNER JOIN e.organizer o WHERE (o.id = :userId) ORDER BY e.appointment ASC")
+	@Query("SELECT new com.masterpiece.FreeSportCamp.dtos.EventDto(e.id,e.appointment,e.time,e.sport.name,e.level.name,e.city.name,o.phoneNumber,o.id,o.userName,e.description, o) FROM Event e INNER JOIN e.organizer o WHERE (o.id = :userId) ORDER BY e.appointment DESC")
 	Page<EventDto> findCreatedBy(@Param("userId") Long userId, Pageable pageable);
 	
 	List<EventViewDto> findProjectedByCityIdAndSportIdAndLevelIdAndTimeBetween(Long cityId, Long sportId, Long levelId, LocalTime minTime,LocalTime maxTime);

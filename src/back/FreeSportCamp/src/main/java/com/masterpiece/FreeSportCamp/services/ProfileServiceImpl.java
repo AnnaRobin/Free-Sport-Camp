@@ -38,6 +38,20 @@ public class ProfileServiceImpl implements ProfileService {
 			user.setCity(new City(dto.getCityId()));
 			user.setPresentation(dto.getPresentation());
 			user.setPhoneNumber(dto.getPhoneNumber());
+			user.setSex(dto.getSex());
+			user.setBirthdate(dto.getBirthDate());
+			this.userRepository.save(user);
+		}
+		
+	}
+	
+	public void delete() {
+		Optional<User> optional = this.userRepository.findById(SecurityHelper.getUserId());
+		if(optional.isEmpty()) {
+			throw new NullPointerException();
+		}else {
+			User user = optional.get();
+			user.setEnabled(false);
 			this.userRepository.save(user);
 		}
 		

@@ -9,4 +9,5 @@ public interface ProfileService {
 	ProfileViewDto get();
 	PublicProfileViewDto getPublic(Long userId);
 	void update (ProfileDto dto);
+	void delete();
 }

@@ -1,12 +1,14 @@
 package com.masterpiece.FreeSportCamp.entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -18,6 +20,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name="users", indexes = {
@@ -47,9 +50,10 @@ public class User {
 	private String phoneNumber;
     
     @Column(name="birthdate")
-    private LocalDateTime birthdate;
+    private LocalDate birthDate;
     
     @Column(name="sex")
+    @Enumerated(EnumType.STRING)
     private Sex sex;
     
     @Column(name="presentation", length = 500)
@@ -163,12 +167,12 @@ public class User {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public LocalDateTime getBirthdate() {
-		return birthdate;
+	public LocalDate getBirthDate() {
+		return birthDate;
 	}
 
-	public void setBirthdate(LocalDateTime birthdate) {
-		this.birthdate = birthdate;
+	public void setBirthdate(LocalDate birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	public City getCity() {

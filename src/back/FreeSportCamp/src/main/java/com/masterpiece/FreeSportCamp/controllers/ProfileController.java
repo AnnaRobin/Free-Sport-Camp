@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,7 +46,24 @@ public class ProfileController {
 	}
 	
 	@PostMapping("/update")
-	protected void update(@Valid @RequestBody ProfileDto dto) {
-		service.update(dto);
+	protected ResponseEntity update(@Valid @RequestBody ProfileDto dto) {
+		try {
+			service.update(dto);
+			return ResponseEntity.ok().build();
+		}
+		catch(Exception ex){
+			return ResponseEntity.badRequest().build();
+		}
+	}
+	
+	@DeleteMapping("")
+	protected ResponseEntity delete() {
+		try {
+			service.delete();
+			return ResponseEntity.ok().build();
+		}
+		catch(Exception ex){
+			return ResponseEntity.badRequest().build();
+		}
 	}
 }

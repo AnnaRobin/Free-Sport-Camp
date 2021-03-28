@@ -89,7 +89,7 @@ public class EventController {
 		service.subscribe(eventId);
 	}
 
-	@PostMapping("/unsubscribe")
+	@DeleteMapping("/unsubscribe")
 	protected void unsubscribe(@RequestParam("eventId") Long eventId) {
 		service.unsubscribe(eventId);
 	}
@@ -115,5 +115,15 @@ public class EventController {
 			return new ResponseEntity<IdentifierDto>(service.edit(dto), HttpStatus.OK);
 		}
 
+	}
+	@DeleteMapping("/")
+	protected ResponseEntity<Boolean> remove(@RequestParam("id") Long eventId) {
+		if(service.remove(eventId)) {
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
+		}
+		
 	}
 }

@@ -32,6 +32,7 @@ public interface EventService {
 	List<SubscriberViewDto> getSubscribers(Long eventId);
 	IdentifierDto create( EventCreatorDto dto);
 	IdentifierDto edit(EventEditorDto dto);
+	Boolean remove(Long eventId);
 	EventEditorViewDto getForEdition(Long eventId);
 	void subscribe(Long eventId);
 	void unsubscribe(Long eventId);

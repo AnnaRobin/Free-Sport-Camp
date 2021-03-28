@@ -31,8 +31,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		.authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
-		.and().authorizeRequests().antMatchers(HttpMethod.POST, "/api/users").permitAll()
-		.and().authorizeRequests().antMatchers(HttpMethod.POST, "/api/profile/**").permitAll()
+		.and().authorizeRequests().antMatchers(HttpMethod.POST, "/api/user").permitAll()
+		//.and().authorizeRequests().antMatchers(HttpMethod.POST, "/api/profile/**").permitAll()
 		//.and().authorizeRequests().antMatchers("/api/public/**").permitAll().and()
 		// "/api/public/**" for anyone even anonymous
 		//.and().authorizeRequests().antMatchers("/api/event/options").permitAll()
@@ -40,7 +40,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		 * "/api/userInfo", "/api/private/**" for fully authenticated
 		 * (not anonymous)
 		 */
-		.antMatchers("/api/event/**","/api/event/")
+		.antMatchers("/api/event/**","/api/event/","/api/profile/**","/api/user/password")
 		.authenticated();
     }
 

@@ -1,8 +1,10 @@
 package com.masterpiece.FreeSportCamp.services;
 
 import com.masterpiece.FreeSportCamp.config.ResourceNotFoundException;
+import com.masterpiece.FreeSportCamp.config.SecurityHelper;
 import com.masterpiece.FreeSportCamp.config.UserDetails;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.modelmapper.ModelMapper;
@@ -11,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.masterpiece.FreeSportCamp.dtos.PasswordDto;
 import com.masterpiece.FreeSportCamp.dtos.UserAuthDto;
 import com.masterpiece.FreeSportCamp.dtos.UserDto;
 import com.masterpiece.FreeSportCamp.dtos.UserInfoDto;
@@ -62,6 +65,20 @@ public class UserServiceImpl implements UserService {
 		users.save(user);
 	}
 
+	public void update(PasswordDto passwordDto) {
+		Optional<User> optional = users.findById(SecurityHelper.getUserId());
+		if(optional.isEmpty()) {
+			throw new NullPointerException();
+		}
+		User user = optional.get();
+		String raw = passwordDto.getPreviousPassword();
+		if(user.getPassword() != encoder.encode(raw)) {
+			throw new NullPointerException();
+		}
+		user.setPassword(encoder.encode(passwordDto.getPassword()));
+		users.save(user);
+	}
+	
 	@Override
 	public boolean uniqueName(String userName) {
 		return !users.existsByUserName(userName);

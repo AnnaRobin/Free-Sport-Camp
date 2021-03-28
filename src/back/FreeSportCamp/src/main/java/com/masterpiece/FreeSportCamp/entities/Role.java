@@ -9,50 +9,48 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 public class Role {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id", columnDefinition = "INT UNSIGNED")
+	@Column(name = "id", columnDefinition = "INT UNSIGNED")
 	private Long id;
-	
-    @Column(length = 256, nullable = false, unique = true)
-    private String code;
-    
-    @Convert(converter = BooleanConverter.class)
-    @Column(length = 1, nullable = false)
-    private boolean defaultRole = false;
 
+	@Column(length = 256, nullable = false, unique = true)
+	private String code;
 
-	  protected Role() {
-			
-		    }
+	@Convert(converter = BooleanConverter.class)
+	@Column(length = 1, nullable = false)
+	private boolean defaultRole = false;
 
-		    public Role(String code) {
-			setCode(code);
-		    }
+	protected Role() {
 
-		    public Long getId() {
-			return id;
-		    }
+	}
 
-		    public String getCode() {
-			return code;
-		    }
-		    
-			
-		    private void setCode(String code) {
-			this.code = code;
-		    }
+	public Role(String code) {
+		setCode(code);
+	}
 
-		    public boolean isDefaultRole() {
-			return defaultRole;
-		    }
+	public Long getId() {
+		return id;
+	}
 
-		    @Override
-		    public String toString() {
-			return "{id=" + id + ", code=" + code + "}";
-		    }
+	public String getCode() {
+		return code;
+	}
+
+	private void setCode(String code) {
+		this.code = code;
+	}
+
+	public boolean isDefaultRole() {
+		return defaultRole;
+	}
+
+	@Override
+	public String toString() {
+		return "{id=" + id + ", code=" + code + "}";
+	}
 
 }

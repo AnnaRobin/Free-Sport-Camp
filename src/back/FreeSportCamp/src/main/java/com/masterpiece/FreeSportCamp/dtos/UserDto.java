@@ -6,7 +6,6 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 
-
 import com.masterpiece.FreeSportCamp.validation.PwConfirmation;
 import com.masterpiece.FreeSportCamp.validation.UniqueMail;
 import com.masterpiece.FreeSportCamp.validation.UniqueName;
@@ -66,7 +65,4 @@ public class UserDto {
 	public void setConfirmation(String confirmation) {
 		this.confirmation = confirmation;
 	}
-	
-
 }
-	

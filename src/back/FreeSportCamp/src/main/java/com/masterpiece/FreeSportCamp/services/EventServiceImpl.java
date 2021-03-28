@@ -1,5 +1,6 @@
 package com.masterpiece.FreeSportCamp.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,13 +102,11 @@ public class EventServiceImpl  extends AbstractService implements EventService{
  public List<EventDto> getAll(Long cityId, Long sportId, Long levelId, Long timeId){
 	Time time = timeRepository.getById(timeId);
 	return eventRepository.findProjectedBy(cityId, sportId, levelId, time.getMinTime(), time.getMaxTime(),SecurityHelper.getUserId());
-	//List<EventDto> mylist = eventRepository.findProjectedBy(cityId, sportId, levelId, time.getMinTime(), time.getMaxTime(),SecurityHelper.getUserId());
-	//return eventRepository.findProjectedByCityIdAndSportIdAndLevelIdAndTimeBetween(cityId, sportId, levelId, time.getMinTime(), time.getMaxTime()); 
  }
  
  public Page<EventDto> getAll(Long cityId, Long sportId, Long levelId, Long timeId, int page, int size){
 	Time time = timeRepository.getById(timeId);
-	return eventRepository.findProjectedBy(cityId, sportId, levelId, time.getMinTime(), time.getMaxTime(),SecurityHelper.getUserId(),PageRequest.of(page, size));
+	return eventRepository.findProjectedBy(LocalDate.now(), cityId, sportId, levelId, time.getMinTime(), time.getMaxTime(),SecurityHelper.getUserId(),PageRequest.of(page, size));
  }
  
  public List<SubscriberViewDto> getSubscribers(Long eventId){
@@ -134,10 +133,7 @@ public class EventServiceImpl  extends AbstractService implements EventService{
 	 }
  }
  public IdentifierDto create (EventCreatorDto dto) {
-	 /*
-	 Event event = getMapper().map(dto, Event.class);
-	 event.setOrganizer(new User(SecurityHelper.getUserId()));
-	 */
+	 
 	 Event event = new Event();
 	 
 	 event.setAppointment( dto.getAppointment());
@@ -154,12 +150,21 @@ public class EventServiceImpl  extends AbstractService implements EventService{
 		
  };
 
- public IdentifierDto edit (EventEditorDto dto) {
+ public IdentifierDto edit(EventEditorDto dto) {
 	 Event event = getMapper().map(dto, Event.class);
 	 event.setOrganizer(new User(SecurityHelper.getUserId()));
 	 
 	 Event savedEvent = eventRepository.save(event);
 	 return new IdentifierDto(savedEvent.getId());
+ }
+ public Boolean remove(Long eventId) {
+	 Optional<Event> optional = eventRepository.findById(eventId);
+	 if(!optional.isEmpty()) {
+		 Event event = optional.get();
+		 eventRepository.delete(event);
+		 return true;
+	 }
+	 return false;
  }
  public EventEditorViewDto getForEdition(Long eventId) {
 	 return eventRepository.findProjectedById(eventId);

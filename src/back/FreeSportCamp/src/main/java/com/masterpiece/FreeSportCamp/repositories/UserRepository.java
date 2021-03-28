@@ -21,6 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
      * @return a projected view
      */
     Optional<UserAuthDto> findByUserName(String userName);
+    Optional<User> findById(Long id);
 
     /**
      * Retrieves a projected view of the current authenticated
