@@ -1,7 +1,7 @@
 
 import React, { FunctionComponent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavLink } from 'reactstrap';
+import { Dropdown, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap';
 import Logout from '../Logout';
 
 const Account: FunctionComponent<{userName : string}> = ({userName}) => {
@@ -24,11 +24,11 @@ const Account: FunctionComponent<{userName : string}> = ({userName}) => {
         <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
         </svg>
       </DropdownToggle>
-            <DropdownMenu className="mt-3">
+            <DropdownMenu className="mt-3" id="account_menu">
             
                 <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' menu_color pointer" to="/profile" >Mon profil</NavLink>
 
-                <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' menu_color pointer" to="/password_change" >Mot de passe</NavLink>
+                <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' menu_color pointer" to="/password" >Mot de passe</NavLink>
                 <Logout className="font-weight-bolder alert-link color='primary' nav-link pointer" text="Deconnexion" />
             </DropdownMenu>
             <span id="bonjour" className="ml-3">Bonjour {userName} !</span>  

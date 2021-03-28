@@ -9,7 +9,7 @@ const Activities: FunctionComponent<{}> = () => {
   
     // hook Search
     const { getSubscribed, events, total, currentPage, error } = useSearch();
-    const pageSize = 2;
+    const pageSize = 5;
   
     useEffect(() => {
       getSubscribed(0, pageSize);

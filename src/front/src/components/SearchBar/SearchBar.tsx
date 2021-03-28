@@ -31,7 +31,7 @@ const SearchBar: FunctionComponent<{}> = () => {
   const { register, watch, handleSubmit, errors } = useForm<SearchParams>();
 
 
-  const pageSize = 2;
+  const pageSize = 5;
   //****************************************************************************//
 
 

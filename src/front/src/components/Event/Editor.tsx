@@ -4,44 +4,9 @@ import { Controller, useForm } from "react-hook-form";
 import Select from '../../components/Select';
 import useOptions from '../../components/Options';
 import { DevTool } from "@hookform/devtools";
-import {EditorParams, EventService} from '../../services/event.service';
+import {EditorParams} from '../../services/event.service';
 import {useHistory} from 'react-router-dom';
-
-export function useEventEditor() {
-    const [event, setEvent] = useState<EditorParams | null>(null);
-    const [error, setError] = useState<Error | undefined>(undefined);
-    const eventService = new EventService();
-    async function _get(id:number): Promise<void>{
-        try{
-            const results = await eventService.get(id);
-            setEvent(results);
-            if(!results){
-                setEvent(results);
-            }
-        }
-        catch(err){
-            setEvent(null);
-            setError(err);
-        }
-    }
-
-    async function _save(params:EditorParams): Promise<void>{
-        try{
-            await eventService.save(params);
-            setError(undefined);
-        }
-        catch(err){
-            setError(err);
-        }
-    }
-    return {
-        get:(id:number)=> _get(id),
-        save:(params:EditorParams) => _save(params),
-        event,
-        error
-    }
-}
-
+import {useEvent} from './Hook';
 
 
 const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
@@ -49,9 +14,10 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
     const [submitStatus, setSubmitStatus] = useState<any | undefined>({ status: null });
     const { sportOptions, cityOptions, levelOptions } = useOptions();
     const { register, control, handleSubmit, reset, errors, formState: { isSubmitted }, setValue } = useForm<EditorParams>({
-        mode: "onBlur"
+        mode: "onBlur",
+        defaultValues:params
     });
-    const {save, error,get,event} = useEventEditor();
+    const {save, error,get,event} = useEvent();
     const history = useHistory();
     useEffect(()=>{
         //load event as soon as options are loaded
@@ -61,7 +27,8 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
     },[sportOptions, cityOptions, levelOptions])
 
     useEffect(()=>{
-        if(params){
+        //load event as soon as options are loaded
+        if(params && sportOptions.length && cityOptions.length && levelOptions.length){
             setValue('cityId',event?.cityId);
             setValue('sportId',event?.sportId);
             setValue('levelId',event?.levelId);
@@ -72,23 +39,10 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
         }
         
     },[event])
-    /*
+
     useEffect(()=>{
-        if(params){
-            setValue('cityId',params?.cityId);
-            setValue('sportId',params?.sportId);
-            setValue('levelId',params?.levelId);
-            setValue('description', params?.description);
-            setValue('appointment', params?.appointment);
-            setValue('time',params?.time);
-            setValue('id',params?.id);
-        }
-        
-    },[params])
-    */
-    useEffect(()=>{
-        if(submitStatus.status == 'submitted' && error == undefined){
-            history.push("/activities");
+        if(submitStatus.status === 'submitted' && error === undefined){
+            history.push("/publications");
         }
     },[submitStatus])
 
@@ -136,7 +90,7 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
                                     rules={{
                                         required: true
                                     }}
-                                    defaultValue=""
+                                    
                                     as={<Select name="sportId" label="" className="shadow  mb-5 bg-white rounded" options={sportOptions} register={register} />}
                                 />
                                 {errors.sportId && errors.sportId.message != '' && <p className="error">{errors.sportId.message}</p>}
@@ -152,7 +106,6 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
                                     rules={{
                                         required: true
                                     }}
-                                    defaultValue=""
                                     as={<Select name="levelId" label="" className="shadow  mb-5 bg-white rounded" options={levelOptions} register={register} />}
                                 />
                                 {errors.levelId && errors.levelId.message != '' && <p className="error">{errors.levelId.message}</p>}
@@ -170,7 +123,6 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
                                     rules={{
                                         required: true
                                     }}
-                                    defaultValue=""
                                     as={<Select name="cityId" label="" className="shadow  mb-5 bg-white rounded" options={cityOptions} register={register} />}
                                 />
                                 {errors.cityId && errors.cityId.message != '' && <p className="error">{errors.cityId.message}</p>}
@@ -220,7 +172,6 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
                         <Controller
                             name="description"
                             control={control}
-                            defaultValue=""
                             as={<Input type="textarea" name="description" id="description" className="shadow p-3 mb-5 bg-white rounded" />}
                         />
                     </FormGroup>
@@ -230,7 +181,7 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
 
                     <Row>
                         <Col>
-                            <Button disabled={submitStatus.status == "submitting"} type="submit" color="warning" className="shadow-lg p-3 mb-5 bg-white rounded font-weight-bold d-block ml-auto mr-5">Envoyer</Button>
+                            <Button disabled={submitStatus.status === "submitting"} type="submit" color="warning" className="shadow-lg p-3 mb-5 bg-white rounded font-weight-bold d-block ml-auto mr-5">Envoyer</Button>
                         </Col>
                         {!params &&
                         <Col>

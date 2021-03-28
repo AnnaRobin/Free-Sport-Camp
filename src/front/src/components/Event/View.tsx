@@ -1,115 +1,46 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Jumbotron, Row, Col, Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
-import {ProfileView} from '../Profile/Profile';
-import UserHelper from '../../helpers/UserHelper'
-import AjaxHelper from '../../helpers/AjaxHelper';
-import {Event} from '../../services/event.service';
+import { Jumbotron, Row, Col, Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody, ModalFooter, Alert } from 'reactstrap';
+import { ProfileView } from '../Profile/Profile';
+import { Event } from '../../services/event.service';
 import { useHistory } from "react-router-dom";
-
-interface subscriber {
-  id: number;
-  userName: string;
-}
-
-
-
+import {useEvent} from './Hook';
 
 
 const EventView: FunctionComponent<{ event: Event, format?: string }> = ({ event, format }) => {
 
   const [dropdownOpen, setOpen] = useState<boolean>(false);
   const [subscribedStatus, setSubscribedStatus] = useState<boolean>(event.isSubscribed);
-  const [subscribers, setSubscribers] = useState<subscriber[] | null>(null);
   const [displayedSubscriberId, setDisplayedSubscriberId] = useState<number | null>(null);
   const [modal, setModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const history = useHistory();
-  
-  const emptyList = { id: 0, userName: "Personne!" };
+  const {subscribeEvent,getEventSubscribers,subscribers,error,remove}= useEvent();
 
-  const edit = function(){
+  const edit = function () {
     history.push("/event/edit/".concat(String(event.id)));
   }
-  const remove = function(){
-    console.log('delete '.concat(String(event.id)));
+  const removeConfirmation = function () {
+    if(remove(event.id)){
+      setDeleteModal(!deleteModal);
+      //reload page
+      history.go(0);
+    }
   }
-
-  const subscribe = function (subscribe: boolean) {
-    const url = subscribe ? `http://localhost:8585/api/event/subscribe?eventId=${event.id}` : `http://localhost:8585/api/event/unsubscribe?eventId=${event.id}`;
-    //FIXME
-    const method = subscribe ? 'POST' : 'POST';
-    AjaxHelper.fetch(url, method, true)
-      .then(function (response) {
-        if (response.ok) {
-          setSubscribedStatus(subscribe);
-          var name = UserHelper.getName();
-
-
-          if (name == null)
-            return;
-
-          //Dynamicaly add current user to subscribers list
-          if (subscribe) {
-            var users: Array<subscriber> = [];
-            if (subscribers != null && subscribers[0].userName !== emptyList.userName) {
-              users = subscribers;
-            }
-            users.push({ id: -1, userName: name });
-            setSubscribers(users);
-          }
-          else {
-            var users = subscribers || [];
-            //var index = users.indexOf({id:-1,userName:name});
-
-            var index = -1;
-            users.forEach(function (item: subscriber, key: number) {
-              if (item.userName == name) {
-                index = key;
-              }
-            });
-
-            if (index >= 0) {
-              //FIXME
-              users.splice(index, 1);
-              if (users.length == 0) {
-                users.push(emptyList);
-              }
-              setSubscribers(users);
-            }
-          }
-        }
-      })
+  
+  const subscribe = function(subscribe:boolean){
+    if(subscribeEvent(event.id,subscribe)){
+      setSubscribedStatus(subscribe);
+    }
   }
 
 
-  const displaySubscriber = function(subscriberId: number|null){
+  const displaySubscriber = function (subscriberId: number | null) {
     setDisplayedSubscriberId(subscriberId);
     setModal(!modal);
   }
 
   const getSubscribers = function () {
-    if (subscribers == null) {
-
-      AjaxHelper.fetch(`http://localhost:8585/api/event/getSubscribers?eventId=${event.id}`,
-        'GET',
-        true
-      )
-        .then(function (response) {
-          if (response.ok) {
-            return response.json();
-          }
-        })
-        .then(function (json) {
-          if (Array.isArray(json) && json.length > 0) {
-            setSubscribers(json);
-            console.log(subscribers);
-          }
-          else {
-            //add empty information
-            setSubscribers([emptyList]);
-          }
-
-        });
-    }
+    getEventSubscribers(event.id);
     //toggle dropdown
     setOpen(!dropdownOpen);
   }
@@ -117,106 +48,126 @@ const EventView: FunctionComponent<{ event: Event, format?: string }> = ({ event
     case 'subscribed':
       return (
         <>
-        <Jumbotron className="p-1 container shadow-lg p-3 mb-5 bg-white rounded np">
+          <Jumbotron className="p-1 container shadow-lg p-3 mb-5 bg-white rounded np">
 
-          <Row>
-            <Col>
-              <p>Organisateur : {event.organizerUserName}</p>
-              <p>Téléphone : {event.organizerPhoneNumber}</p>
-              <p>à savoir : {event.description}</p>
-            </Col>
-            <Col></Col>
+            <Row>
+              <Col>
+                <p>Organisateur : {event.organizerUserName}</p>
+                <p>Téléphone : {event.organizerPhoneNumber}</p>
+                <p>à savoir : {event.description}</p>
+              </Col>
+              <Col></Col>
 
-            <Col>
-              <p>Quand:{new Intl.DateTimeFormat('fr-FR').format(new Date(event.appointment))} {event.time}</p>
-              <p>Sport : {event.sportName}</p>
-              <ButtonDropdown isOpen={dropdownOpen} toggle={() => getSubscribers()}>
-                <DropdownToggle caret size="sm">
-                  Participants
+              <Col>
+                <p>Quand:{new Intl.DateTimeFormat('fr-FR').format(new Date(event.appointment))} {event.time}</p>
+                <p>Sport : {event.sportName}</p>
+                <ButtonDropdown isOpen={dropdownOpen} toggle={() => getSubscribers()}>
+                  <DropdownToggle caret size="sm">
+                    Participants
                 </DropdownToggle>
 
-                <DropdownMenu>
-                  {subscribers ? subscribers.map((subscriber) => {
-                    return (<DropdownItem onClick={()=>displaySubscriber(subscriber.id)}>{subscriber.userName}</DropdownItem>)
-                  })
-                    : ''
-                  }
-                </DropdownMenu>
+                  <DropdownMenu>
+                    {subscribers.length > 0 ?  subscribers.map((subscriber) => {
+                      return (<DropdownItem onClick={() => displaySubscriber(subscriber.id)}>{subscriber.userName}</DropdownItem>)
+                    })
+                      : <DropdownItem>Personne!</DropdownItem>
+                    }
+                  </DropdownMenu>
 
-              </ButtonDropdown >
+                </ButtonDropdown >
 
-            </Col>
-            <Col></Col>
-            <Col>
-              <p></p>
-              <p></p>
-              {!event.isOwner && subscribedStatus && <Button size="sm" onClick={() => subscribe(false)}>Desinscription</Button>}
-              {!event.isOwner && !subscribedStatus && <Button size="sm" onClick={() => subscribe(true)}>Inscription</Button>}
-              {event.isOwner && <Button size="sm" color="warning" className="mr-3" onClick={()=>edit()}>Modifier</Button>}
-              {event.isOwner && <Button size="sm" color="danger" onClick={()=>remove()}>Supprimer</Button>}
-            </Col>
-          </Row>
-        </Jumbotron>
-        <Modal isOpen={modal} toggle={()=>displaySubscriber(null)}>
+              </Col>
+              <Col></Col>
+              <Col>
+                <p></p>
+                <p></p>
+                {!event.isOwner && subscribedStatus && <Button size="sm" onClick={() => subscribe(false)}>Desinscription</Button>}
+                {!event.isOwner && !subscribedStatus && <Button size="sm" onClick={() => subscribe(true)}>Inscription</Button>}
+                {event.isOwner && <Button size="sm" color="warning" className="mr-3" onClick={() => edit()}>Modifier</Button>}
+                {event.isOwner && <Button size="sm" color="danger" onClick={() => setDeleteModal(!deleteModal)}>Supprimer</Button>}
+              </Col>
+            </Row>
+          </Jumbotron>
+          <Modal isOpen={modal} toggle={() => displaySubscriber(null)}>
             <ModalBody>
               <ProfileView userId={displayedSubscriberId}></ProfileView>
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={()=>displaySubscriber(null)}>Fermer</Button>
+              <Button color="primary" onClick={() => displaySubscriber(null)}>Fermer</Button>
             </ModalFooter>
           </Modal>
+          <Modal isOpen={deleteModal}>
+            <ModalBody>
+              <p>Voulez vous réellement supprimer cet évènement?</p>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" onClick={() => removeConfirmation()}>Supprimer</Button>
+              <Button color="secondary" onClick={() => setDeleteModal(!deleteModal)}>Annuler</Button>
+            </ModalFooter>
+          </Modal>
+          {error && <Alert color="danger">{error.message}</Alert>}
         </>
       )
     default:
       return (
         <>
-        <Jumbotron className="p-1 container shadow-lg p-3 mb-5 bg-white rounded np">
+          <Jumbotron className="p-1 container shadow-lg p-3 mb-5 bg-white rounded np">
 
-          <Row>
-            <Col>
-              <p>Organisateur : {event.organizerUserName}</p>
-              <p>Téléphone : {event.organizerPhoneNumber}</p>
-              <p>à savoir : {event.description}</p>
-            </Col>
-            <Col></Col>
+            <Row>
+              <Col>
+                <p>Organisateur : {event.organizerUserName}</p>
+                <p>Téléphone : {event.organizerPhoneNumber}</p>
+                <p>à savoir : {event.description}</p>
+              </Col>
+              <Col></Col>
 
-            <Col>
-              <p>Quand:{new Intl.DateTimeFormat('fr-FR').format(new Date(event.appointment))} {event.time}</p>
-              <ButtonDropdown isOpen={dropdownOpen} toggle={() => getSubscribers()}>
-                <DropdownToggle caret size="sm">
-                  Participants
+              <Col>
+                <p>Quand:{new Intl.DateTimeFormat('fr-FR').format(new Date(event.appointment))} {event.time}</p>
+                <ButtonDropdown isOpen={dropdownOpen} toggle={() => getSubscribers()}>
+                  <DropdownToggle caret size="sm">
+                    Participants
                 </DropdownToggle>
 
-                <DropdownMenu>
-                  {subscribers ? subscribers.map((subscriber) => {
-                    return (<DropdownItem onClick={()=>displaySubscriber(subscriber.id)}>{subscriber.userName}</DropdownItem>)
-                  })
-                    : ''
-                  }
-                </DropdownMenu>
+                  <DropdownMenu>
+                    {subscribers.length > 0 ?  subscribers.map((subscriber) => {
+                      return (<DropdownItem onClick={() => displaySubscriber(subscriber.id)}>{subscriber.userName}</DropdownItem>)
+                    })
+                      : <DropdownItem>Personne!</DropdownItem>
+                    }
+                  </DropdownMenu>
 
-              </ButtonDropdown >
+                </ButtonDropdown >
 
-            </Col>
-            <Col></Col>
-            <Col>
-              <p></p>
-              <p></p>
-              {!event.isOwner && subscribedStatus && <Button size="sm" onClick={() => subscribe(false)}>Desinscription</Button>}
-              {!event.isOwner && !subscribedStatus && <Button size="sm" onClick={() => subscribe(true)}>Inscription</Button>}
-              {event.isOwner && <Button size="sm" color="warning" className="mr-3" onClick={()=>edit()}>Modifier</Button>}
-              {event.isOwner && <Button size="sm" color="danger" onClick={()=>remove()}>Supprimer</Button>}
-            </Col>
-          </Row>
-        </Jumbotron>
-        <Modal isOpen={modal} toggle={()=>displaySubscriber(null)}>
+              </Col>
+              <Col></Col>
+              <Col>
+                <p></p>
+                <p></p>
+                {!event.isOwner && subscribedStatus && <Button size="sm" onClick={() => subscribe(false)}>Desinscription</Button>}
+                {!event.isOwner && !subscribedStatus && <Button size="sm" onClick={() => subscribe(true)}>Inscription</Button>}
+                {event.isOwner && <Button size="sm" color="warning" className="mr-3" onClick={() => edit()}>Modifier</Button>}
+                {event.isOwner && <Button size="sm" color="danger" onClick={() => setDeleteModal(!deleteModal)}>Supprimer</Button>}
+              </Col>
+            </Row>
+          </Jumbotron>
+          <Modal isOpen={modal} toggle={() => displaySubscriber(null)}>
             <ModalBody>
-            <ProfileView userId={displayedSubscriberId}></ProfileView>
+              <ProfileView userId={displayedSubscriberId}></ProfileView>
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={()=>displaySubscriber(null)}>Fermer</Button>
+              <Button color="primary" onClick={() => displaySubscriber(null)}>Fermer</Button>
             </ModalFooter>
           </Modal>
+          <Modal isOpen={deleteModal}>
+            <ModalBody>
+              <p>Voulez vous réellement supprimer cet évènement?</p>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" onClick={() => removeConfirmation()}>Supprimer</Button>
+              <Button color="secondary" onClick={() => setDeleteModal(!deleteModal)}>Annuler</Button>
+            </ModalFooter>
+          </Modal>
+          {error && <Alert color="danger">{error.message}</Alert>}
         </>
       )
   }

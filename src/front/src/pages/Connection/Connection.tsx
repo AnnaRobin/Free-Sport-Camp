@@ -2,49 +2,33 @@ import React, { FunctionComponent, useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, Container,Alert } from 'reactstrap';
 import { useForm, Controller } from "react-hook-form";
 import UserHelper from '../../helpers/UserHelper';
-import AjaxHelper from '../../helpers/AjaxHelper';
-type Inputs = {
-  client_id: any,
-  grant_type: any,
-  userName: string,
-  password: string
-};
+import {Credentials} from '../../services/user.service';
+import {useUserManagement} from '../../components/User/Hook';
+
 
 const Connection: FunctionComponent<{}> = () => {
   const [submitStatus, setSubmitStatus] = useState<Error | undefined>(undefined);
-  const { register, control, handleSubmit, errors } = useForm<Inputs>({
+  const { register, control, handleSubmit, errors } = useForm<Credentials>({
     mode: "onBlur"
   });
-  const onSubmit = (data: Inputs) => {
-    AjaxHelper.fetch('http://localhost:8585/oauth/token',
-      'POST',
-      false,
-      {
-        'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      "username=" + data.userName
-      + "&password=" + data.password
-      + "&client_id=" + data.client_id
-      + "&grant_type=" + data.grant_type)
-      .then(function (response) {
-        if (response.ok) {
-          setSubmitStatus(undefined);
-          return response.json();
-        }
-        else {
-          throw new Error("erreur d'authentification");
-        }
-
-      })
-      .then(function (json) {
-        const token = json.access_token;
+  const {getAccessToken,error} = useUserManagement();
+  
+  
+  const onSubmit = async (data: Credentials) => {
+    try{
+      const token = await getAccessToken(data);
+      if(token){
         UserHelper.connect(token);
+        setSubmitStatus(undefined);
         window.location.href = "/search";
-      })
-      .catch(error => {
-        setSubmitStatus(error);
-      });
+      }
+      else{
+        setSubmitStatus({name:"error",message:"erreur d'authentification"});
+      }
+    }
+    catch(err){
+      setSubmitStatus(err);
+    }
   }
 
   return (

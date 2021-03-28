@@ -36,8 +36,9 @@ const Header: FunctionComponent<{}> = () => {
 
 
   return (
-    <Container className="themed-container p-0" fluid={true}>
-
+    <Container className="themed-container p-0 bg-light" fluid={true}>
+      <Row>
+        <Col>
       <Navbar color="light" light expand="md">
         <NavbarBrand tag={Link} to="/">
           <img src={logo} alt="Logo Free Sport Camp" className="d-none d-sm-block logo" />
@@ -57,10 +58,6 @@ const Header: FunctionComponent<{}> = () => {
 
             <NavItem>
               <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/event/create">Publiez vos annonces</NavLink>
-            </NavItem>
-
-            <NavItem>
-              <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/account" >Compte </NavLink>
             </NavItem>
 
             {!userName &&
@@ -84,7 +81,10 @@ const Header: FunctionComponent<{}> = () => {
           
         </Collapse>
       </Navbar>
-      {userName && <Account userName={userName}/>}
+      </Col>
+      {userName && <Col className="flex-fixed-width-item"><Account userName={userName}/></Col>}
+      </Row>
+      
     </Container>
 
 

@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Header from './components/Header';
 import MiniFooter from './components/MiniFooter';
-import ScrollToTop from './components/ScrollToTop';
 
 
 // import ErrorBoundary from './components/ErrorBoundary';
@@ -21,7 +20,7 @@ import Activities from './pages/Activities';
 import Publications from './pages/Publications'
 import Create from './pages/Event';
 import Edit from './pages/Event/Edit';
-import Account from './pages/Account';
+import {Password} from './pages/Account/Password';
 import {View}  from './pages/Profile/View';
 import {Edit as ProfileEdit}  from './pages/Profile/Edit';
 import {Public}  from './pages/Profile/Public';
@@ -36,22 +35,20 @@ const App: React.FunctionComponent<{}> = () => {
       <AppLayout
         header={<Header />}
         content={       
-         <ScrollToTop>
           <Switch>
           <Route exact={true} path="/search" component={Search} />
           <Route exact={true} path="/inscription" component={Inscription} />
+          <Route exact={true} path="/password" component={Password} />
           <Route exact={true} path="/activities" component={Activities} />
           <Route exact={true} path="/publications" component={Publications} />
           <Route exact={true} path="/connection" component={Connection} />
           <Route exact={true} path="/event/create" component={Create} />
           <Route exact={true} path="/event/edit/:eventId" component={Edit} />
           <Route exact={true} path="/" component={Mission} />
-          <Route exact={true} path="/account" component={Account} />
           <Route exact={true} path="/profile" component={View} />
           <Route exact={true} path="/profile/edit" component={ProfileEdit} />
           <Route exact={true} path="/profile/:userId" component={Public} />
           </Switch>
-          </ScrollToTop>
         }   
         footer={<MiniFooter />}
       />  

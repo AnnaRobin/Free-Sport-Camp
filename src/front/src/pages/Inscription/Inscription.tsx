@@ -1,56 +1,28 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 import { useForm, Controller } from "react-hook-form";
-
-type Inputs = {
-  client_id: any,
-  grant_type: any,
-  name: string,
-  userName: string,
-  email: string,
-  password: string,
-  confirmation: string
-}
+import {User} from '../../services/user.service';
+import {useUserManagement} from '../../components/User/Hook';
+import {useHistory} from 'react-router-dom';
 
 
 const Inscription: FunctionComponent<{}> = () => {
   const [submitStatus, setSubmitStatus] = useState<any | undefined>(undefined);
-  const { register, control, handleSubmit, errors, getValues, reset, formState: { isSubmitted } } = useForm<Inputs>({
+  const { register, control, handleSubmit, errors, getValues, reset, formState: { isSubmitted } } = useForm<User>({
     mode: "onBlur"
   });
-  const onSubmit = (data: any) => {
-
-    return fetch('http://localhost:8585/api/user', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then(function (response) {
-        if (response.ok) {
-          window.location.href = "http://localhost:3000/connection"
-          //   setSubmitStatus({ status: 'success', message: 'Votre inscription a bien été enregistré ! Vous pouvez vous connecter' });
-        }
-        else {
-          setSubmitStatus({ status: 'error', message: 'Veuillez remplir le formulaire correctement !' });
-        }
-        //return response.json();
-      });
-    /*
-    .then(function(data) {
-      console.log(data);
-        
-      if (data.statusCode) {
-        setSubmitStatus({ status: 'error', message: 'Veuillez remplir le formulaire correctement !' });
-      } else {
-        setSubmitStatus({ status: 'success', message: 'Votre inscription a bien été enregistré ! Vous pouvez vous connecter' });
-        
-      }
-      
-    });*/
-
+  const history = useHistory();
+  const {createUser,error} = useUserManagement();
+  const onSubmit = (userDatas: User) => {
+    try{
+      createUser(userDatas);
+      setSubmitStatus({ status: 'success', message: 'Votre inscription a bien été enregistré ! Vous pouvez vous connecter' });
+      history.push("/connection");
+    }
+    catch(error){
+      console.log(error);
+      setSubmitStatus({ status: 'error', message: 'Veuillez remplir le formulaire correctement !' });
+    }
   }
 
   return (

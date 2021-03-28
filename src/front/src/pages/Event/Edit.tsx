@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import  Editor, {useEventEditor}  from '../../components/Event/Editor';
+import  Editor  from '../../components/Event/Editor';
+import  {useEvent}  from '../../components/Event/Hook';
 import { Alert } from 'reactstrap';
 
 type EventParams = {
@@ -9,7 +10,7 @@ type EventParams = {
 
 const Edit: FunctionComponent<{}> = () => {
     const params = useParams<EventParams>();
-    const {get,event,error} = useEventEditor();
+    const {get,event,error} = useEvent();
     useEffect(()=>{
           get(Number(params.eventId));
   },[])

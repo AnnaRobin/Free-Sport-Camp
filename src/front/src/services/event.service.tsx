@@ -1,8 +1,8 @@
 import AjaxHelper from '../helpers/AjaxHelper';
-
+import {basicProfile} from './profile.service';
 
 export interface Option {
-    id: number;
+    id: number|string;
     name: string;
 }
 
@@ -59,75 +59,161 @@ export interface EditorParams {
 
 export class EventService {
     public async search(params: SearchParams): Promise<Page<Event[]>> {
-        const response = await AjaxHelper.fetch(`http://localhost:8585/api/event/search?cityId=${params.cityId}&sportId=${params.sportId}&levelId=${params.levelId}&timeId=${params.timeId}&page=${params.page}&size=${params.size}`, 'GET', true, {})
+        try{
+            const response = await AjaxHelper.fetch(`http://localhost:8585/api/event/search?cityId=${params.cityId}&sportId=${params.sportId}&levelId=${params.levelId}&timeId=${params.timeId}&page=${params.page}&size=${params.size}`, 'GET', true, {})
 
-        if (response.status != 200) {
-            throw new Error(response.statusText);
+            if (response.status !== 200) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
         }
-        return response.json();
+        catch(err){
+            throw new Error(err.message);
+        }
     }
 
     public async getSubscribed(params: PageParams): Promise<Page<Event[]>> {
-        const response = await AjaxHelper.fetch(`http://localhost:8585/api/event/getSubscribed?page=${params.page}&size=${params.size}`, 'GET', true, {})
+        try{
+            const response = await AjaxHelper.fetch(`http://localhost:8585/api/event/getSubscribed?page=${params.page}&size=${params.size}`, 'GET', true, {})
 
-        if (response.status != 200) {
-            throw new Error(response.statusText);
+            if (response.status !== 200) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
         }
-        return response.json();
+        catch(err){
+            throw new Error(err.message);
+        }
     }
 
     public async getCreated(params: PageParams): Promise<Page<Event[]>> {
-        const response = await AjaxHelper.fetch(`http://localhost:8585/api/event/getCreated?page=${params.page}&size=${params.size}`, 'GET', true, {})
+        try{
+            const response = await AjaxHelper.fetch(`http://localhost:8585/api/event/getCreated?page=${params.page}&size=${params.size}`, 'GET', true, {})
 
-        if (response.status != 200) {
-            throw new Error(response.statusText);
+            if (response.status !== 200) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
         }
-        return response.json();
+        catch(err){
+            throw new Error(err.message);
+        }
     }
 
     public async getOptions(): Promise<Options> {
-        const response = await AjaxHelper.fetch('http://localhost:8585/api/event/options', 'GET', true, {});
-        if (response.status != 200) {
-            throw new Error(response.statusText);
+        try{
+            const response = await AjaxHelper.fetch('http://localhost:8585/api/event/options', 'GET', true, {});
+            if (response.status !== 200) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
         }
-        return response.json();
+        catch(err){
+            throw new Error(err.message);
+        }
+        
     }
 
     public async get(eventId: number): Promise<EditorParams> {
-        const response = await AjaxHelper.fetch(`http://localhost:8585/api/event/getForEdition?id=${eventId}`, 'GET', true, {});
-        if(response.status == 403) {
-            throw new Error("Vous n'êtes pas autorisé à éditer cet évènement");
+        try{
+            const response = await AjaxHelper.fetch(`http://localhost:8585/api/event/getForEdition?id=${eventId}`, 'GET', true, {});
+            if(response.status === 403) {
+                throw new Error("Vous n'êtes pas autorisé à éditer cet évènement");
+            }
+            if (response.status !== 200) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
         }
-        if (response.status != 200) {
-            throw new Error(response.statusText);
+        catch(err){
+            throw new Error(err.message);
         }
-        return response.json();
     }
 
     public async save(params: EditorParams): Promise<number> {
-        var method = 'POST';
+        try{
+            var method = 'POST';
 
-        if (params.id) {
-            method = 'PUT';
+            if (params.id) {
+                method = 'PUT';
+            }
+            
+            const response = await AjaxHelper.fetch('http://localhost:8585/api/event/', method, true, {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }, JSON.stringify(params));
+            
+            switch(response.status){
+                case 403:
+                    throw new Error("Vous n'êtes pas autorisé à éditer cet évènement");
+                case 409:
+                    throw new Error("Vous avez déjà un évènement sur ce créneau");
+                default:
+                    if([200,201].indexOf(response.status) === -1) {
+                        throw new Error(response.statusText);
+                    }        
+            }
+            return response.json();
         }
-        
-        const response = await AjaxHelper.fetch('http://localhost:8585/api/event/', method, true, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }, JSON.stringify(params));
-        
-        switch(response.status){
-            case 403:
-                throw new Error("Vous n'êtes pas autorisé à éditer cet évènement");
-                break;
-            case 409:
-                throw new Error("Vous avez déjà un évènement sur ce créneau");
-                break;
-            default:
-                if([200,201].indexOf(response.status) == -1) {
+        catch(err){
+            throw new Error(err.message);
+        }
+    }
+
+
+    public async remove(eventId: number):Promise<void>{
+        try{
+            const response = await AjaxHelper.fetch(`http://localhost:8585/api/event/?id=${eventId}`, 'DELETE', true);
+            switch(response.status){
+                case 200:
+                    return;
+                case 403:
+                    throw new Error("Vous n'êtes pas autorisé à supprimer cet évènement");
+                case 404:
+                    throw new Error("Evènement non trouvé");
+                default:
                     throw new Error(response.statusText);
-                }        
+            }
         }
+        catch(err){
+            throw new Error(err.message);
+        }
+    }
+
+    public async getSubscribers(eventId: number): Promise<basicProfile[]> {
+        try{
+            const response = await AjaxHelper.fetch(`http://localhost:8585/api/event/getSubscribers?eventId=${eventId}`,
+            'GET',
+            true
+        );
+
+        if (response.status !== 200) {
+            return Promise.reject();
+        }
+
         return response.json();
+        }
+        catch(err){
+            throw new Error(err.message);
+        }
+    }
+
+    public async subscribe(eventId:number, subscribe:boolean): Promise<any>{
+        try{
+            const url = subscribe ? `http://localhost:8585/api/event/subscribe?eventId=${eventId}` : `http://localhost:8585/api/event/unsubscribe?eventId=${eventId}`;
+            const method = subscribe ? 'POST' : 'DELETE';
+    
+            const response = await AjaxHelper.fetch(url, method, true);
+            if (response.status !== 200) {
+                return Promise.reject();
+            }
+    
+            return response.json();
+        }
+        catch(err){
+            throw new Error(err.message);
+        }
+        
+
     }
 }

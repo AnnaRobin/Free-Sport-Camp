@@ -9,7 +9,7 @@ const Publications: FunctionComponent<{}> = () => {
   
     // hook Search
     const { getCreated, events, total, currentPage, error } = useSearch();
-    const pageSize = 10;
+    const pageSize = 5;
   
     useEffect(() => {
       getCreated(0, pageSize);
