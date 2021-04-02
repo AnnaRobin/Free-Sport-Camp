@@ -235,7 +235,7 @@ public class User {
 			+ enabled + ", fullName=" + fullName
 			+ ", email=" + email
 			+ ", phoneNumber=" + phoneNumber
-			+ ", birthbade=" + birthdate + ", sex=" + sex 
+			+ ", birthDate=" + birthDate + ", sex=" + sex 
 			+ ", city=" + city + ", presentation=" + presentation +"}";
 	
 	

@@ -1,12 +1,15 @@
 package com.masterpiece.FreeSportCamp.services;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +34,9 @@ import com.masterpiece.FreeSportCamp.repositories.SportRepository;
 import com.masterpiece.FreeSportCamp.repositories.TimeRepository;
 import com.masterpiece.FreeSportCamp.repositories.UserRepository;
 import com.masterpiece.FreeSportCamp.config.SecurityHelper;
+
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 
 @Service
 @Transactional
@@ -82,14 +88,6 @@ public class EventServiceImpl  extends AbstractService implements EventService{
 	 return eventRepository.existsByOrganizerAndId(new User(SecurityHelper.getUserId()), dto.getId());
  }
  
- public List<EventDto> getAll(SearchDto dto){
-	 return getAll(dto.getCityId(), dto.getSportId(), dto.getLevelId(), dto.getTimeId());
- }
-	
- public List<EventDto> getSubscribed(){
-	 return eventRepository.findSubscribedBy(SecurityHelper.getUserId());
- }
- 
  public Page<EventDto> getSubscribed(int page, int size){
 	 return eventRepository.findSubscribedBy(SecurityHelper.getUserId(),PageRequest.of(page, size));
  }
@@ -97,55 +95,71 @@ public class EventServiceImpl  extends AbstractService implements EventService{
  public Page<EventDto> getCreated(int page, int size){
 	 return eventRepository.findCreatedBy(SecurityHelper.getUserId(),PageRequest.of(page, size));
  }
- 
- 
- public List<EventDto> getAll(Long cityId, Long sportId, Long levelId, Long timeId){
-	Time time = timeRepository.getById(timeId);
-	return eventRepository.findProjectedBy(cityId, sportId, levelId, time.getMinTime(), time.getMaxTime(),SecurityHelper.getUserId());
- }
- 
+
+
  public Page<EventDto> getAll(Long cityId, Long sportId, Long levelId, Long timeId, int page, int size){
 	Time time = timeRepository.getById(timeId);
-	return eventRepository.findProjectedBy(LocalDate.now(), cityId, sportId, levelId, time.getMinTime(), time.getMaxTime(),SecurityHelper.getUserId(),PageRequest.of(page, size));
+	Page<EventDto> events =  eventRepository.findProjectedBy(LocalDate.now(), cityId, sportId, levelId, time.getMinTime(), time.getMaxTime(),PageRequest.of(page, size));
+	List<Long> eventIds = events.stream().map(EventDto::getId).collect(Collectors.toList());
+	List<EventDto> subscribedEventIds = eventRepository.findSubscribedBy(eventIds,SecurityHelper.getUserId());
+	
+	List<EventDto> updatedEvents = new ArrayList<EventDto>();
+	
+	for(EventDto event : events) {
+		if(subscribedEventIds.contains(event)) {
+			event.setIsSubscribed(true);
+		}
+		updatedEvents.add(event);
+	}
+	Page<EventDto> eventsPage = new PageImpl<EventDto>(updatedEvents,events.getPageable(),events.getTotalElements());
+	return eventsPage;
  }
  
  public List<SubscriberViewDto> getSubscribers(Long eventId){
 	 return eventRepository.findProjectedBy(eventId);
  }
  
- public void subscribe(Long eventId) {
+ public Boolean subscribe(Long eventId) {
 	 Optional<Event> optional = eventRepository.findById(eventId);
 	 if(!optional.isEmpty()) {
 		 Event event = optional.get();
 		 event.getSubscribers().add(new User(SecurityHelper.getUserId()));
 		 eventRepository.save(event);
+		 return true;
 	 }
+	 return false;
  }
  
- public void unsubscribe(Long eventId) {
+ public Boolean unsubscribe(Long eventId) {
 	 Optional<Event> optional = eventRepository.findById(eventId);
 	 if(!optional.isEmpty()) {
 		 Event event = optional.get();
 		 Optional<User> optUser = userRepository.findById(SecurityHelper.getUserId());
 		 User user = optUser.get();
-		 event.getSubscribers().remove(user);
-		 eventRepository.save(event);
+		 if(event.getOrganizer() != user) {
+			 event.getSubscribers().remove(user);
+			 eventRepository.save(event);
+			 return true;
+		 }
 	 }
+	 return false;
  }
+ 
  public IdentifierDto create (EventCreatorDto dto) {
 	 
 	 Event event = new Event();
 	 
 	 event.setAppointment( dto.getAppointment());
-	 event.setDescription(dto.getDescription());
+	 event.setDescription(Jsoup.clean(dto.getDescription(), Whitelist.none()));
 	 event.setTime(dto.getTime());
 	 event.setOrganizer(new User(SecurityHelper.getUserId()));
 
 	 event.setSport(new Sport(dto.getSportId()));
 	 event.setLevel(new Level(dto.getLevelId()));
 	 event.setCity(new City(dto.getCityId()));
-	 
+	 //event.getSubscribers().add(new User(SecurityHelper.getUserId()));
 	 Event savedEvent = eventRepository.save(event);
+	 this.subscribe(savedEvent.getId());
 	 return new IdentifierDto(savedEvent.getId());
 		
  };
@@ -153,7 +167,7 @@ public class EventServiceImpl  extends AbstractService implements EventService{
  public IdentifierDto edit(EventEditorDto dto) {
 	 Event event = getMapper().map(dto, Event.class);
 	 event.setOrganizer(new User(SecurityHelper.getUserId()));
-	 
+	 event.setDescription(Jsoup.clean(dto.getDescription(), Whitelist.none()));
 	 Event savedEvent = eventRepository.save(event);
 	 return new IdentifierDto(savedEvent.getId());
  }

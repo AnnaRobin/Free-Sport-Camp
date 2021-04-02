@@ -15,6 +15,10 @@ import com.masterpiece.FreeSportCamp.entities.City;
 public class EventDto {
 	
 	public EventDto(Long id, LocalDate appointment, LocalTime time, String sportName, String levelName, String cityName, String phoneNumber, Long organizerId, String organizerName,String description,User me) {
+		this(id,appointment,time,sportName,levelName,cityName,phoneNumber,organizerId,organizerName,description);
+		this.isSubscribed = me!=null;
+	}
+	public EventDto(Long id, LocalDate appointment, LocalTime time, String sportName, String levelName, String cityName, String phoneNumber, Long organizerId, String organizerName,String description) {
 		this.id =id;
 		this.sportName = sportName;
 		this.levelName = levelName;
@@ -23,8 +27,8 @@ public class EventDto {
 		this.description = description;
 		this.time = time;
 		this.phoneNumber = phoneNumber;
+		this.organizerId = organizerId;
 		this.organizerName = organizerName;
-		this.isSubscribed = me!=null;
 		this.isOwner = SecurityHelper.getUserId() == organizerId;
 	}
 	
@@ -43,6 +47,8 @@ public class EventDto {
 	private String phoneNumber;
 	
 	private String description;
+	
+	private Long organizerId;
 	
 	private String organizerName;
 	
@@ -80,12 +86,18 @@ public class EventDto {
 	public String getDescription() {
 		return this.description;
 	}
+	public Long getOrganizerId() {
+		return this.organizerId;
+	}
 	
 	public String getOrganizerUserName() {
 		return this.organizerName;
 	}
 	public Boolean getisSubscribed(){
 		return this.isSubscribed;
+	}
+	public void setIsSubscribed(Boolean isSubscribed) {
+		this.isSubscribed = isSubscribed;
 	}
 	public Boolean getisOwner() {
 		return this.isOwner;

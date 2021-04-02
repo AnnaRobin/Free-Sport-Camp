@@ -85,13 +85,23 @@ public class EventController {
 	}
 
 	@PostMapping("/subscribe")
-	protected void subscribe(@RequestParam("eventId") Long eventId) {
-		service.subscribe(eventId);
+	protected ResponseEntity subscribe(@RequestParam("eventId") Long eventId) {
+		if(service.subscribe(eventId)) {
+			return ResponseEntity.ok().build();
+		}
+		else {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
 	@DeleteMapping("/unsubscribe")
-	protected void unsubscribe(@RequestParam("eventId") Long eventId) {
-		service.unsubscribe(eventId);
+	protected ResponseEntity unsubscribe(@RequestParam("eventId") Long eventId) {
+		if(service.unsubscribe(eventId)) {
+			return ResponseEntity.ok().build();
+		}
+		else {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
 	@PostMapping("/")

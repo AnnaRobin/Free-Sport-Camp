@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -49,7 +51,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void create(UserDto userDto) {
 		User user = mapper.map(userDto, User.class);
-
+		user.setEmail(Jsoup.clean(userDto.getEmail(), Whitelist.none()));
+		user.setUserName(Jsoup.clean(userDto.getUserName(), Whitelist.none()));
+		user.setFullName(Jsoup.clean(userDto.getFullName(), Whitelist.none()));
 		String raw = userDto.getPassword();
 		String encoded = encoder.encode(raw);
 		user.setPassword(encoded);

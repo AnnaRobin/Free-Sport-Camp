@@ -21,12 +21,7 @@ public interface EventService {
 	Boolean alreadyExistsEvent(EventCreatorDto dto);
 	Boolean alreadyExistsEvent(EventEditorDto dto);
 	Boolean isOwner(EventEditorDto dto);
-	
-	List<EventDto> getAll(SearchDto dto);
-
-	List<EventDto> getAll(Long cityId, Long sportId, Long levelId, Long timeId);
 	Page<EventDto> getAll(Long cityId, Long sportId, Long levelId, Long timeId, int page, int size);
-	List<EventDto> getSubscribed();
 	Page<EventDto> getSubscribed(int page, int size);
 	Page<EventDto> getCreated(int page, int size);
 	List<SubscriberViewDto> getSubscribers(Long eventId);
@@ -34,7 +29,7 @@ public interface EventService {
 	IdentifierDto edit(EventEditorDto dto);
 	Boolean remove(Long eventId);
 	EventEditorViewDto getForEdition(Long eventId);
-	void subscribe(Long eventId);
-	void unsubscribe(Long eventId);
+	Boolean subscribe(Long eventId);
+	Boolean unsubscribe(Long eventId);
 
 }

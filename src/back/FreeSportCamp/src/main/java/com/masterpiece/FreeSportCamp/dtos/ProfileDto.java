@@ -7,9 +7,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import com.masterpiece.FreeSportCamp.entities.Sex;
+import org.hibernate.validator.constraints.SafeHtml;
 
 public class ProfileDto {
-
+	@SafeHtml
 	private String presentation;
 	
 	@NotNull

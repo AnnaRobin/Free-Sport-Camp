@@ -12,6 +12,9 @@ import com.masterpiece.FreeSportCamp.entities.City;
 import com.masterpiece.FreeSportCamp.entities.User;
 import com.masterpiece.FreeSportCamp.repositories.UserRepository;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
@@ -36,8 +39,8 @@ public class ProfileServiceImpl implements ProfileService {
 		else {
 			User user = optional.get();
 			user.setCity(new City(dto.getCityId()));
-			user.setPresentation(dto.getPresentation());
-			user.setPhoneNumber(dto.getPhoneNumber());
+			user.setPresentation(Jsoup.clean(dto.getPresentation(),Whitelist.none()));
+			user.setPhoneNumber(Jsoup.clean(dto.getPhoneNumber(),Whitelist.none()));
 			user.setSex(dto.getSex());
 			user.setBirthdate(dto.getBirthDate());
 			this.userRepository.save(user);
