@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {Profile, ProfileParams, ProfileService} from '../../services/profile.service';
+import {Profile, ProfileParams, ProfileService} from '../../services/Profile';
 import UserHelper from '../../helpers/UserHelper';
 
 export default function useProfile(){

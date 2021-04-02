@@ -4,7 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import Select from '../../components/Select';
 import useOptions from '../../components/Options';
 import { DevTool } from "@hookform/devtools";
-import {EditorParams} from '../../services/event.service';
+import {EditorParams} from '../../services/Event';
 import {useHistory} from 'react-router-dom';
 import {useEvent} from './Hook';
 
@@ -181,7 +181,7 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
 
                     <Row>
                         <Col>
-                            <Button disabled={submitStatus.status === "submitting"} type="submit" color="warning" className="shadow-lg p-3 mb-5 bg-white rounded font-weight-bold d-block ml-auto mr-5">Envoyer</Button>
+                            <Button disabled={submitStatus.status === "submitting"} type="submit" color="warning" className="shadow-lg p-3 mb-5 bg-white rounded font-weight-bold d-block ml-auto mr-auto">Envoyer</Button>
                         </Col>
                         {!params &&
                         <Col>

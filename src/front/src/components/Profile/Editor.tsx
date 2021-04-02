@@ -5,7 +5,7 @@ import Select from '../../components/Select';
 import PhoneInput from 'react-phone-input-2'
 import useOptions from '../../components/Options';
 import useProfile from '../../components/Profile/Hook';
-import {ProfileParams} from '../../services/profile.service';
+import {ProfileParams} from '../../services/Profile';
 import { useHistory } from 'react-router-dom';
 
 export const Editor: FunctionComponent<{}> = () => {

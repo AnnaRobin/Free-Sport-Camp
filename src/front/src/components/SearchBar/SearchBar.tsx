@@ -28,7 +28,7 @@ const SearchBar: FunctionComponent<{}> = () => {
   const { sportOptions, cityOptions, timeOptions, levelOptions } = useOptions();
 
   // React Hook Form
-  const { register, watch, handleSubmit, errors } = useForm<SearchParams>();
+  const { register, watch, handleSubmit, formState, getValues } = useForm<SearchParams>();
 
 
   const pageSize = 5;
@@ -40,7 +40,6 @@ const SearchBar: FunctionComponent<{}> = () => {
 
   //handle form submission
   const onSubmit = handleSubmit(({ city, time, level, sport }) => {
-    console.log(city);
     search(city, sport, level, time, 0, pageSize);
   });
  
@@ -59,25 +58,25 @@ const SearchBar: FunctionComponent<{}> = () => {
               <div className="col-sm text-center" >
                 {/* sportOptions reference options list defined by UseOptions Hook */}
                 {/* register reference register function defined by UseForm Hook */}
-                <Select name="sport" label="Sport" options={sportOptions} register={register} />
+                <Select name="sport" label="Sport" options={sportOptions} register={register({required: true})} />
               </div>
 
               <div className="col-sm text-center">
                 {/* cityOptions reference options list defined by UseOptions Hook */}
                 {/* register reference register function defined by UseForm Hook */}
-                <Select name="city" label="Ville" options={cityOptions} register={register} />
+                <Select name="city" label="Ville" options={cityOptions} register={register({required: true})} />
               </div>
 
               <div className="col-sm text-center">
                 {/* levelOptions reference options list defined by UseOptions Hook */}
                 {/* register reference register function defined by UseForm Hook */}
-                <Select name="level" label="Niveau" options={levelOptions} register={register} />
+                <Select name="level" label="Niveau" options={levelOptions} register={register({required: true})} />
               </div>
 
               <div className="col-sm text-center">
                 {/* timeOptions reference options list defined by UseOptions Hook */}
                 {/* register reference register function defined by UseForm Hook */}
-                <Select name="time" label="Créneau" options={timeOptions} register={register} />
+                <Select name="time" label="Créneau" options={timeOptions} register={register({required: true})} />
               </div>
 
               <div className="col-sm text-center ">
@@ -85,6 +84,7 @@ const SearchBar: FunctionComponent<{}> = () => {
               </div>
             </div>
           </form>
+          {formState.isSubmitted && !!!formState.isValid && <p className="error">Veuillez saisir tous les champs</p>}
         </Jumbotron>
       </div>
 

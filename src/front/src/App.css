@@ -142,3 +142,18 @@ margin: 3% 8%;
   }
   
 }
+.btn-txt-color{
+  color:#212529 !important;
+  font-weight: bold;
+}
+.btn-txt-color:hover{
+  color:#212529 !important;
+}
+
+.pagination .page-item.active .page-link{
+  background-color: #bdbdc7;
+  border-color: #818182;
+}
+.pagination .page-link{
+  color:#bdbdc7;
+}

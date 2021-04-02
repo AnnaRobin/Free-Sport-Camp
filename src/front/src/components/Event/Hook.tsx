@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import UserHelper from '../../helpers/UserHelper';
-import {EditorParams, EventService} from '../../services/event.service';
-import { basicProfile } from '../../services/profile.service';
+import {EditorParams, EventService} from '../../services/Event';
+import { basicProfile } from '../../services/Profile';
 
 export function useEvent(){
     const [event, setEvent] = useState<EditorParams | null>(null);
     const [error, setError] = useState<Error | undefined>(undefined);
     const [subscribers, setSubscribers] = useState<basicProfile[]>([]);
+
     const eventService = new EventService();
     async function _get(id:number): Promise<void>{
         try{

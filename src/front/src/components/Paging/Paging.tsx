@@ -1,13 +1,11 @@
 import React, { FunctionComponent, useState, useLayoutEffect } from 'react';
 import { Pagination, PaginationItem, PaginationLink, Container } from 'reactstrap';
 
-
 interface Page{
     displayedValue: number
     value: number,
     current: boolean
 }
-
 
 const Paging: FunctionComponent<{totalCount: number, pageSize:number, currentPage:number, handleClick: any, scrollTo: string}> = ({totalCount, pageSize, currentPage, handleClick, scrollTo}) => {
 
@@ -24,13 +22,13 @@ const Paging: FunctionComponent<{totalCount: number, pageSize:number, currentPag
       }, [totalCount,currentPage])
 
     return (
-        <Container className="d-flex">
-            <Pagination className="mx-auto d-inline-flex">
+        <Container className="pagination justify-content-end">
+            <Pagination size="sm" >
            {pages.map((page) => {
             return (
                 <>
                 {page.current?<PaginationItem key={page.value} active>
-                <PaginationLink> {page.displayedValue}</PaginationLink>
+                <PaginationLink > {page.displayedValue}</PaginationLink>
                 </PaginationItem>
                 :<PaginationItem key={page.value}>
                     <PaginationLink href={scrollTo} onClick={()=>handleClick(page.value)} > {page.displayedValue}</PaginationLink>
@@ -39,10 +37,7 @@ const Paging: FunctionComponent<{totalCount: number, pageSize:number, currentPag
                     )
           })}
         </Pagination>
-        </Container>
-        
+        </Container>     
     )
-
 }
-
 export default Paging;

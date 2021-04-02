@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { useForm, Controller } from "react-hook-form";
 import { useUserManagement } from '../../components/User/Hook';
-import { PasswordUpdate } from '../../services/user.service';
+import { PasswordUpdate } from '../../services/User';
 import { useHistory } from 'react-router-dom';
 
 export const Password: FunctionComponent<{}> = () => {
@@ -30,7 +30,7 @@ export const Password: FunctionComponent<{}> = () => {
         <Container className="mt-5">
             <Form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
                 <FormGroup>
-                    <Label for="password" className="font-weight-bold">Ancien mot de passe</Label>
+                    <Label for="password" className="font-weight-bold">Ancien mot de passe *</Label>
                     <Controller
                         name="previousPassword"
                         control={control}

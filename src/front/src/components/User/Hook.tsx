@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {UserService,Credentials,User, PasswordUpdate} from '../../services/user.service';
+import {UserService,Credentials,User, PasswordUpdate} from '../../services/User';
 
 export function useUserManagement(){
     const [error, setError] = useState<string|undefined>(undefined);
@@ -15,21 +15,25 @@ export function useUserManagement(){
         return null;
       }
     }
-    async function _createUser(userDatas:User):Promise<void>{
+    async function _createUser(userDatas:User):Promise<Boolean>{
         try{
             const response = await userService.create(userDatas);
+            return true;
         }
         catch(err){
-            setError(err);
+            setError(err.message);
+            return false;
         }
     }
-    async function _updatePassword(datas:PasswordUpdate):Promise<void>{
+    async function _updatePassword(datas:PasswordUpdate):Promise<Boolean>{
       try{
         const response = await userService.updatePassword(datas);
         setError(undefined);
+        return true;
       }
       catch(err){
           setError(err);
+          return false;
       }
     }
     return{

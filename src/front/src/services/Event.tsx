@@ -1,5 +1,5 @@
 import AjaxHelper from '../helpers/AjaxHelper';
-import {basicProfile} from './profile.service';
+import {basicProfile} from './Profile';
 
 export interface Option {
     id: number|string;
@@ -22,12 +22,16 @@ export interface Event {
     time: string;
     levelName: string;
     sportName: string;
+    organizerId: number;
     organizerUserName: string;
     organizerPhoneNumber: string;
     isSubscribed: boolean;
     isOwner: boolean;
 }
-
+export interface PageParams {
+    page: number,
+    size: number
+}
 export interface SearchParams extends PageParams {
     cityId: number,
     sportId: number,
@@ -35,10 +39,6 @@ export interface SearchParams extends PageParams {
     timeId: number
 }
 
-export interface PageParams {
-    page: number,
-    size: number
-}
 export interface Page<T> {
     content: T,
     totalElements: number,
@@ -144,6 +144,8 @@ export class EventService {
             }, JSON.stringify(params));
             
             switch(response.status){
+                case 500:
+                    throw new Error("Erreur inconnue");
                 case 403:
                     throw new Error("Vous n'êtes pas autorisé à éditer cet évènement");
                 case 409:
@@ -198,7 +200,7 @@ export class EventService {
         }
     }
 
-    public async subscribe(eventId:number, subscribe:boolean): Promise<any>{
+    public async subscribe(eventId:number, subscribe:boolean): Promise<void>{
         try{
             const url = subscribe ? `http://localhost:8585/api/event/subscribe?eventId=${eventId}` : `http://localhost:8585/api/event/unsubscribe?eventId=${eventId}`;
             const method = subscribe ? 'POST' : 'DELETE';
@@ -207,8 +209,6 @@ export class EventService {
             if (response.status !== 200) {
                 return Promise.reject();
             }
-    
-            return response.json();
         }
         catch(err){
             throw new Error(err.message);

@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Option } from '../../services/event.service';
+import { Option } from '../../services/Event';
 
 const Select: FunctionComponent<{ name: string, label: string, className?: string, options: Option[], register: any, value?:any, onChange?:any }> = ({ name, label, className, options, register, value, onChange}) => {
     return (

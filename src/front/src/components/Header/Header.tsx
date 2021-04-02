@@ -37,7 +37,7 @@ const Header: FunctionComponent<{}> = () => {
 
   return (
     <Container className="themed-container p-0 bg-light" fluid={true}>
-      <Row>
+      <Row className="mr-0">
         <Col>
       <Navbar color="light" light expand="md">
         <NavbarBrand tag={Link} to="/">
@@ -65,12 +65,14 @@ const Header: FunctionComponent<{}> = () => {
                 <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/connection">Connexion </NavLink>
               </NavItem>}
             {userName &&
+            <>
             <NavItem>
               <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/activities">Mes Activités </NavLink>
-            </NavItem>}
+            </NavItem>
             <NavItem>
               <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/publications">Mes Publications </NavLink>
             </NavItem>
+            </>}
           </Nav>
 
           

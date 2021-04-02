@@ -79,15 +79,18 @@ import {
         Faire du sport est essentiel pour notre santé physique et mentale, pour se sentir bien au quotidien, 
         mais beaucoup de personnes ne trouvent pas la motivation de les pratiquer seul.<br/>
 
-        Vous venez de découvrir une application gratuite, qui facilite la mise en relation entre collègues souhaitant pratiquer une activité sportive de n'importe quelle niveau.
+        Vous venez de découvrir une application gratuite, qui facilite la mise en relation entre collègues souhaitant pratiquer une activité sportive de n'importe quel niveau.
 
         Selon votre emploi du temps, pour matin, midi ou soir, vous pouvez
 
         chercher / proposer un activité pour s'amuser avec vos collègues à côté de votre bureau, organiser des compétitions "maison", ou aller plus loin et se préparer ensemble aux compétitions plus ambitieuses (comme le marathon, par exemple ;)
         seulement en quelque clics.<br/>
 
-        Selon vos centres d’intérêts sportif, vos objectifs et votre disponibilité, il devient plus facile !<br/>
-        C’EST DONC L’APPLICATION IDÉALE POUR UN SPORTIF OCCASIONNEL, QUI A SOUVENT DU MAL À SE MOTIVER À BOUGER D SON FOTEUIL. 
+        Selon vos centres d’intérêts sportifs, vos objectifs et votre disponibilité, il devient plus facile !<br/>
+        C’EST DONC L’APPLICATION IDÉALE POUR UN SPORTIF OCCASIONNEL, QUI A SOUVENT DU MAL À SE MOTIVER À BOUGER D SON FAUTEUIL. <br/><br/>
+
+        Si vous avez des questions n'hésitez pas à me contacter notre administrateur : anna.cuilhe@yahoo.fr
+
         </div>
         </>
 

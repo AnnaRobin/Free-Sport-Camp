@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {Option, EventService} from '../../services/event.service';
+import {Option, EventService} from '../../services/Event';
 
 
 export default function useOptions() {

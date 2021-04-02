@@ -3,7 +3,6 @@ import UserHelper from '../UserHelper';
 interface Dictionary<T> {
     [Key: string]: T;
 }
-
 class AjaxHelper{
 
     static fetch(url:string,method:string,auth:boolean,headers?:Dictionary<string>,body?:string):Promise<Response>{
@@ -22,7 +21,6 @@ class AjaxHelper{
         if(method != 'GET' && body != undefined){
             options['body'] = body;
         }
-
         return fetch(url,
                     options
                     )
@@ -34,9 +32,5 @@ class AjaxHelper{
                         return response;
                     });
     }
-
-   
-
 }
-
 export default AjaxHelper;

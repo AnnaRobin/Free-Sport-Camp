@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {Event, PageParams,SearchParams, EventService} from '../../services/event.service';
+import {Event, PageParams,SearchParams, EventService} from '../../services/Event';
 
 // Custom Hook
 export default function useSearch() {

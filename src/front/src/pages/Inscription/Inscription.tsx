@@ -1,36 +1,26 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 import { useForm, Controller } from "react-hook-form";
-import {User} from '../../services/user.service';
+import {User} from '../../services/User';
 import {useUserManagement} from '../../components/User/Hook';
 import {useHistory} from 'react-router-dom';
 
-
 const Inscription: FunctionComponent<{}> = () => {
-  const [submitStatus, setSubmitStatus] = useState<any | undefined>(undefined);
   const { register, control, handleSubmit, errors, getValues, reset, formState: { isSubmitted } } = useForm<User>({
     mode: "onBlur"
   });
   const history = useHistory();
   const {createUser,error} = useUserManagement();
-  const onSubmit = (userDatas: User) => {
-    try{
-      createUser(userDatas);
-      setSubmitStatus({ status: 'success', message: 'Votre inscription a bien été enregistré ! Vous pouvez vous connecter' });
+  const onSubmit = async (userDatas: User) => {
+    if(await createUser(userDatas))
+    {
+      //setSubmitStatus({ status: 'success', message: 'Votre inscription a bien été enregistré ! Vous pouvez vous connecter' });
       history.push("/connection");
-    }
-    catch(error){
-      console.log(error);
-      setSubmitStatus({ status: 'error', message: 'Veuillez remplir le formulaire correctement !' });
     }
   }
 
   return (
     <>
-      {submitStatus && submitStatus.status === 'error' && <p className="alert alert-danger">{submitStatus.message}</p>}
-      {submitStatus && submitStatus.status === 'success' && (
-        <p className="alert alert-success">{submitStatus.message}</p>
-      )}
       <Container className="mt-5">
         <Form onSubmit={handleSubmit(onSubmit)}>
           <h5 className="text-right">Vous posédez déjà un compte?  <a href="/connection">Connectez-vous !</a> </h5>
@@ -44,7 +34,7 @@ const Inscription: FunctionComponent<{}> = () => {
               name="fullName"
               control={control}
               rules={{
-                required: true, maxLength: { value: 45, message: "Votre nom ne doit pas contenir plus que 45 charachtères !" },
+                required: true, maxLength: { value: 45, message: "Votre nom ne doit pas contenir plus que 45 caractères !" },
                 pattern: {
                   value: /[a-zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ]+\s[a-zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ]+$/i,
                   message: " Êtes vous sûr ? "
@@ -53,14 +43,14 @@ const Inscription: FunctionComponent<{}> = () => {
               defaultValue=""
               as={<Input type="text" name="fullName" id="fullName" placeholder="Prénom Nom" className="shadow p-3 mb-5 bg-white rounded" />}
             />
-            {errors.name && errors.name.message !== '' && <p className="error">{errors.name.message}</p>}
+            {errors.fullName && errors.fullName.message !== '' && <p className="error">{errors.fullName.message}</p>}
           </FormGroup>
           <FormGroup>
             <Label for="userName" className="font-weight-bold">Nom d'utilisateur *</Label>
             <Controller
               name="userName"
               control={control}
-              rules={{ required: true, maxLength: { value: 45, message: " Votre nom d'utilisateur ne doit contenir plus que 45 charachtères !" } }}
+              rules={{ required: true, maxLength: { value: 45, message: " Votre nom d'utilisateur ne doit contenir plus que 45 caractères !" } }}
               defaultValue=""
               as={<Input type="text" id="userName" placeholder="Soyez créatifs ! ;)" className="shadow p-3 mb-5 bg-white rounded" />}
             />
@@ -116,10 +106,10 @@ const Inscription: FunctionComponent<{}> = () => {
 
           </FormGroup>
 
-          {(errors.name || errors.userName || errors.email || errors.password || errors.confirmation) && isSubmitted && <span style={{ color: "red" }}>  ⚠ Tous les champs sont obligatoires !</span>}
+          {(errors.fullName || errors.userName || errors.email || errors.password || errors.confirmation) && isSubmitted && <span style={{ color: "red" }}>  ⚠ Tous les champs sont obligatoires !</span>}
 
 
-
+          {error && <p className="error">{error}</p>}
           <Button type="submit" color="warning" className="shadow-lg p-3 mb-5 bg-white rounded font-weight-bold  justify-content-center align-items-center d-block ml-auto mr-auto" >Inscription</Button>
           <h6 className="text-danger">* Champs obligatoires</h6>
 

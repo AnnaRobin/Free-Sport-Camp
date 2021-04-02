@@ -1,5 +1,8 @@
 import AjaxHelper from '../helpers/AjaxHelper';
-
+export interface basicProfile {
+    id: number;
+    userName: string;
+}
 export interface Profile extends basicProfile {
     presentation: string;
     phoneNumber?: string;
@@ -10,12 +13,6 @@ export interface Profile extends basicProfile {
     age?:number;
     isOwner: boolean;
 }
-
-export interface basicProfile {
-    id: number;
-    userName: string;
-}
-
 export interface ProfileParams {
     presentation: string;
     phoneNumber: string;
