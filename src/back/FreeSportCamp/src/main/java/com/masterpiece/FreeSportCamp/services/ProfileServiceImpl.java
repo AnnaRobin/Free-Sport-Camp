@@ -9,6 +9,7 @@ import com.masterpiece.FreeSportCamp.dtos.ProfileDto;
 import com.masterpiece.FreeSportCamp.dtos.ProfileViewDto;
 import com.masterpiece.FreeSportCamp.dtos.PublicProfileViewDto;
 import com.masterpiece.FreeSportCamp.entities.City;
+import com.masterpiece.FreeSportCamp.entities.Event;
 import com.masterpiece.FreeSportCamp.entities.User;
 import com.masterpiece.FreeSportCamp.repositories.UserRepository;
 
@@ -38,9 +39,22 @@ public class ProfileServiceImpl implements ProfileService {
 		}
 		else {
 			User user = optional.get();
-			user.setCity(new City(dto.getCityId()));
-			user.setPresentation(Jsoup.clean(dto.getPresentation(),Whitelist.none()));
-			user.setPhoneNumber(Jsoup.clean(dto.getPhoneNumber(),Whitelist.none()));
+			if(dto.getCityId() == null) {
+				user.setCity(null);
+			}
+			else {
+				user.setCity(new City(dto.getCityId()));	
+			}
+			if(dto.getPresentation() == null)
+				user.setPresentation(dto.getPresentation());
+			else {
+				user.setPresentation(Jsoup.clean(dto.getPresentation(),Whitelist.none()));	
+			}
+			if(dto.getPhoneNumber() == null)
+				user.setPhoneNumber(dto.getPhoneNumber());
+			else {
+				user.setPhoneNumber(Jsoup.clean(dto.getPhoneNumber(),Whitelist.none()));	
+			}
 			user.setSex(dto.getSex());
 			user.setBirthdate(dto.getBirthDate());
 			this.userRepository.save(user);

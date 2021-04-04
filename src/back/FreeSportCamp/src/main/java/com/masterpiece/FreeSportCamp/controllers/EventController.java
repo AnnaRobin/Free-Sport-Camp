@@ -109,7 +109,9 @@ public class EventController {
 		if (service.alreadyExistsEvent(dto)) {
 			return new ResponseEntity<IdentifierDto>(HttpStatus.CONFLICT);
 		} else {
-			return new ResponseEntity<IdentifierDto>(service.create(dto), HttpStatus.CREATED);
+			IdentifierDto viewDto = service.create(dto);
+			service.subscribe(viewDto.getId());
+			return new ResponseEntity<IdentifierDto>(viewDto, HttpStatus.CREATED);
 		}
 
 	}

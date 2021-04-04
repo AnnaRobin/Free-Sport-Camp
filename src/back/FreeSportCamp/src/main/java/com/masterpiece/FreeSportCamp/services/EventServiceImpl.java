@@ -123,6 +123,9 @@ public class EventServiceImpl  extends AbstractService implements EventService{
 	 Optional<Event> optional = eventRepository.findById(eventId);
 	 if(!optional.isEmpty()) {
 		 Event event = optional.get();
+		 if(event.getAppointment().isBefore(LocalDate.now())) {
+			 return false;
+		 }
 		 event.getSubscribers().add(new User(SecurityHelper.getUserId()));
 		 eventRepository.save(event);
 		 return true;
@@ -134,6 +137,9 @@ public class EventServiceImpl  extends AbstractService implements EventService{
 	 Optional<Event> optional = eventRepository.findById(eventId);
 	 if(!optional.isEmpty()) {
 		 Event event = optional.get();
+		 if(event.getAppointment().isBefore(LocalDate.now())) {
+			 return false;
+		 }
 		 Optional<User> optUser = userRepository.findById(SecurityHelper.getUserId());
 		 User user = optUser.get();
 		 if(event.getOrganizer() != user) {
@@ -150,7 +156,12 @@ public class EventServiceImpl  extends AbstractService implements EventService{
 	 Event event = new Event();
 	 
 	 event.setAppointment( dto.getAppointment());
-	 event.setDescription(Jsoup.clean(dto.getDescription(), Whitelist.none()));
+	 if(dto.getDescription() == null) {
+		 event.setDescription("");
+	 } 
+	 else {
+		 event.setDescription(Jsoup.clean(dto.getDescription(),Whitelist.none()));
+	 }
 	 event.setTime(dto.getTime());
 	 event.setOrganizer(new User(SecurityHelper.getUserId()));
 
@@ -159,7 +170,7 @@ public class EventServiceImpl  extends AbstractService implements EventService{
 	 event.setCity(new City(dto.getCityId()));
 	 //event.getSubscribers().add(new User(SecurityHelper.getUserId()));
 	 Event savedEvent = eventRepository.save(event);
-	 this.subscribe(savedEvent.getId());
+	 
 	 return new IdentifierDto(savedEvent.getId());
 		
  };
@@ -167,7 +178,12 @@ public class EventServiceImpl  extends AbstractService implements EventService{
  public IdentifierDto edit(EventEditorDto dto) {
 	 Event event = getMapper().map(dto, Event.class);
 	 event.setOrganizer(new User(SecurityHelper.getUserId()));
-	 event.setDescription(Jsoup.clean(dto.getDescription(), Whitelist.none()));
+	 if(dto.getDescription() == null) {
+		 event.setDescription("");
+	 } 
+	 else {
+		 event.setDescription(Jsoup.clean(dto.getDescription(),Whitelist.none()));
+	 }
 	 Event savedEvent = eventRepository.save(event);
 	 return new IdentifierDto(savedEvent.getId());
  }

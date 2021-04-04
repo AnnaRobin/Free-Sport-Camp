@@ -26,22 +26,4 @@ public class City extends AbstractEntity{
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
-	public class CityProxy extends City{
-		
-		public CityProxy(Long id) {
-			super.id = id;
-			
-		}
-		@Override
-		public Long getId() {
-			return super.getId();
-		}
-		@Override
-		public String getName() {
-			if(super.getName() == null) {
-				
-			}
-			return super.getName();
-		}
-	}
 }
