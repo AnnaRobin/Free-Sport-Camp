@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Button, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 import { useForm, Controller } from "react-hook-form";
 import {User} from '../../services/User';

@@ -1,12 +1,11 @@
 import React, { FunctionComponent} from 'react';
-import { Jumbotron, Button } from 'reactstrap';
+import { Jumbotron, Button, Form } from 'reactstrap';
 import { useForm } from "react-hook-form";
 import Select from '../../components/Select';
 import EventView from '../../components/Event';
 import useOptions from '../../components/Options';
 import useSearch from '../../components/Search';
 import Paging from '../Paging';
-
 
 
 type SearchParams = {
@@ -28,7 +27,7 @@ const SearchBar: FunctionComponent<{}> = () => {
   const { sportOptions, cityOptions, timeOptions, levelOptions } = useOptions();
 
   // React Hook Form
-  const { register, watch, handleSubmit, formState, getValues } = useForm<SearchParams>();
+  const { register, watch, handleSubmit, formState } = useForm<SearchParams>();
 
 
   const pageSize = 5;
@@ -39,8 +38,8 @@ const SearchBar: FunctionComponent<{}> = () => {
 
 
   //handle form submission
-  const onSubmit = handleSubmit(({ city, time, level, sport }) => {
-    search(city, sport, level, time, 0, pageSize);
+  const onSubmit = handleSubmit( async ({ city, time, level, sport }) => {
+    await search(city, sport, level, time, 0, pageSize);
   });
  
   //****************************************************************************//
@@ -52,7 +51,7 @@ const SearchBar: FunctionComponent<{}> = () => {
     <>
       <div>
         <Jumbotron className="mt-5">
-          <form className="container -xl" onSubmit={onSubmit}>{/* subscribe function handleSubmit() referenced by const onSubmit (Event Handlers) to submit event*/}
+          <Form className="container -xl" onSubmit={onSubmit}>{/* subscribe function handleSubmit() referenced by const onSubmit (Event Handlers) to submit event*/}
             <div className="row">
 
               <div className="col-sm text-center" >
@@ -80,10 +79,10 @@ const SearchBar: FunctionComponent<{}> = () => {
               </div>
 
               <div className="col-sm text-center ">
-                <Button type="submit" color="secondary">Recherche</Button>{' '}
+                <Button disabled={formState.isSubmitting} type="submit" color="secondary">Recherche</Button>
               </div>
             </div>
-          </form>
+          </Form>
           {formState.isSubmitted && !!!formState.isValid && <p className="error">Veuillez saisir tous les champs</p>}
         </Jumbotron>
       </div>

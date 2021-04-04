@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Col, Button, Form, FormGroup, Label, Input, Container, Row, Alert } from 'reactstrap';
+import { Col, Button, Form, FormGroup, Label, Input, Container, Row } from 'reactstrap';
 import { Controller, useForm } from "react-hook-form";
 import Select from '../../components/Select';
 import useOptions from '../../components/Options';
@@ -13,7 +13,7 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
 
     const [submitStatus, setSubmitStatus] = useState<any | undefined>({ status: null });
     const { sportOptions, cityOptions, levelOptions } = useOptions();
-    const { register, control, handleSubmit, reset, errors, formState: { isSubmitted }, setValue } = useForm<EditorParams>({
+    const { register, control, handleSubmit, reset, errors, formState, setValue } = useForm<EditorParams>({
         mode: "onBlur",
         defaultValues:params
     });
@@ -41,7 +41,8 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
     },[event])
 
     useEffect(()=>{
-        if(submitStatus.status === 'submitted' && error === undefined){
+        console.log('submitted');
+        if(submitStatus.status == 'submitted' && error === undefined){
             history.push("/publications");
         }
     },[submitStatus])
@@ -66,11 +67,6 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
 
     return (
         <>
-            {submitStatus && submitStatus.status === 'error' && <p className="alert alert-danger">{submitStatus.message}</p>}
-            {submitStatus && submitStatus.status === 'success' && (
-                <p className="alert alert-success">{submitStatus.message}</p>
-            )}
-            {error && error.message && <Alert color="danger">{error?.message}</Alert>}
             <Container className="mt-5 pt-5">
                 <Form onSubmit={onSubmit}>
                     <Controller
@@ -93,7 +89,7 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
                                     
                                     as={<Select name="sportId" label="" className="shadow  mb-5 bg-white rounded" options={sportOptions} register={register} />}
                                 />
-                                {errors.sportId && errors.sportId.message != '' && <p className="error">{errors.sportId.message}</p>}
+                                {errors.sportId && errors.sportId.message !== '' && <p className="error">{errors.sportId.message}</p>}
                             </FormGroup>
                         </Col>
 
@@ -108,7 +104,7 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
                                     }}
                                     as={<Select name="levelId" label="" className="shadow  mb-5 bg-white rounded" options={levelOptions} register={register} />}
                                 />
-                                {errors.levelId && errors.levelId.message != '' && <p className="error">{errors.levelId.message}</p>}
+                                {errors.levelId && errors.levelId.message !== '' && <p className="error">{errors.levelId.message}</p>}
                             </FormGroup>
                         </Col>
 
@@ -125,7 +121,7 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
                                     }}
                                     as={<Select name="cityId" label="" className="shadow  mb-5 bg-white rounded" options={cityOptions} register={register} />}
                                 />
-                                {errors.cityId && errors.cityId.message != '' && <p className="error">{errors.cityId.message}</p>}
+                                {errors.cityId && errors.cityId.message !== '' && <p className="error">{errors.cityId.message}</p>}
                             </FormGroup>
                         </Col>
 
@@ -147,7 +143,7 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
                                 />
                                 {errors.appointment && errors.appointment.type === "validate" && (
                                     <div className="error">"Cette date est déjà passée !"</div>)}
-                                {errors.appointment && errors.appointment.message != '' && <p className="error">{errors.appointment.message}</p>}
+                                {errors.appointment && errors.appointment.message !== '' && <p className="error">{errors.appointment.message}</p>}
                             </FormGroup>
                         </Col>
                         <Col md={6}>
@@ -162,7 +158,7 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
                                     defaultValue=""
                                     as={<Input type="time" name="time" id="time" placeholder="" className="shadow p-3 mb-5 bg-white rounded" />}
                                 />
-                                {errors.time && errors.time.message != '' && <p className="error">{errors.time.message}</p>}
+                                {errors.time && errors.time.message !== '' && <p className="error">{errors.time.message}</p>}
 
                             </FormGroup>
                         </Col>
@@ -176,12 +172,12 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
                         />
                     </FormGroup>
 
-                    {(errors.sportId || errors.levelId || errors.cityId || errors.appointment || errors.time ) && isSubmitted && <span style={{ color: "red" }}>  ⚠ Les champs (*) sont obligatoires !</span>}
-
+                    {(errors.sportId || errors.levelId || errors.cityId || errors.appointment || errors.time ) && formState.isSubmitted && <span style={{ color: "red" }}>  ⚠ Les champs (*) sont obligatoires !</span>}
+                    {error && error.message && <p className="error">{error?.message}</p>}
 
                     <Row>
                         <Col>
-                            <Button disabled={submitStatus.status === "submitting"} type="submit" color="warning" className="shadow-lg p-3 mb-5 bg-white rounded font-weight-bold d-block ml-auto mr-auto">Envoyer</Button>
+                            <Button disabled={formState.isSubmitting} type="submit" color="warning" className="text-center shadow-lg p-3 bg-white rounded font-weight-bold d-block ml-auto mr-auto">Envoyer</Button>
                         </Col>
                         {!params &&
                         <Col>
@@ -196,7 +192,7 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
                                     appointment: "",
                                     description: ""
                                 })}
-                                as={<Button color="warning" className="shadow-lg p-3 mb-5 bg-white rounded font-weight-bold d-block ml-5 mr-auto">Annuler</Button>}
+                                as={<Button color="warning" className="shadow-lg p-3 bg-white rounded font-weight-bold d-block ml-auto mr-auto">Annuler</Button>}
                             />
                         </Col>
                         }

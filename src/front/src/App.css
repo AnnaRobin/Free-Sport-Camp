@@ -49,7 +49,7 @@ code {
 .select{
   min-width:150px;
 }
-#main_menu .alert-link:hover{
+#account_menu .alert-link:hover, #main_menu .alert-link:hover{
 color: orangered;
 }
 #sub_menu .list-group-item-action:hover{
@@ -67,6 +67,9 @@ color: orangered;
 }
 .pointer{
   cursor: pointer;
+}
+.pointer:hover{
+  color: orangered;
 }
 .error{
   color: red;
@@ -157,3 +160,4 @@ margin: 3% 8%;
 .pagination .page-link{
   color:#bdbdc7;
 }
+

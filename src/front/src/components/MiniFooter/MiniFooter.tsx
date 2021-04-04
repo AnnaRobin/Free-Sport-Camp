@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Container, Jumbotron, Row, Col } from 'reactstrap';
+import { Jumbotron, Row, Col } from 'reactstrap';
 
 
 const MiniFooter: FunctionComponent<{}> = () => {
@@ -11,9 +11,7 @@ const MiniFooter: FunctionComponent<{}> = () => {
           <Col className="text-left font-weight-bolder">Masterpiece, 2021.</Col>
           <Col className="text-right font-weight-bolder">Anna Cuilhé</Col>
         </Row>
-
       </Jumbotron>
-
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState} from 'react';
+import React, { FunctionComponent, useEffect} from 'react';
 import { Jumbotron } from 'reactstrap';
 import EventView from '../../components/Event';
 import useSearch from '../../components/Search';

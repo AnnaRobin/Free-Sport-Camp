@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {UserService,Credentials,User, PasswordUpdate} from '../../services/User';
 
 export function useUserManagement(){
-    const [error, setError] = useState<string|undefined>(undefined);
-    const [token, setToken] = useState<string|undefined>(undefined);
+    const [error, setError] = useState<Error|undefined>(undefined);
     const userService = new UserService();
     async function _getAccessToken(credentials:Credentials):Promise<string|null>{
       try{
@@ -11,7 +10,7 @@ export function useUserManagement(){
         return response.access_token;
       }
       catch(err){
-        setError(err.message);
+        setError(err);
         return null;
       }
     }
@@ -21,7 +20,7 @@ export function useUserManagement(){
             return true;
         }
         catch(err){
-            setError(err.message);
+            setError(err);
             return false;
         }
     }

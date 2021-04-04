@@ -26,7 +26,7 @@ const Account: FunctionComponent<{userName : string}> = ({userName}) => {
       </DropdownToggle>
             <DropdownMenu className="mt-3" id="account_menu">
             
-                <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' menu_color pointer" to="/profile" >Mon profil</NavLink>
+                <NavLink id="main_menu" tag={Link} className="font-weight-bolder alert-link color='primary' menu_color pointer" to="/profile" >Mon profil</NavLink>
 
                 <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' menu_color pointer" to="/password" >Mot de passe</NavLink>
                 <Logout className="font-weight-bolder alert-link color='primary' nav-link pointer" text="Deconnexion" />

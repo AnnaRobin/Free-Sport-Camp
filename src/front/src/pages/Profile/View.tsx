@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Button, Container, Row, Col, Modal, ModalBody, ModalFooter, Alert } from 'reactstrap';
 import useProfile from '../../components/Profile/Hook';
 import { ProfileView } from '../../components/Profile/Profile';
@@ -30,7 +30,7 @@ export const View: FunctionComponent<{}> = () => {
             <Container className="mb-5">
                 <Row>
                     <Col className="text-center align-centershadow-lg"><Button  color="warning"  className="shadow-lg p-2 mb-2 bg-white rounded btn-txt-color" onClick={onClick}>Modifier mon profil</Button></Col>
-                    <Col className="text-center"><Button color="danger"  className="shadow-lg p-2 mb-2 bg-white rounded btn-txt-color" onClick={onRemove}>Désactiver mon profil</Button></Col>
+                    <Col className="text-center"><Button color="danger"  className="shadow-lg p-2 mb-2 bg-white rounded btn-txt-color" onClick={onRemove}>Désactiver mon compte</Button></Col>
                 </Row>
             </Container>
             <Modal isOpen={deleteModal}>

@@ -1,2 +1,2 @@
-import useOptions from './Options';
+import useOptions from './Hook';
 export default useOptions;

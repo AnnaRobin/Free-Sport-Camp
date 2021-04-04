@@ -31,15 +31,16 @@ export class UserService {
             + "&password=" + data.password
             + "&client_id=" + data.client_id
             + "&grant_type=" + data.grant_type);
-
-        if (response.status === 400) {
-            throw new Error("Attention, le nom d'utilisateur ou le mot de passe est incorrect !");
+        
+        switch(response.status){
+            case 200:
+                return response.json();
+            case 400:
+                //const datas = await response.json();
+                throw new Error("Nom d'utilisateur ou mot de passe invalide");
+            default:
+                throw new Error("Erreur inconnue");
         }
-        if (response.status !== 200) {
-            throw new Error(response.statusText);
-        }
-        return response.json();
-
     }
 
     public async create(userDatas:User):Promise<any>{
@@ -52,7 +53,24 @@ export class UserService {
             },
             JSON.stringify(userDatas)
         );
-        return ErrorHelper.readResponse(response);
+
+        if(response.status !== 400){
+            return response.json();
+        }
+        const datas = await response.json();
+        
+        if(Array.isArray(datas)){
+            switch(datas[0].code){
+                case "UniqueMail":
+                    throw new Error("Ce mail est déjà utilisé");
+                case "UniqueName":
+                    throw new Error("Nom d'utilisateur est déjà pris");
+                default:
+                    throw new Error("Erreur inconnue");
+            }
+        }
+        return response.json();
+        //return ErrorHelper.readResponse(response);
     }
 
     public async updatePassword(datas:PasswordUpdate):Promise<any>{

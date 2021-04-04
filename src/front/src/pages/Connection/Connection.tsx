@@ -15,19 +15,12 @@ const Connection: FunctionComponent<{}> = () => {
   
   
   const onSubmit = async (data: Credentials) => {
-    try{
-      const token = await getAccessToken(data);
-      if(token){
-        UserHelper.connect(token);
-        setSubmitStatus(undefined);
-        window.location.href = "/search";
-      }
-      else{
-        setSubmitStatus({name:"error",message:"Adresse mail ou mot de passe invalide"});
-      }
-    }
-    catch(err){
-      setSubmitStatus(err);
+    
+    const token = await getAccessToken(data);
+    if(token){
+      UserHelper.connect(token);
+      setSubmitStatus(undefined);
+      window.location.href = "/search";
     }
   }
 
@@ -66,7 +59,7 @@ const Connection: FunctionComponent<{}> = () => {
         <div style={{ color: "red" }}>
           {formState.isSubmitted && !!!formState.isValid && <p className="error">Tous les champs sont obligatoires !</p>}
         </div>
-        {submitStatus && <p className="error">{submitStatus.message}</p>}
+        {error && <p className="error">{error.message}</p>}
         <Button color="warning" className="shadow-lg p-3 mb-5 bg-white rounded font-weight-bold d-block ml-auto mr-auto">Connexion</Button>
         <h6 className="text-danger mt-5 pt-5">* Champs obligatoires</h6>
 

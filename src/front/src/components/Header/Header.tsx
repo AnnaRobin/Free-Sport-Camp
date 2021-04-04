@@ -3,26 +3,13 @@ import { Link } from 'react-router-dom';
 import UserHelper from '../../helpers/UserHelper';
 import Account from '../Account';
 
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  Container,
-  Row,
-  Col
-} from 'reactstrap';
+import { Collapse, Navbar,NavbarToggler,NavbarBrand,Nav, NavItem,NavLink,Container,Row,Col} from 'reactstrap';
 
 import logo from '../../assets/images/logo.png';
 import logo_mobile from '../../assets/images/logo_mobile.png';
 
 
 const Header: FunctionComponent<{}> = () => {
-
-
 
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
@@ -88,10 +75,6 @@ const Header: FunctionComponent<{}> = () => {
       </Row>
       
     </Container>
-
-
-
-
 
   );
 
