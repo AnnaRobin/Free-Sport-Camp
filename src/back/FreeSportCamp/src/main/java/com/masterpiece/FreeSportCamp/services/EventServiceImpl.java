@@ -99,20 +99,7 @@ public class EventServiceImpl  extends AbstractService implements EventService{
 
  public Page<EventDto> getAll(Long cityId, Long sportId, Long levelId, Long timeId, int page, int size){
 	Time time = timeRepository.getById(timeId);
-	Page<EventDto> events =  eventRepository.findProjectedBy(LocalDate.now(), cityId, sportId, levelId, time.getMinTime(), time.getMaxTime(),PageRequest.of(page, size));
-	List<Long> eventIds = events.stream().map(EventDto::getId).collect(Collectors.toList());
-	List<EventDto> subscribedEventIds = eventRepository.findSubscribedBy(eventIds,SecurityHelper.getUserId());
-	
-	List<EventDto> updatedEvents = new ArrayList<EventDto>();
-	
-	for(EventDto event : events) {
-		if(subscribedEventIds.contains(event)) {
-			event.setIsSubscribed(true);
-		}
-		updatedEvents.add(event);
-	}
-	Page<EventDto> eventsPage = new PageImpl<EventDto>(updatedEvents,events.getPageable(),events.getTotalElements());
-	return eventsPage;
+	return eventRepository.findProjectedBy(LocalDate.now(), cityId, sportId, levelId, time.getMinTime(), time.getMaxTime(),SecurityHelper.getUserId(),PageRequest.of(page, size));
  }
  
  public List<SubscriberViewDto> getSubscribers(Long eventId){
@@ -155,7 +142,7 @@ public class EventServiceImpl  extends AbstractService implements EventService{
 	 
 	 Event event = new Event();
 	 
-	 event.setAppointment( dto.getAppointment());
+	 event.setAppointment(dto.getAppointment());
 	 if(dto.getDescription() == null) {
 		 event.setDescription("");
 	 } 
@@ -164,7 +151,6 @@ public class EventServiceImpl  extends AbstractService implements EventService{
 	 }
 	 event.setTime(dto.getTime());
 	 event.setOrganizer(new User(SecurityHelper.getUserId()));
-
 	 event.setSport(new Sport(dto.getSportId()));
 	 event.setLevel(new Level(dto.getLevelId()));
 	 event.setCity(new City(dto.getCityId()));

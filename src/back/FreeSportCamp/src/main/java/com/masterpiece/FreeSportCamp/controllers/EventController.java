@@ -41,8 +41,7 @@ public class EventController {
 	protected EventController(EventService service) {
 		this.service = service;
 	}
-	
-	
+		
 	@GetMapping("/getForEdition")
 	protected ResponseEntity<EventEditorViewDto> getForEdition(@RequestParam("id") @NotNull @Min(1) Long eventId){
 		if(!service.isOwner(new EventEditorDto(eventId))) {
@@ -50,16 +49,13 @@ public class EventController {
 		}
 		else {
 			return new ResponseEntity<EventEditorViewDto>(service.getForEdition(eventId),HttpStatus.OK);
-		}
-		
-	}
-	
+		}		
+	}	
 	@GetMapping("/options")
 	protected CriteriaViewDto getOptions() {
 
 		return service.get();
-	}
-	
+	}	
 	@GetMapping("/search")
 	protected Page<EventDto> getAll(@RequestParam("cityId") @NotNull @Min(1) Long cityId,
 			@RequestParam("sportId") @NotNull @Min(1) Long sportId,
@@ -68,22 +64,18 @@ public class EventController {
 			@RequestParam("size") @NotNull @Min(1) @Max(50) int size) {
 		return service.getAll(cityId, sportId, levelId, timeId, page, size);
 	}
-
 	@GetMapping("/getSubscribed")
 	protected Page<EventDto> getSubscribed(@RequestParam("page") int page, @RequestParam("size") int size) {
 		return service.getSubscribed(page, size);
 	}
-
 	@GetMapping("/getCreated")
 	protected Page<EventDto> getCreated(@RequestParam("page") int page, @RequestParam("size") int size) {
 		return service.getCreated(page, size);
 	}
-
 	@GetMapping("/getSubscribers")
 	protected List<SubscriberViewDto> getSubscribers(@RequestParam("eventId") Long eventId) {
 		return service.getSubscribers(eventId);
 	}
-
 	@PostMapping("/subscribe")
 	protected ResponseEntity subscribe(@RequestParam("eventId") Long eventId) {
 		if(service.subscribe(eventId)) {
@@ -93,7 +85,6 @@ public class EventController {
 			return ResponseEntity.badRequest().build();
 		}
 	}
-
 	@DeleteMapping("/unsubscribe")
 	protected ResponseEntity unsubscribe(@RequestParam("eventId") Long eventId) {
 		if(service.unsubscribe(eventId)) {
@@ -103,7 +94,6 @@ public class EventController {
 			return ResponseEntity.badRequest().build();
 		}
 	}
-
 	@PostMapping("/")
 	protected ResponseEntity<IdentifierDto> createEvent(@Valid @RequestBody EventCreatorDto dto) {
 		if (service.alreadyExistsEvent(dto)) {
@@ -113,9 +103,7 @@ public class EventController {
 			service.subscribe(viewDto.getId());
 			return new ResponseEntity<IdentifierDto>(viewDto, HttpStatus.CREATED);
 		}
-
-	}
-	
+	}	
 	@PutMapping("/")
 	protected ResponseEntity<IdentifierDto> editEvent(@Valid @RequestBody EventEditorDto dto) {
 		if(!service.isOwner(dto)) {
@@ -126,7 +114,6 @@ public class EventController {
 		} else {
 			return new ResponseEntity<IdentifierDto>(service.edit(dto), HttpStatus.OK);
 		}
-
 	}
 	@DeleteMapping("/")
 	protected ResponseEntity<Boolean> remove(@RequestParam("id") Long eventId) {
@@ -135,7 +122,6 @@ public class EventController {
 		}
 		else {
 			return new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
-		}
-		
+		}		
 	}
 }

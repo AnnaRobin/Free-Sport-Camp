@@ -2,8 +2,8 @@ package com.masterpiece.FreeSportCamp.dtos;
 
 public interface SportViewDto {
 	
-	Long getId();
+	Long getId();	
 	
 	String getName();
-
+	
 }

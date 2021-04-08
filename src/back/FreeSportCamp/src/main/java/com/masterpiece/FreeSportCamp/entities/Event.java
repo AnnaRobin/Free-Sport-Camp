@@ -3,6 +3,7 @@ package com.masterpiece.FreeSportCamp.entities;
 import java.time.LocalDate;
 
 import java.time.LocalTime;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -17,6 +18,7 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -28,7 +30,6 @@ import javax.persistence.Table;
 	@Index(name = "events_organizer_id_IDX", columnList = "organizer_id")	
 })
 public class Event {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id", columnDefinition = "INT UNSIGNED")
@@ -43,15 +44,15 @@ public class Event {
 	@Column(name="description", length=1000)
 	private String description;
 	
-	@OneToOne(optional=false)
+	@ManyToOne(optional=false)
 	@JoinColumn(nullable = false, name="city_id", foreignKey = @ForeignKey(name= "events_city_id_FK"))
 	private City city;
 	
-	@OneToOne(optional=false)
+	@ManyToOne(optional=false)
 	@JoinColumn(nullable = false, name="level_id", foreignKey = @ForeignKey(name= "events_level_id_FK"))
 	private Level level;
 	
-	@OneToOne(optional=false)
+	@ManyToOne(optional=false)
 	@JoinColumn(nullable = false, name="sport_id", foreignKey = @ForeignKey(name= "events_sport_id_FK"))
 	private Sport sport;
 	
@@ -64,7 +65,7 @@ public class Event {
 	  name = "participations", 
 	  joinColumns = @JoinColumn(name = "event_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "user_id"))
-	List<User> subscribers;
+	Collection<User> subscribers;
 	
 	public Event() {
 		
@@ -138,11 +139,11 @@ public class Event {
 		this.organizer = organizer;
 	}
 	
-	public List<User> getSubscribers(){
+	public Collection<User> getSubscribers(){
 		return this.subscribers;
 	}
 	
-	public void setSubscribers(List<User> subscribers) {
+	public void setSubscribers(Collection<User> subscribers) {
 		this.subscribers = subscribers;
 	}
 	

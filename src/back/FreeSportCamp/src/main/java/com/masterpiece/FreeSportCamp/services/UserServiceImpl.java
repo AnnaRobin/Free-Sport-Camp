@@ -57,14 +57,10 @@ public class UserServiceImpl implements UserService {
 		String raw = userDto.getPassword();
 		String encoded = encoder.encode(raw);
 		user.setPassword(encoded);
-
 		Role role = roles.findByDefaultRoleTrue();
-
 		Set<Role> roles = new HashSet<>();
 		roles.add(role);
-
 		user.setRoles(roles); // role par défaut
-
 		user.setEnabled(true);
 		users.save(user);
 	}

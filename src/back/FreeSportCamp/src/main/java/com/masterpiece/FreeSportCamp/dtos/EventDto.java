@@ -2,23 +2,12 @@ package com.masterpiece.FreeSportCamp.dtos;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Collection;
-import java.util.Optional;
 
-import com.masterpiece.FreeSportCamp.entities.Sport;
-import com.masterpiece.FreeSportCamp.entities.User;
-import com.masterpiece.FreeSportCamp.entities.Level;
 import com.masterpiece.FreeSportCamp.config.SecurityHelper;
-import com.masterpiece.FreeSportCamp.entities.City;
 
 
 public class EventDto {
-	
-	public EventDto(Long id, LocalDate appointment, LocalTime time, String sportName, String levelName, String cityName, String phoneNumber, Long organizerId, String organizerName,String description,User me) {
-		this(id,appointment,time,sportName,levelName,cityName,phoneNumber,organizerId,organizerName,description);
-		this.isSubscribed = me!=null;
-	}
-	public EventDto(Long id, LocalDate appointment, LocalTime time, String sportName, String levelName, String cityName, String phoneNumber, Long organizerId, String organizerName,String description) {
+	public EventDto(Long id, LocalDate appointment, LocalTime time, String sportName, String levelName, String cityName, String phoneNumber, Long organizerId, String organizerName,String description, Long subscriberId) {
 		this.id =id;
 		this.sportName = sportName;
 		this.levelName = levelName;
@@ -29,7 +18,8 @@ public class EventDto {
 		this.phoneNumber = phoneNumber;
 		this.organizerId = organizerId;
 		this.organizerName = organizerName;
-		this.isOwner = SecurityHelper.getUserId() == organizerId;
+		this.isOwner = organizerId == SecurityHelper.getUserId();
+		this.isSubscribed = subscriberId == SecurityHelper.getUserId();
 	}
 	
 	private Long id;
@@ -95,9 +85,6 @@ public class EventDto {
 	}
 	public Boolean getisSubscribed(){
 		return this.isSubscribed;
-	}
-	public void setIsSubscribed(Boolean isSubscribed) {
-		this.isSubscribed = isSubscribed;
 	}
 	public Boolean getisOwner() {
 		return this.isOwner;
