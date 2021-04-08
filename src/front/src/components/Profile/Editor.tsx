@@ -1,5 +1,5 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
-import { Button, Form, FormGroup, Label, Input, Container, Row, Col, Alert, InputGroup,InputGroupAddon, InputGroupText } from 'reactstrap';
+import React, { FunctionComponent, useEffect } from 'react';
+import { Button, Form, FormGroup, Label, Input, Container, Row, Col, InputGroup,InputGroupAddon, InputGroupText } from 'reactstrap';
 import { Controller, useForm } from "react-hook-form";
 import Select from '../../components/Select';
 import useOptions from '../../components/Options';
@@ -101,7 +101,7 @@ export const Editor: FunctionComponent<{}> = () => {
                   }}
                   as={<Select name="cityId" label="" className="shadow  mb-5 bg-white rounded" options={cityOptions} register={register} />}
                 />
-                {errors.cityId && errors.cityId.message != '' && <p className="error">{errors.cityId.message}</p>}
+                {errors.cityId && errors.cityId.message !== '' && <p className="error">{errors.cityId.message}</p>}
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -125,7 +125,7 @@ export const Editor: FunctionComponent<{}> = () => {
                   as={<Input placeholder="6XXXXXXXXX" type="tel" maxlength="9" name="phoneNumber" className="shadow bg-white rounded form-control" register={register} />}
                 />
                 </InputGroup>
-                {errors.phoneNumber && errors.phoneNumber.message != '' && <p className="error">{errors.phoneNumber.message}</p>}
+                {errors.phoneNumber && errors.phoneNumber.message !== '' && <p className="error">{errors.phoneNumber.message}</p>}
               </FormGroup>
             </Col>
           </Row>

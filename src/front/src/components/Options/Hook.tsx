@@ -10,7 +10,7 @@ export default function useOptions() {
     const [genders, setGenders] = useState<Option[]>([]);
     const eventService = new EventService();
     
-    async function _getOptions(){
+    async function _getOptions():Promise<void>{
         try{
             const results = await eventService.getOptions();
             setSports(results.sports);

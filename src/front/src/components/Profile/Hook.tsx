@@ -27,7 +27,7 @@ export default function useProfile(){
             if(params.phoneNumber){
                 params.phoneNumber = prefix.concat(params.phoneNumber);
             }
-            const response = await profileService.save(params);
+            await profileService.save(params);
             setError(undefined);
             return true;
         }
@@ -39,7 +39,7 @@ export default function useProfile(){
     }
     async function _remove(): Promise<Boolean>{
         try{
-            const response = await profileService.remove();
+            await profileService.remove();
             UserHelper.disconnect();
             setError(undefined);
             return true;

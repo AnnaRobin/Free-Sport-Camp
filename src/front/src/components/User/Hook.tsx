@@ -16,7 +16,7 @@ export function useUserManagement(){
     }
     async function _createUser(userDatas:User):Promise<Boolean>{
         try{
-            const response = await userService.create(userDatas);
+            await userService.create(userDatas);
             return true;
         }
         catch(err){
@@ -26,7 +26,7 @@ export function useUserManagement(){
     }
     async function _updatePassword(datas:PasswordUpdate):Promise<Boolean>{
       try{
-        const response = await userService.updatePassword(datas);
+        await userService.updatePassword(datas);
         setError(undefined);
         return true;
       }

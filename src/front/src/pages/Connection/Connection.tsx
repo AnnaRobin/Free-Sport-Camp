@@ -1,5 +1,5 @@
-import React, { FunctionComponent, useState } from 'react';
-import { Button, Form, FormGroup, Label, Input, Container,Alert } from 'reactstrap';
+import React, { FunctionComponent } from 'react';
+import { Button, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 import { useForm, Controller } from "react-hook-form";
 import UserHelper from '../../helpers/UserHelper';
 import {Credentials} from '../../services/User';
@@ -7,8 +7,7 @@ import {useUserManagement} from '../../components/User/Hook';
 
 
 const Connection: FunctionComponent<{}> = () => {
-  const [submitStatus, setSubmitStatus] = useState<Error | undefined>(undefined);
-  const { register, control, handleSubmit, errors, formState } = useForm<Credentials>({
+  const { register, control, handleSubmit, formState } = useForm<Credentials>({
     mode: "onBlur"
   });
   const {getAccessToken,error} = useUserManagement();
@@ -19,7 +18,6 @@ const Connection: FunctionComponent<{}> = () => {
     const token = await getAccessToken(data);
     if(token){
       UserHelper.connect(token);
-      setSubmitStatus(undefined);
       window.location.href = "/search";
     }
   }
@@ -56,9 +54,7 @@ const Connection: FunctionComponent<{}> = () => {
         </FormGroup>
         {/* {(errors.userName || errors.password) && <span>Veuillez remplir le champs !</span>} */}
 
-        <div style={{ color: "red" }}>
-          {formState.isSubmitted && !!!formState.isValid && <p className="error">Tous les champs sont obligatoires !</p>}
-        </div>
+        {formState.isSubmitted && !!!formState.isValid && <p className="error">Tous les champs sont obligatoires !</p>}
         {error && <p className="error">{error.message}</p>}
         <Button color="warning" className="shadow-lg p-3 mb-5 bg-white rounded font-weight-bold d-block ml-auto mr-auto">Connexion</Button>
         <h6 className="text-danger mt-5 pt-5">* Champs obligatoires</h6>

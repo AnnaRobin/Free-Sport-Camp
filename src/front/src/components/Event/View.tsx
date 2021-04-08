@@ -1,10 +1,9 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Jumbotron, Row, Col, Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody, ModalFooter, Alert } from 'reactstrap';
+import { useHistory } from "react-router-dom";
 import { ProfileView } from '../Profile/Profile';
 import { Event } from '../../services/Event';
-import { useHistory } from "react-router-dom";
 import { useEvent } from './Hook';
-
 
 const EventView: FunctionComponent<{ event: Event }> = ({ event }) => {
 
@@ -18,9 +17,9 @@ const EventView: FunctionComponent<{ event: Event }> = ({ event }) => {
   const history = useHistory();
   const { subscribeEvent, getEventSubscribers, subscribers, error, remove } = useEvent();
 
-  useEffect(()=>{
+  useEffect(() => {
     setIsEditable(new Date(event.appointment).getTime() > new Date().getTime());
-  },[])
+  }, [])
 
   const edit = function () {
     history.push("/event/edit/".concat(String(event.id)));
@@ -32,34 +31,26 @@ const EventView: FunctionComponent<{ event: Event }> = ({ event }) => {
       history.go(0);
     }
   }
-
   const subscribe = function (subscribe: boolean) {
     if (subscribeEvent(event.id, subscribe)) {
       setSubscribedStatus(subscribe);
     }
   }
-
-
   const displaySubscriber = function (subscriberId: number | null) {
     setDisplayedSubscriberId(subscriberId);
     setModal(!modal);
   }
-
   const displayDescription = function () {
     setDescriptionModal(!descriptionModal);
   }
-
-
   const getSubscribers = function () {
     getEventSubscribers(event.id);
     //toggle dropdown
     setOpen(!dropdownOpen);
   }
-
   return (
     <>
       <Jumbotron className="p-1 container shadow-lg p-3 mb-5 bg-white rounded np">
-
         <Row>
           <Col xs="6" sm="5">
             <p className="pointer" onClick={() => displaySubscriber(event.organizerId)}><strong>Organisateur :</strong> {event.organizerUserName}</p>
@@ -73,7 +64,6 @@ const EventView: FunctionComponent<{ event: Event }> = ({ event }) => {
               <DropdownToggle caret size="sm">
                 Participants
                 </DropdownToggle>
-
               <DropdownMenu>
                 {subscribers.length > 0 ? subscribers.map((subscriber) => {
                   return (<DropdownItem onClick={() => displaySubscriber(subscriber.id)}>{subscriber.userName}</DropdownItem>)
@@ -81,9 +71,7 @@ const EventView: FunctionComponent<{ event: Event }> = ({ event }) => {
                   : <DropdownItem>Personne</DropdownItem>
                 }
               </DropdownMenu>
-
             </ButtonDropdown >
-
           </Col>
           <Col xs="12" sm="2">
             <p></p>
@@ -123,9 +111,5 @@ const EventView: FunctionComponent<{ event: Event }> = ({ event }) => {
       {error && <Alert color="danger">{error.message}</Alert>}
     </>
   )
-
-
 }
-
-
 export default EventView;

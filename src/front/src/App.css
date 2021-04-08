@@ -153,6 +153,11 @@ margin: 3% 8%;
   color:#212529 !important;
 }
 
+#pagination{
+  display:block;
+  overflow-x: auto;
+}
+
 .pagination .page-item.active .page-link{
   background-color: #bdbdc7;
   border-color: #818182;

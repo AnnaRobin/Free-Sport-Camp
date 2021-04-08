@@ -18,7 +18,7 @@ class AjaxHelper{
         }
         options['method'] = method;
         options['headers'] = headers;
-        if(method != 'GET' && body != undefined){
+        if(method !== 'GET' && body !== undefined){
             options['body'] = body;
         }
         return fetch(url,

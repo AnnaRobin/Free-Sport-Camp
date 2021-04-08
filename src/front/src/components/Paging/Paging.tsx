@@ -16,13 +16,13 @@ const Paging: FunctionComponent<{ totalCount: number, pageSize: number, currentP
         var pagesBuilder: Page[] = [];
         for (var page = 1; page <= pagesCount; page++) {
             //page 1 is default current page
-            pagesBuilder.push({ displayedValue: page, value: page - 1, current: (page - 1) == currentPage });
+            pagesBuilder.push({ displayedValue: page, value: page - 1, current: (page - 1) === currentPage });
         }
         setPages(pagesBuilder);
     }, [totalCount, currentPage])
 
     return (
-        <Container className="pagination justify-content-end">
+        <Container id="pagination" className="pagination justify-content-end">
             <Pagination size="sm" >
                 {pages.map((page) => {
                     return (

@@ -14,7 +14,6 @@ const Inscription: FunctionComponent<{}> = () => {
   const onSubmit = async (userDatas: User) => {
     if(await createUser(userDatas))
     {
-      //setSubmitStatus({ status: 'success', message: 'Votre inscription a bien été enregistré ! Vous pouvez vous connecter' });
       history.push("/connection");
     }
   }
