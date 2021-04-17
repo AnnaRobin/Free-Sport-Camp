@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Table(name="sports")
 public class Sport extends AbstractEntity{
 
-	public Sport() {}
+	protected Sport() {}
 	public Sport(Long id) {
 		this.setId(id); 
 	}

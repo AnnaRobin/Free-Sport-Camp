@@ -154,7 +154,6 @@ public class EventServiceImpl  extends AbstractService implements EventService{
 	 event.setSport(new Sport(dto.getSportId()));
 	 event.setLevel(new Level(dto.getLevelId()));
 	 event.setCity(new City(dto.getCityId()));
-	 //event.getSubscribers().add(new User(SecurityHelper.getUserId()));
 	 Event savedEvent = eventRepository.save(event);
 	 
 	 return new IdentifierDto(savedEvent.getId());

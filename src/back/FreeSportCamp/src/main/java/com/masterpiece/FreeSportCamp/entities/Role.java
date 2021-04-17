@@ -23,7 +23,8 @@ public class Role {
 	@Convert(converter = BooleanConverter.class)
 	@Column(length = 1, nullable = false)
 	private boolean defaultRole = false;
-
+	
+	
 	protected Role() {
 
 	}

@@ -13,7 +13,7 @@ public abstract class AbstractEntity {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)   
 	@Column(name="id", length= 10, columnDefinition = "INT UNSIGNED")
-	protected Long id;
+	private Long id;
 	
 	@Column(name="name", nullable = false, length=45)
 	private String name;
@@ -36,7 +36,5 @@ public abstract class AbstractEntity {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-
+	}	
 }

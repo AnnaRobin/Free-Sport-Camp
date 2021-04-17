@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Table(name="levels")
 public class Level extends AbstractEntity {
 
-	public Level() {}
+	protected Level() {}
 	public Level(Long id) {
 		this.setId(id);
 		

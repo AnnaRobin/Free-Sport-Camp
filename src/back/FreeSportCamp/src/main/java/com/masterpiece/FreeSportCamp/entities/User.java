@@ -88,7 +88,7 @@ public class User {
 	
 	
 	
-	public User() {
+	protected User() {
 		
 	}
 	

@@ -31,5 +31,4 @@ public interface EventService {
 	EventEditorViewDto getForEdition(Long eventId);
 	Boolean subscribe(Long eventId);
 	Boolean unsubscribe(Long eventId);
-
 }

@@ -26,6 +26,7 @@ public interface EventRepository extends JpaRepository<Event, Long>{
 	Boolean existsByOrganizerAndId(User organizer, Long id);
 	
 	EventEditorViewDto findProjectedById(@Param("eventId") Long id);
+	
 	@Query("SELECT new com.masterpiece.FreeSportCamp.dtos.EventDto(e.id,e.appointment,e.time,e.sport.name,e.level.name,e.city.name,e.organizer.phoneNumber,e.organizer.id, e.organizer.userName,e.description, me.id) FROM Event e LEFT JOIN e.subscribers me ON (me.id = :userId) WHERE (e.city.id = :cityId) and (e.sport.id = :sportId) and (e.level.id = :levelId) and (e.time <= :maxTime) and (e.time >= :minTime) AND (e.appointment >= :minDate) ORDER BY e.appointment ASC, e.time ASC")
 	Page<EventDto> findProjectedBy(@Param("minDate") LocalDate minDate, @Param("cityId") Long cityId,@Param("sportId") Long sportId, @Param("levelId")Long levelId, @Param("minTime") LocalTime minTime, @Param("maxTime") LocalTime maxTime,@Param("userId") Long userId, Pageable pageable);
 	

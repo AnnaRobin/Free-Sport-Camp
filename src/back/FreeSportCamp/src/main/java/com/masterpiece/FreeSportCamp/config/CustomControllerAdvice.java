@@ -47,14 +47,14 @@ public class CustomControllerAdvice extends ResponseEntityExceptionHandler{
 		return super.handleExceptionInternal(ex, validationErrors, headers, status, request);
 	}
 	
-	/*
+	
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex,
 			Object body,HttpHeaders headers,HttpStatus status,
 			WebRequest request){
 		return super.handleExceptionInternal(ex,body,headers,status,request);
 	}
-	*/
+	
 	
 	@ExceptionHandler(ConstraintViolationException.class)
     protected ResponseEntity<Object> handleConstraintViolation(javax.validation.ConstraintViolationException ex, WebRequest request) {
