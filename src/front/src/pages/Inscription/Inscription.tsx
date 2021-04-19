@@ -108,7 +108,7 @@ const Inscription: FunctionComponent<{}> = () => {
           {(errors.fullName || errors.userName || errors.email || errors.password || errors.confirmation) && isSubmitted && <span style={{ color: "red" }}>  ⚠ Tous les champs sont obligatoires !</span>}
 
 
-          {error && <p className="error">{error}</p>}
+          {error && <p className="error">{error.message}</p>}
           <Button type="submit" color="warning" className="shadow-lg p-3 mb-5 bg-white rounded font-weight-bold  justify-content-center align-items-center d-block ml-auto mr-auto" >Inscription</Button>
           <h6 className="text-danger">* Champs obligatoires</h6>
 
