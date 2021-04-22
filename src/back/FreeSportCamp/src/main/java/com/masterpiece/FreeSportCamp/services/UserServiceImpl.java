@@ -71,8 +71,8 @@ public class UserServiceImpl implements UserService {
 			throw new NullPointerException();
 		}
 		User user = optional.get();
-		String raw = passwordDto.getPreviousPassword();
-		if(user.getPassword() != encoder.encode(raw)) {
+		
+		if(!encoder.matches(passwordDto.getPreviousPassword(), user.getPassword())) {
 			throw new NullPointerException();
 		}
 		user.setPassword(encoder.encode(passwordDto.getPassword()));

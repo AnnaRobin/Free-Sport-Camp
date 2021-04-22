@@ -36,7 +36,6 @@ export class UserService {
             case 200:
                 return response.json();
             case 400:
-                //const datas = await response.json();
                 throw new Error("Nom d'utilisateur ou mot de passe invalide");
             default:
                 throw new Error("Erreur inconnue");
@@ -58,7 +57,7 @@ export class UserService {
             return response.json();
         }
         const datas = await response.json();
-        
+          
         if(Array.isArray(datas)){
             switch(datas[0].code){
                 case "UniqueMail":
@@ -70,11 +69,11 @@ export class UserService {
             }
         }
         return response.json();
-        //return ErrorHelper.readResponse(response);
     }
 
     public async updatePassword(datas:PasswordUpdate):Promise<any>{
-        const response = await  AjaxHelper.fetch('http://localhost:8585/api/user/password',
+        try{
+            const response = await  AjaxHelper.fetch('http://localhost:8585/api/user/password',
             'POST',
             true,
             {
@@ -84,8 +83,13 @@ export class UserService {
             JSON.stringify(datas)
         );
         if (response.status !== 200) {
-            throw new Error(response.statusText);
+            throw new Error("Erreur lors de la modification du mot de passe");
         }
-        return response.json();
+        return response.text();
+        }
+        catch(err){
+            throw new Error(err.message);
+        }
+        
     }
 }
