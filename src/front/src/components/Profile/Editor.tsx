@@ -1,11 +1,11 @@
 import React, { FunctionComponent, useEffect } from 'react';
-import { Button, Form, FormGroup, Label, Input, Container, Row, Col, InputGroup,InputGroupAddon, InputGroupText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Container, Row, Col, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { Controller, useForm } from "react-hook-form";
+import { useHistory } from 'react-router-dom';
+import { ProfileParams } from '../../services/Profile';
 import Select from '../../components/Select';
 import useOptions from '../../components/Options';
 import useProfile from '../../components/Profile/Hook';
-import { ProfileParams } from '../../services/Profile';
-import { useHistory } from 'react-router-dom';
 
 export const Editor: FunctionComponent<{}> = () => {
   const { cityOptions, genderOptions } = useOptions();
@@ -25,13 +25,15 @@ export const Editor: FunctionComponent<{}> = () => {
 
   useEffect(() => {
     setValue('presentation', profile?.presentation);
-    if(profile?.phoneNumber && profile.phoneNumber.startsWith(prefix)){
-      setValue('phoneNumber', profile?.phoneNumber?.slice(prefix.length));
+    if (profile?.phoneNumber){
+      if(profile.phoneNumber.startsWith(prefix)){
+        setValue('phoneNumber', profile?.phoneNumber?.slice(prefix.length));
+      }
+      else{
+        setValue('phoneNumber', profile?.phoneNumber);
+      }
     }
-    else{
-      setValue('phoneNumber', profile?.phoneNumber);
-    }
-    
+
     setValue('cityId', profile?.cityId);
     setValue('sex', profile?.sex);
     setValue('birthDate', profile?.birthDate);
@@ -45,8 +47,8 @@ export const Editor: FunctionComponent<{}> = () => {
 
 
   const dateValidator = (newDate: any) => {
-    return newDate == null ||  Date.parse(newDate) < Date.now();
-};
+    return newDate == null || Date.parse(newDate) < Date.now();
+  };
 
   return (
     <>
@@ -108,22 +110,22 @@ export const Editor: FunctionComponent<{}> = () => {
               <FormGroup className="mb-5">
                 <Label for="phoneNumber" className="font-weight-bold">Numéro de téléphone</Label>
                 <InputGroup>
-        <InputGroupAddon addonType="prepend">
-          <InputGroupText>+{prefix}</InputGroupText>
-        </InputGroupAddon>
-                <Controller
-                  name="phoneNumber"
-                  control={control}
-                  rules={{
-                    required: false,
-                    pattern: {
-                      value: /^(\d{9}?)$/,
-                      message: "Le numéro de téléphone n'est pas valide !"
-                    }
-                  }}
-                  defaultValue=""
-                  as={<Input placeholder="6XXXXXXXXX" type="tel" maxlength="9" name="phoneNumber" className="shadow bg-white rounded form-control" register={register} />}
-                />
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>+{prefix}</InputGroupText>
+                  </InputGroupAddon>
+                  <Controller
+                    name="phoneNumber"
+                    control={control}
+                    rules={{
+                      required: false,
+                      pattern: {
+                        value: /^(\d{9}?)$/,
+                        message: "Le numéro de téléphone n'est pas valide !"
+                      }
+                    }}
+                    defaultValue=""
+                    as={<Input placeholder="6XXXXXXXXX" type="tel" maxlength="9" name="phoneNumber" className="shadow bg-white rounded form-control" register={register} />}
+                  />
                 </InputGroup>
                 {errors.phoneNumber && errors.phoneNumber.message !== '' && <p className="error">{errors.phoneNumber.message}</p>}
               </FormGroup>
