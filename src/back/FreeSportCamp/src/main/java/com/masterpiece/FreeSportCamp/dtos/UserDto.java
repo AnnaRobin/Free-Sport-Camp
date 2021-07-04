@@ -18,7 +18,7 @@ public class UserDto {
 	private String userName;
 	
 	@NotBlank
-	@Length(max=45)
+	@Length(min=5, max=45)
 	private String password;
 	
 	@NotBlank

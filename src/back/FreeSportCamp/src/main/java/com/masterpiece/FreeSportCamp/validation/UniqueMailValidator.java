@@ -12,8 +12,6 @@ public class UniqueMailValidator implements ConstraintValidator<UniqueMail, Stri
 	@Autowired
 	private UserService service;
 	
-	
-	
 	@Override
 	public boolean isValid(String email, ConstraintValidatorContext context) {
 		if (email == null) {

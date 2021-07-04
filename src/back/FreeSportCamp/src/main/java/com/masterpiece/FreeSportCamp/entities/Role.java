@@ -8,20 +8,30 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author Anna Cuilhé
+ * The Role class mapped to the database
+ */
 @Entity
 @Table(name = "roles")
 public class Role {
 
 	@Id
+	// id field is the primary key
+    // The id is auto-incremented by database (identity):
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", columnDefinition = "INT UNSIGNED")
+	@Column(name = "id",  nullable = false, length= 10, columnDefinition = "INT UNSIGNED") // Column specifications
 	private Long id;
 
-	@Column(length = 256, nullable = false, unique = true)
+	@Column(name="code", length = 45, nullable = false, unique = true)
 	private String code;
 
+	/**
+	 * A custom converter to convert entity {@code Boolean} attribute state into
+     * database column representation and back again.
+	 */
 	@Convert(converter = BooleanConverter.class)
-	@Column(length = 1, nullable = false)
+	@Column(name="default_role", length = 1, nullable = false)
 	private boolean defaultRole = false;
 	
 	

@@ -49,6 +49,4 @@ public class SearchDto {
 		this.timeId = timeId;
 	}
 	
-	
-
 }

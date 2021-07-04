@@ -10,8 +10,6 @@ import com.masterpiece.FreeSportCamp.services.UserService;
 
 public class PwConfirmationValidator implements ConstraintValidator<PwConfirmation, UserDto> {
 	
-
-	
 	 @Override
 	    public boolean isValid(UserDto value,
 		    ConstraintValidatorContext context) {
@@ -24,5 +22,4 @@ public class PwConfirmationValidator implements ConstraintValidator<PwConfirmati
 	
 		return password.equals(confirmation);
 	    }
-
 }

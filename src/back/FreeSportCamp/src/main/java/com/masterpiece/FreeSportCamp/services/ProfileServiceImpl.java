@@ -16,61 +16,83 @@ import com.masterpiece.FreeSportCamp.repositories.UserRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
-@Service
+@Service // defines this class as a service
 public class ProfileServiceImpl implements ProfileService {
 
+	/**
+	 * userRepository is injected by Spring during startup of the application
+	 */
 	private final UserRepository userRepository;
-	
-    protected ProfileServiceImpl(UserRepository userRepository) {
-    	this.userRepository = userRepository;
-        }
-    
-    public ProfileViewDto get() {
-    	return userRepository.getProfileById(SecurityHelper.getUserId());
-    }
-    
-    public PublicProfileViewDto getPublic(Long id) {
-    	return userRepository.getPublicProfileById(id);
-    }
+
+	/**
+	 * Creates a new {@code ProfileServiceImpl} with given injected repository.
+	 * 
+	 * @param userRepository is an injected {@code UserRepository}
+	 */
+	protected ProfileServiceImpl(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
+	/**
+	 * retrieve a view of a profile (the given id is the currently authenticated
+	 * user identifier)
+	 */
+	public ProfileViewDto get() {
+		return userRepository.getProfileById(SecurityHelper.getUserId());
+	}
+
+	/**
+	 * retrieve a view of a profile with a given id
+	 */
+	public PublicProfileViewDto getPublic(Long id) {
+		return userRepository.getPublicProfileById(id);
+	}
+
+	/**
+	 * Update a profile - if exist (the given id is the currently authenticated user
+	 * identifier)
+	 */
 	public void update(ProfileDto dto) {
 		Optional<User> optional = this.userRepository.findById(SecurityHelper.getUserId());
-		if(optional.isEmpty()) {
-			throw new NullPointerException();
-		}
-		else {
+		if (optional.isEmpty()) {
+			throw new NullPointerException(); // Constructs a {@code NullPointerException} with no detail message.
+		} else {
 			User user = optional.get();
-			if(dto.getCityId() == null) {
+			if (dto.getCityId() == null) {
 				user.setCity(null);
+			} else {
+				user.setCity(new City(dto.getCityId()));
 			}
+			if (dto.getPresentation() == null)
+				user.setPresentation(dto.getPresentation()); // Convert dto to entity
 			else {
-				user.setCity(new City(dto.getCityId()));	
+				user.setPresentation(Jsoup.clean(dto.getPresentation(), Whitelist.none()));
 			}
-			if(dto.getPresentation() == null)
-				user.setPresentation(dto.getPresentation());
-			else {
-				user.setPresentation(Jsoup.clean(dto.getPresentation(),Whitelist.none()));	
-			}
-			if(dto.getPhoneNumber() == null)
+			if (dto.getPhoneNumber() == null)
 				user.setPhoneNumber(dto.getPhoneNumber());
 			else {
-				user.setPhoneNumber(Jsoup.clean(dto.getPhoneNumber(),Whitelist.none()));	
+				user.setPhoneNumber(Jsoup.clean(dto.getPhoneNumber(), Whitelist.none()));
 			}
 			user.setSex(dto.getSex());
 			user.setBirthdate(dto.getBirthDate());
-			this.userRepository.save(user);
+			this.userRepository.save(user); // Save the changing(s) to database
 		}
-		
+
 	}
-	
+
+	/**
+	 * Deactivate a user - if exist (the given id is the currently authenticated
+	 * user identifier)
+	 */
 	public void delete() {
 		Optional<User> optional = this.userRepository.findById(SecurityHelper.getUserId());
-		if(optional.isEmpty()) {
+		if (optional.isEmpty()) {
 			throw new NullPointerException();
-		}else {
+		} else {
 			User user = optional.get();
 			user.setEnabled(false);
-			this.userRepository.save(user);
+			this.userRepository.save(user); // Save the changing(s) to database
 		}
-		
+
 	}
 }

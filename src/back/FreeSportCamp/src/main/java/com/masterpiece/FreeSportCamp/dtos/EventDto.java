@@ -18,8 +18,8 @@ public class EventDto {
 		this.phoneNumber = phoneNumber;
 		this.organizerId = organizerId;
 		this.organizerName = organizerName;
-		this.isOwner = organizerId == SecurityHelper.getUserId();
-		this.isSubscribed = subscriberId == SecurityHelper.getUserId();
+		this.isOwner = organizerId.equals(SecurityHelper.getUserId());
+		this.isSubscribed = subscriberId != null && subscriberId.equals(SecurityHelper.getUserId());
 	}
 	
 	private Long id;

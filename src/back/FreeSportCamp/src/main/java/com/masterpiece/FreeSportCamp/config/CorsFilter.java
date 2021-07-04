@@ -27,15 +27,12 @@ public class CorsFilter implements Filter {
 			ServletResponse servletResponse, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
-		response.setHeader("Access-Control-Allow-Origin", allowedOrigin);
-		
+		response.setHeader("Access-Control-Allow-Origin", allowedOrigin);		
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 		response.setHeader("Access-Control-Allow-Methods", "POST,GET,PUT,DELETE,OPTIONS");
 		response.setHeader("Access-Control-Allow-Headers", "x-requested-with, Authorization, Content-Type");
 		
 		chain.doFilter(servletRequest, servletResponse);
-		
-		
+			
 	}
-
 }

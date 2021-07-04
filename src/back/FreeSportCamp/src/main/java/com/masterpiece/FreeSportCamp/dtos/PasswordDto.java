@@ -6,11 +6,11 @@ import org.hibernate.validator.constraints.Length;
 
 public class PasswordDto {
 	@NotBlank
-	@Length(max=45)
+	@Length(min=5, max=45)
 	private String previousPassword;
 	
 	@NotBlank
-	@Length(max=45)
+	@Length(min=5, max=45)
 	private String password;
 	
 	public String getPreviousPassword() {

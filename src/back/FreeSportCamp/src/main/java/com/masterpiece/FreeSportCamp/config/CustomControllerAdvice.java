@@ -20,7 +20,6 @@ import com.masterpiece.FreeSportCamp.errors.ValidationError;
 @RestControllerAdvice
 public class CustomControllerAdvice extends ResponseEntityExceptionHandler{
 	
-	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
 			MethodArgumentNotValidException ex, HttpHeaders headers,
@@ -47,7 +46,6 @@ public class CustomControllerAdvice extends ResponseEntityExceptionHandler{
 		return super.handleExceptionInternal(ex, validationErrors, headers, status, request);
 	}
 	
-	
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex,
 			Object body,HttpHeaders headers,HttpStatus status,
@@ -55,10 +53,8 @@ public class CustomControllerAdvice extends ResponseEntityExceptionHandler{
 		return super.handleExceptionInternal(ex,body,headers,status,request);
 	}
 	
-	
 	@ExceptionHandler(ConstraintViolationException.class)
     protected ResponseEntity<Object> handleConstraintViolation(javax.validation.ConstraintViolationException ex, WebRequest request) {
         return handleExceptionInternal(ex,null,null,HttpStatus.BAD_REQUEST,request);
     }
-
 }

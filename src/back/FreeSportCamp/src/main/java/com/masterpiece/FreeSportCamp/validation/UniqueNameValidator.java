@@ -12,8 +12,6 @@ public class UniqueNameValidator implements ConstraintValidator<UniqueName, Stri
 	@Autowired
 	private UserService service;
 	
-	
-	
 	@Override
 	public boolean isValid(String userName, ConstraintValidatorContext context) {
 		if (userName == null) {
@@ -21,5 +19,4 @@ public class UniqueNameValidator implements ConstraintValidator<UniqueName, Stri
 		}
 		return service.uniqueName(userName);
 	}
-
 }

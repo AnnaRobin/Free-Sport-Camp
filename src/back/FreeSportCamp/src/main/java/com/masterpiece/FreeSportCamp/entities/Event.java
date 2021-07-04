@@ -22,6 +22,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+/**
+ * @author Anna Cuilhé
+ * The Event class mapped to the database
+ */
 @Entity
 @Table(name="events", indexes = {
 	@Index(name = "events_city_id_IDX", columnList = "city_id" ),
@@ -30,9 +34,10 @@ import javax.persistence.Table;
 	@Index(name = "events_organizer_id_IDX", columnList = "organizer_id")	
 })
 public class Event {
-	@Id
+	@Id// id field is the primary key
+    // The id is auto-incremented by database (identity):
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id", columnDefinition = "INT UNSIGNED")
+	@Column(name="id",  nullable = false, length= 10, columnDefinition = "INT UNSIGNED") // Column specifications
 	private Long id;
 	
 	@Column(name="appointment",  nullable = false)
@@ -44,25 +49,40 @@ public class Event {
 	@Column(name="description", length=1000)
 	private String description;
 	
+	
+	/**
+	 * Specifies the mapping of associations. It is applied to the owning side of an association.  
+	 */
+	// Many Event to One City
 	@ManyToOne(optional=false)
 	@JoinColumn(nullable = false, name="city_id", foreignKey = @ForeignKey(name= "events_city_id_FK"))
 	private City city;
 	
+	// Many Event to One Level
 	@ManyToOne(optional=false)
 	@JoinColumn(nullable = false, name="level_id", foreignKey = @ForeignKey(name= "events_level_id_FK"))
 	private Level level;
 	
+	// Many Event to One Sport
 	@ManyToOne(optional=false)
 	@JoinColumn(nullable = false, name="sport_id", foreignKey = @ForeignKey(name= "events_sport_id_FK"))
 	private Sport sport;
 	
+	// Many Event to One Organizer
 	@ManyToOne(optional=false)
 	@JoinColumn(nullable = false, name="organizer_id", foreignKey = @ForeignKey(name= "events_organizer_id_FK"))
 	private User organizer;
 	
+	// Many Event to Many Subscriber
+	/**
+	 * inverseJoinColumns : The foreign key columns
+     * of the join table which reference the
+     * primary table of the entity that does
+     * not own the association. (I.e. the
+     * inverse side of the association).
+	 */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-	  name = "participations", 
+	@JoinTable(name = "participations", 
 	  joinColumns = @JoinColumn(name = "event_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "user_id"))
 	Collection<User> subscribers;
@@ -147,5 +167,4 @@ public class Event {
 		this.subscribers = subscribers;
 	}
 	
-
 }

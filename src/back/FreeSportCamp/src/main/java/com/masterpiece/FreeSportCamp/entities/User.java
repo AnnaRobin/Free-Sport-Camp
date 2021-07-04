@@ -18,10 +18,16 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
+/**
+ * @author Anna Cuilhé
+ * The User class mapped to the database
+ *
+ */
 @Entity
 @Table(name="users", indexes = {
 		@Index(name = "users_city_id_IDX", columnList = "city_id" )
@@ -29,12 +35,13 @@ import javax.persistence.Table;
 })
 public class User {
 
-	@Id
+	@Id// id field is the primary key
+    // The id is auto-incremented by database (identity):
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id", columnDefinition = "INT UNSIGNED")
+	@Column(name="id", nullable = false, length= 10,  columnDefinition = "INT UNSIGNED")
 	private Long id;
 	
-	@Column(name="full_name",  nullable = false, length = 45)
+	@Column(name="full_name",  nullable = false, length = 45)// Column specifications
 	private String fullName;
 
 	@Column(name="username", nullable = false, length = 45, unique = true)
@@ -43,7 +50,7 @@ public class User {
 	@Column(name="email", nullable = false, length = 45, unique = true)
 	private String email;
 
-	@Column(name="password", nullable = false, length = 45)
+	@Column(name="password", nullable = false, length = 250)
 	private String password;
 	
     @Column(name="phone_number", length = 25)
@@ -63,36 +70,33 @@ public class User {
     @Column(length = 1, nullable = false)
     private boolean enabled;
     
-
-
-	@OneToOne
+    // Many User to One City	
+	@ManyToOne
     @JoinColumn(nullable = true, name="city_id", foreignKey = @ForeignKey(name= "users_city_id_FK"))
     private City city;
 	
+	// Many User to Many Event
 	@ManyToMany
-	@JoinTable(
-	  name = "participations", 
+	@JoinTable(name = "participations", 
 	  joinColumns = @JoinColumn(name = "user_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "event_id"))
 	List<Event> subscribedEvents;
 	
 	
-	
+	/**
+	 * Many User to Many Role 
+	 * The EAGER strategy is a requirement on the persistenceprovider runtime that data must be eagerly fetched. 
+	 */
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "users_roles", 
 	    joinColumns = @JoinColumn(name = "user_id"),
 	    inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-    
 	
-	
-	
-	
-	protected User() {
+	public User() {
 		
 	}
-	
-	
+		
 	public String getPresentation() {
 		return presentation;
 	}
@@ -116,8 +120,6 @@ public class User {
 	public void setSex(Sex sex) {
 		this.sex = sex;
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -237,6 +239,5 @@ public class User {
 			+ ", phoneNumber=" + phoneNumber
 			+ ", birthDate=" + birthDate + ", sex=" + sex 
 			+ ", city=" + city + ", presentation=" + presentation +"}";
-	
 	
     }}

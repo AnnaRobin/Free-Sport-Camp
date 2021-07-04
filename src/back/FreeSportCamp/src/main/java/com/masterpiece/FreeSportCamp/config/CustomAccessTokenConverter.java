@@ -16,8 +16,4 @@ public class CustomAccessTokenConverter extends DefaultAccessTokenConverter {
 		authentication.setDetails(claims); // Prevents details set to null
 		return authentication;
 	    }
-	
-	
-	
-
 }

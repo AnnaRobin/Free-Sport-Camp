@@ -157,15 +157,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		.secret(encoder.encode("")).scopes("trusted")
 		.authorizedGrantTypes("password", "refresh_token")
 		.accessTokenValiditySeconds(accessTokenValiditySeconds)
-		.refreshTokenValiditySeconds(refreshTokenValiditySeconds)
-		
-		
-		;
+		.refreshTokenValiditySeconds(refreshTokenValiditySeconds);
     }
-    
    
-    
-
     /**
      * Standard enpoint returning a view of the current authenticated user.
      * <p>

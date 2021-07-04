@@ -30,33 +30,46 @@ import com.masterpiece.FreeSportCamp.dtos.UserInfoDto;
 import com.masterpiece.FreeSportCamp.repositories.UserRepository;
 import com.masterpiece.FreeSportCamp.repositories.RoleRepository;
 
-@Service
+@Service // defines this class as a service
 public class UserServiceImpl implements UserService {
 
-	private final ModelMapper mapper;
-
+	/**
+	 * Injected service interface for encoding passwords.
+	 */
 	private final PasswordEncoder encoder;
 
+	/**
+	 * The injected repositories by Spring during startup of the application
+	 */
 	private final UserRepository users;
-
 	private final RoleRepository roles;
 
-	public UserServiceImpl(ModelMapper mapper, PasswordEncoder encoder, UserRepository users, RoleRepository roles) {
-		this.mapper = mapper;
+	/**
+	 * Creates a new {@code UserServiceImpl} with given injected repositories.
+	 * 
+	 * @param encoder : Service interface for encoding passwords.
+	 * @param users
+	 * @param roles
+	 */
+	public UserServiceImpl(PasswordEncoder encoder, UserRepository users, RoleRepository roles) {
 		this.encoder = encoder;
 		this.users = users;
 		this.roles = roles;
 	}
 
+	/**
+	 * Creation and saving of user with a default role (user)
+	 */
 	@Override
 	public void create(UserDto userDto) {
-		User user = mapper.map(userDto, User.class);
-		user.setEmail(Jsoup.clean(userDto.getEmail(), Whitelist.none()));
-		user.setUserName(Jsoup.clean(userDto.getUserName(), Whitelist.none()));
+		User user = new User();
+		user.setEmail(Jsoup.clean(userDto.getEmail(), Whitelist.none())); // Convert dto to entity with jsoup (HTML
+																			// Cleaner) to avoid XSS attacks with a
+																			// configuration specified by a Whitelist.
+		user.setUserName(Jsoup.clean(userDto.getUserName(), Whitelist.none())); // This whitelist allows only simple
+																				// text
 		user.setFullName(Jsoup.clean(userDto.getFullName(), Whitelist.none()));
-		String raw = userDto.getPassword();
-		String encoded = encoder.encode(raw);
-		user.setPassword(encoded);
+		user.setPassword(encoder.encode(userDto.getPassword()));
 		Role role = roles.findByDefaultRoleTrue();
 		Set<Role> roles = new HashSet<>();
 		roles.add(role);
@@ -65,51 +78,60 @@ public class UserServiceImpl implements UserService {
 		users.save(user);
 	}
 
+	/**
+	 * Update a password
+	 */
 	public void update(PasswordDto passwordDto) {
 		Optional<User> optional = users.findById(SecurityHelper.getUserId());
-		if(optional.isEmpty()) {
-			throw new NullPointerException();
+		if (optional.isEmpty()) {
+			throw new NullPointerException(); // Constructs a {@code NullPointerException} with no detail message.
 		}
 		User user = optional.get();
-		
-		if(!encoder.matches(passwordDto.getPreviousPassword(), user.getPassword())) {
+
+		if (!encoder.matches(passwordDto.getPreviousPassword(), user.getPassword())) {
 			throw new NullPointerException();
 		}
 		user.setPassword(encoder.encode(passwordDto.getPassword()));
 		users.save(user);
 	}
-	
-	@Override
+
+	/**
+	 * UniqueNamaValidator implements ConstraintValidator which defines the logic to
+	 * validate a given constraint for a given object type
+	 */
 	public boolean uniqueName(String userName) {
 		return !users.existsByUserName(userName);
-
 	}
 
-	@Override
+	/**
+	 * UniqueMailValidator implements ConstraintValidator which defines the logic to
+	 * validate a given constraint for a given object type
+	 */
 	public boolean uniqueMail(String email) {
 		return !users.existsByEmail(email);
-
 	}
 
-	// Throws UsernameNotFoundException (Spring contract)
-
+	/**
+	 * Throws UsernameNotFoundException (Spring contract)
+	 * <p>
+	 * Method for authentication
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
-		  UserAuthDto user = users.findByUserName(username) .orElseThrow(() -> new
-		  UsernameNotFoundException( "Ce n'est pas votre nom d'utilisateur: " + username));
-		 return new UserDetails(user);
-		 
-		
+		UserAuthDto user = users.findByUserName(username)
+				.orElseThrow(() -> new UsernameNotFoundException("Ce n'est pas votre nom d'utilisateur: " + username));
+		return new UserDetails(user);
+
 	}
 
-	// Throws ResourceNotFoundException (restful practice)
-	
-	  @Override 
-	  public UserInfoDto getCurrentUserInfo(Long id) { 
-	  return users.getById(id).orElseThrow(
-	   () -> new ResourceNotFoundException("with id:"+ id)); 
-	   }
-	 
-
+	/**
+	 * Throws ResourceNotFoundException (restful practice)
+	 * <p>
+	 * {@code UserInfoDto} : a projected view of the current authenticated
+	 * {@code User}
+	 */
+	@Override
+	public UserInfoDto getCurrentUserInfo(Long id) {
+		return users.getById(id).orElseThrow(() -> new ResourceNotFoundException("with id:" + id));
+	}
 }

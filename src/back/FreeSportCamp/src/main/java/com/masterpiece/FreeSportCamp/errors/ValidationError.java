@@ -30,7 +30,6 @@ public class ValidationError {
 	}
 	
 	 public boolean isGlobalError() {
-			return globalError;
-		    }
-
+		return globalError;
+   }
 }
