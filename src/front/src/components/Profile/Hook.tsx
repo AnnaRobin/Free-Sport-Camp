@@ -19,8 +19,7 @@ export default function useProfile(){
         }
         catch(err){
             setError(err);
-        }
-      
+        }  
     }
     async function _save(params:ProfileParams): Promise<Boolean>{
         try{
@@ -34,8 +33,7 @@ export default function useProfile(){
         catch(err){
             setError(err);
             return false;
-        }
-        
+        }      
     }
     async function _remove(): Promise<Boolean>{
         try{

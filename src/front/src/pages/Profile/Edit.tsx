@@ -6,5 +6,5 @@ export const Edit: FunctionComponent<{}> = () => {
   return (
     <Editor/>
   );
-  
+   
   }

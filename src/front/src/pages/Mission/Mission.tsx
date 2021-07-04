@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-    Carousel,
-    CarouselItem,
-    CarouselControl,
-    CarouselIndicators,
-    CarouselCaption
-  } from 'reactstrap';
+import { Carousel, CarouselItem, CarouselControl, CarouselIndicators, CarouselCaption } from 'reactstrap';
       
       const items = [
         {
@@ -15,13 +9,12 @@ import {
         },
         {
           src: '/caroussel2.jpeg',
-         
-          altText: 'french',
+          altText: '',
           caption: 'Avez-vous envie de bien s\'amuser avec vos collègues ?'
         },
         {
           src: '/caroussel3.jpg',
-          altText: 'aaa',
+          altText: '',
           caption: 'Ou les 2 ? ... Pourquoi pas ! ;) '
         }
       ];
@@ -89,7 +82,7 @@ import {
         Selon vos centres d’intérêts sportifs, vos objectifs et votre disponibilité, il devient plus facile !<br/>
         C’EST DONC L’APPLICATION IDÉALE POUR UN SPORTIF OCCASIONNEL, QUI A SOUVENT DU MAL À SE MOTIVER À BOUGER D SON FAUTEUIL. <br/><br/>
 
-        Si vous avez des questions n'hésitez pas à me contacter notre administrateur : anna.cuilhe@yahoo.fr
+        Si vous avez des questions n'hésitez pas à me contacter notre administrateur : anna.admin@yahoo.fr
 
         </div>
         </>

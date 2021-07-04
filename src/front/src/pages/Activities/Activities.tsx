@@ -25,11 +25,9 @@ const Activities: FunctionComponent<{}> = () => {
             <h2 id="defaultMessage">{error}</h2>
           }
           <Paging totalCount={total} pageSize={pageSize} currentPage={currentPage} handleClick={(pageNumber:number)=>{getSubscribed(pageNumber, pageSize);}} scrollTo="#resultContainer" />
-        </Jumbotron>
-      
+        </Jumbotron>   
     </>
-    );
-        
+    );       
   }
   
   export default Activities;

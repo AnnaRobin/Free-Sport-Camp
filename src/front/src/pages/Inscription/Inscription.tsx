@@ -1,19 +1,18 @@
 import React, { FunctionComponent } from 'react';
 import { Button, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 import { useForm, Controller } from "react-hook-form";
-import {User} from '../../services/User';
-import {useUserManagement} from '../../components/User/Hook';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { User } from '../../services/User';
+import { useUserManagement } from '../../components/User/Hook';
 
 const Inscription: FunctionComponent<{}> = () => {
-  const { register, control, handleSubmit, errors, getValues, reset, formState: { isSubmitted } } = useForm<User>({
+  const { register, control, handleSubmit, errors, getValues, formState: { isSubmitted } } = useForm<User>({
     mode: "onBlur"
   });
   const history = useHistory();
-  const {createUser,error} = useUserManagement();
+  const { createUser, error } = useUserManagement();
   const onSubmit = async (userDatas: User) => {
-    if(await createUser(userDatas))
-    {
+    if (await createUser(userDatas)) {
       history.push("/connection");
     }
   }
@@ -77,7 +76,7 @@ const Inscription: FunctionComponent<{}> = () => {
             <Controller
               name="password"
               control={control}
-              rules={{ required: true, maxLength: { value: 45, message: "Votre mot de passe ne doit contenir plus que 45 charachtères !" }, minLength: { value: 5, message: "Votre mot de passe doit contenir au moins 5 caractères !" } }}
+              rules={{ required: true, maxLength: { value: 45, message: "Votre mot de passe ne doit contenir plus que 45 caractères !" }, minLength: { value: 5, message: "Votre mot de passe doit contenir au moins 5 caractères !" } }}
               defaultValue=""
               as={<Input type="password" id="password" placeholder="Le mot de passe doit contenir au moins 5 caractères !" className="shadow p-3 mb-5 bg-white rounded" />}
             />
@@ -91,7 +90,6 @@ const Inscription: FunctionComponent<{}> = () => {
               rules={{
                 required: true,
                 validate: {
-
                   matchesPreviousPassword: value => {
                     const { password } = getValues();
                     return password === value || "La confirmation du mot de passe ne correspond pas !";
@@ -102,21 +100,17 @@ const Inscription: FunctionComponent<{}> = () => {
               as={<Input type="password" id="confirmation" placeholder="Confirmez votre mot de passe !" className="shadow p-3 mb-5 bg-white rounded" />}
             />
             {errors.confirmation && errors.confirmation.message !== '' && <p className="error">{errors.confirmation.message}</p>}
-
           </FormGroup>
 
           {(errors.fullName || errors.userName || errors.email || errors.password || errors.confirmation) && isSubmitted && <span style={{ color: "red" }}>  ⚠ Tous les champs sont obligatoires !</span>}
 
-
           {error && <p className="error">{error.message}</p>}
           <Button type="submit" color="warning" className="shadow-lg p-3 mb-5 bg-white rounded font-weight-bold  justify-content-center align-items-center d-block ml-auto mr-auto" >Inscription</Button>
           <h6 className="text-danger">* Champs obligatoires</h6>
-
         </Form>
       </Container>
     </>
   )
 };
-
 
 export default Inscription;

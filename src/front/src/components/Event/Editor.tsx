@@ -2,7 +2,6 @@ import React, { FunctionComponent, useEffect } from 'react';
 import { Col, Button, Form, FormGroup, Label, Input, Container, Row } from 'reactstrap';
 import { Controller, useForm } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
-import { DevTool } from "@hookform/devtools";
 
 import Select from '../../components/Select';
 import useOptions from '../../components/Options';
@@ -16,29 +15,17 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
         mode: "onBlur",
         defaultValues: params
     });
-    const { save, error, get, event } = useEvent();
+    const { save, error} = useEvent();
     const history = useHistory();
-
-    //load event as soon as options are loaded
+    
     useEffect(() => {
         if (params && sportOptions.length && cityOptions.length && levelOptions.length) {
-            get(Number(params?.id));
+            setValue('cityId', params?.cityId);
+            setValue('sportId', params?.sportId);
+            setValue('levelId', params?.levelId);
         }
     }, [sportOptions, cityOptions, levelOptions])
  
-    //load event as soon as options are loaded
-    useEffect(() => {    
-        if (params && sportOptions.length && cityOptions.length && levelOptions.length) {
-            setValue('cityId', event?.cityId);
-            setValue('sportId', event?.sportId);
-            setValue('levelId', event?.levelId);
-            setValue('description', event?.description);
-            setValue('appointment', event?.appointment);
-            setValue('time', event?.time);
-            setValue('id', event?.id);
-        }
-    }, [event])
-
     const onSubmit = handleSubmit(async ({ cityId, levelId, sportId, appointment, time, description, id }) => {
         if (await save({ cityId, levelId, sportId, appointment, time, description, id })) {
             history.push("/publications");
@@ -173,7 +160,7 @@ const Editor: FunctionComponent<{ params?: EditorParams }> = ({ params }) => {
                     <h6 className="text-danger mt-5 pt-5">* Champs obligatoires</h6>
                 </Form>
             </Container>
-            <DevTool control={control} />
+            
         </>
     );
 }

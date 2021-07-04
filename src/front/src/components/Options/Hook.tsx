@@ -3,11 +3,14 @@ import {Option, EventService} from '../../services/Event';
 
 
 export default function useOptions() {
+    // definition of states
     const [sports, setSports] = useState<Option[]>([]);
     const [cities, setCities] = useState<Option[]>([]);
     const [times, setTimes] = useState<Option[]>([]);
     const [levels, setLevels] = useState<Option[]>([]);
     const [genders, setGenders] = useState<Option[]>([]);
+    const [error, setError] = useState<Error | undefined>(undefined);
+    // instancie le service
     const eventService = new EventService();
     
     async function _getOptions():Promise<void>{
@@ -18,13 +21,13 @@ export default function useOptions() {
             setTimes(results.times);
             setLevels(results.levels);
             setGenders([{id:"MALE",name:"Homme"},{id:"FEMALE",name:"Femme"}]);
+            setError(undefined);
         }
         catch(err){
-            console.log(err.message);
-        }
-        
+            setError(err);
+        }   
     }
-
+    // execute at the execution of useOptions
     useEffect(() => {
         _getOptions();
     }, [])
@@ -34,7 +37,8 @@ export default function useOptions() {
         cityOptions: cities,
         timeOptions: times,
         levelOptions: levels,
-        genderOptions: genders
+        genderOptions: genders,
+        error
     }
 }
 

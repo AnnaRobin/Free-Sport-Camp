@@ -4,13 +4,12 @@ import {Event, PageParams,SearchParams, EventService} from '../../services/Event
 // Custom Hook
 export default function useSearch() {
 
-    // *************  State Hooks *************//
+    // State Hooks 
     const [events, setEvents] = useState<Event[]>([]);
     const [error, setError] = useState<string | undefined>("Votre allié pour trouver vos partenaires de sport !");
     const [total, setTotal] = useState<number>(0);
     const [currentPage, setCurrentPage] = useState<number>(0);
-    // ****************************************//
-
+    
     const eventService = new EventService();
     
     async function _search(params:SearchParams): Promise<void> {
@@ -86,4 +85,4 @@ export default function useSearch() {
       error
     }
   }
-  /////////////////////////////
+  

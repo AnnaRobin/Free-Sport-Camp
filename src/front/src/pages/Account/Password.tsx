@@ -5,10 +5,11 @@ import { useUserManagement } from '../../components/User/Hook';
 import { PasswordUpdate } from '../../services/User';
 import { useHistory } from 'react-router-dom';
 
+
 export const Password: FunctionComponent<{}> = () => {
     const [errorMessage, setErrorMessage] = useState<Error | undefined>(undefined);
     const { updatePassword, error } = useUserManagement();
-    const { register, control, getValues, handleSubmit, errors } = useForm<any>({
+    const { register, control, getValues, handleSubmit, errors, formState: { isSubmitted } } = useForm<any>({
         mode: "onBlur"
     });
     const history = useHistory();
@@ -21,6 +22,7 @@ export const Password: FunctionComponent<{}> = () => {
         catch (err) {
             setErrorMessage(err);
         }
+        console.log(errors);
     }
     return (
         <Container className="mt-5">
@@ -40,10 +42,11 @@ export const Password: FunctionComponent<{}> = () => {
                     <Controller
                         name="password"
                         control={control}
-                        rules={{ required: true }}
+                        rules={{ required: true, maxLength: { value: 45, message: "Votre mot de passe ne doit contenir plus que 45 caractères !" }, minLength: { value: 5, message: "Votre mot de passe doit contenir au moins 5 caractères !" } }}
                         defaultValue=""
-                        as={<Input type="password" id="password" placeholder="mot de passe" className="shadow p-3 mb-5 bg-white rounded" register={register} />}
+                        as={<Input type="password" id="password"placeholder="Le mot de passe doit contenir au moins 5 caractères !" className="shadow p-3 mb-5 bg-white rounded" register={register} />}
                     />
+                    {errors.password && errors.password.message !== '' && <p className="error">{errors.password.message}</p>}
                 </FormGroup>
                 <FormGroup>
                     <Label for="password" className="font-weight-bold">Confirmation nouveau mot de passe *</Label>
@@ -61,12 +64,11 @@ export const Password: FunctionComponent<{}> = () => {
                             }
                         }}
                         defaultValue=""
-                        as={<Input type="password" id="confirmation" placeholder="mot de passe" className="shadow p-3 mb-5 bg-white rounded" register={register} />}
+                        as={<Input type="password" id="confirmation" placeholder="Confirmez votre mot de passe !" className="shadow p-3 mb-5 bg-white rounded" register={register} />}
                     />
+                    {errors.confirmation && errors.confirmation.message !== '' && <p className="error">{errors.confirmation.message}</p>}
                 </FormGroup>
-                
-                    {Object.keys(errors).length > 0 &&
-                        <p className="error">"Tous les champs sont obligatoires !"</p>}
+                    {(errors.previousPassword?.type == "required" || errors.password?.type == "required" || errors.confirmation?.type == "required") && isSubmitted && <p className="error">"Tous les champs sont obligatoires !"</p>}
                     {errorMessage && <p className="error">{errorMessage.message}</p>}
                     {error && <p className="error">{error.message}</p>}
                 
@@ -74,6 +76,7 @@ export const Password: FunctionComponent<{}> = () => {
                 <Button color="warning" className="shadow-lg p-3 mb-5 bg-white rounded font-weight-bold d-block ml-auto mr-auto">Modifier</Button>
                 <h6 className="text-danger mt-5 pt-5">* Champs obligatoires</h6>
             </Form>
+            
         </Container>
     )
 };

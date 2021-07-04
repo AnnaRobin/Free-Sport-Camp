@@ -1,3 +1,6 @@
+/*The services folder contains service classes and interfaces.
+ The methods of the service classes encapsulate the endpoints of the back end API.
+ The interfaces allow to type the data returned by the above mentioned methods.*/
 import AjaxHelper from '../helpers/AjaxHelper';
 
 export interface Credentials {
@@ -18,9 +21,9 @@ export interface PasswordUpdate {
 };
 
 export class UserService {
-
+    // endpoint to get the Access Token
     public async getAccessToken(data: Credentials): Promise<any> {
-        const response = await AjaxHelper.fetch('http://localhost:8585/oauth/token',
+        const response = await AjaxHelper.fetch('http://localhost:8585/oauth/token', // endpoint provided by Spring Boot
             'POST',
             false,
             {
@@ -41,7 +44,7 @@ export class UserService {
                 throw new Error("Erreur inconnue");
         }
     }
-
+    // Endpoint to create a resource (user) with given inputs.
     public async create(userDatas:User):Promise<any>{
         const response = await  AjaxHelper.fetch('http://localhost:8585/api/user',
             'POST',
@@ -70,7 +73,7 @@ export class UserService {
         }
         return response.json();
     }
-
+    // Endpoint to update a resource (password) with given inputs.
     public async updatePassword(datas:PasswordUpdate):Promise<any>{
         try{
             const response = await  AjaxHelper.fetch('http://localhost:8585/api/user/password',

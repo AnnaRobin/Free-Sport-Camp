@@ -7,7 +7,6 @@ import useOptions from '../../components/Options';
 import useSearch from '../../components/Search';
 import Paging from '../Paging';
 
-
 type SearchParams = {
   city: number;
   time: number;
@@ -15,40 +14,29 @@ type SearchParams = {
   sport: number;
 }
 
-//React Component
 const SearchBar: FunctionComponent<{}> = () => {
-
-  //****************************   Custom Hooks ********************************//
-
+  //Custom Hooks 
   // hook Search
   const { search, events, total, currentPage, error } = useSearch();
 
-  // hook option
+  // hook option, for retriever the 4 lists
   const { sportOptions, cityOptions, timeOptions, levelOptions } = useOptions();
 
   // React Hook Form
   const { register, watch, handleSubmit, formState } = useForm<SearchParams>();
 
-
   const pageSize = 5;
-  //****************************************************************************//
-
-
-  //**************************** Event Handlers ********************************//
-
+ 
+  //Event Handlers 
 
   //handle form submission
-  const onSubmit = handleSubmit( async ({ city, time, level, sport }) => {
+  const onSubmit = handleSubmit( async ({ city, time, level, sport }) => { // gère la submission, si c'est validé, la contenue est appelé
     await search(city, sport, level, time, 0, pageSize);
   });
- 
-  //****************************************************************************//
-
-
-  //****************** React Component returned code ***************************//
-
+  //React Component returned code
   return (
     <>
+    {/*serch bar*/} 
       <div>
         <Jumbotron className="mt-5">
           <Form className="container -xl" onSubmit={onSubmit}>{/* subscribe function handleSubmit() referenced by const onSubmit (Event Handlers) to submit event*/}
@@ -87,6 +75,7 @@ const SearchBar: FunctionComponent<{}> = () => {
         </Jumbotron>
       </div>
 
+       {/*results of the serch*/} 
       <div>
         <Jumbotron fluid className="alert-light results container" id="resultContainer">
           {/* events contains list of events found by useSearch Custom Hook*/}
@@ -96,17 +85,11 @@ const SearchBar: FunctionComponent<{}> = () => {
           })  :
             <h2 id="defaultMessage">{error}</h2>
           }
-          
-            
               <Paging totalCount={total} pageSize={pageSize} currentPage={currentPage} handleClick={(pageNumber:number)=>{search(watch("city"), watch("sport"), watch("level"), watch("time"), pageNumber, pageSize);}} scrollTo="#resultContainer" />
-            
-          
-          
         </Jumbotron>
       </div>
     </>
   );
-  //****************************************************************************//
 };
 
 export default SearchBar;

@@ -1,9 +1,8 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Button, Container, Row, Col, Modal, ModalBody, ModalFooter, Alert } from 'reactstrap';
+import { useHistory } from 'react-router-dom';
 import useProfile from '../../components/Profile/Hook';
 import { ProfileView } from '../../components/Profile/Profile';
-import { useHistory } from 'react-router-dom';
-
 
 export const View: FunctionComponent<{}> = () => {
     const history = useHistory();
@@ -29,8 +28,8 @@ export const View: FunctionComponent<{}> = () => {
             {error && <Alert color="danger">{error.message}</Alert>}
             <Container className="mb-5">
                 <Row>
-                    <Col className="text-center align-centershadow-lg"><Button  color="warning"  className="shadow-lg p-2 mb-2 bg-white rounded btn-txt-color" onClick={onClick}>Modifier mon profil</Button></Col>
-                    <Col className="text-center"><Button color="danger"  className="shadow-lg p-2 mb-2 bg-white rounded btn-txt-color" onClick={onRemove}>Désactiver mon compte</Button></Col>
+                    <Col className="text-center align-centershadow-lg"><Button color="warning" className="shadow-lg p-2 mb-2 bg-white rounded btn-txt-color" onClick={onClick}>Modifier mon profil</Button></Col>
+                    <Col className="text-center"><Button color="danger" className="shadow-lg p-2 mb-2 bg-white rounded btn-txt-color" onClick={onRemove}>Désactiver mon compte</Button></Col>
                 </Row>
             </Container>
             <Modal isOpen={deleteModal}>
@@ -45,6 +44,5 @@ export const View: FunctionComponent<{}> = () => {
             </Modal>
         </>
     );
-
 }
 

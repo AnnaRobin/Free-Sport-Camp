@@ -4,7 +4,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-
+/* The ReactDom.render() method is the application's input.
+It calls the App component, the parent component of our application.
+ */
 ReactDOM.render(
   <React.StrictMode>
     <App />

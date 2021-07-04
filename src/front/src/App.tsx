@@ -1,14 +1,15 @@
+// import ErrorBoundary from './components/ErrorBoundary';
+//const GettingStarted = React.lazy(() => import('./pages/GettingStarted'));
+//const NotFound = lazy(() => import('./pages/NotFound'));
+// const Unauthorized = lazy(() => import('./pages/Unauthorized'));
+
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
 
 import Header from './components/Header';
 import MiniFooter from './components/MiniFooter';
 
-
-// import ErrorBoundary from './components/ErrorBoundary';
 import AppLayout from './components/AppLayout';
-
  
 import './App.css';
 
@@ -25,10 +26,8 @@ import {View}  from './pages/Profile/View';
 import {Edit as ProfileEdit}  from './pages/Profile/Edit';
 import {Public}  from './pages/Profile/Public';
 
-//const GettingStarted = React.lazy(() => import('./pages/GettingStarted'));
-//const NotFound = lazy(() => import('./pages/NotFound'));
-//const Unauthorized = lazy(() => import('./pages/Unauthorized'));
 
+// collects the pages (header / content / footer) and takes care of the routing between them
 const App: React.FunctionComponent<{}> = () => {
   return (
     <BrowserRouter>
