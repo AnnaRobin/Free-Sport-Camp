@@ -21,15 +21,15 @@ import javax.persistence.AttributeConverter;
  *            </ul>
  */
 
-public class BooleanConverter implements AttributeConverter<Boolean, String> {
+public class BooleanConverter implements AttributeConverter<Boolean, Integer> {
 
 	@Override
-	public String convertToDatabaseColumn(Boolean value) {
-		return Boolean.TRUE.equals(value) ? "T" : "F";
+	public Integer convertToDatabaseColumn(Boolean value) {
+		return Boolean.TRUE.equals(value) ? 1 : 0;
 	}
 
 	@Override
-	public Boolean convertToEntityAttribute(String value) {
-		return "T".equals(value);
+	public Boolean convertToEntityAttribute(Integer value) {
+		return 1 == value;
 	}
 }
