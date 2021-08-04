@@ -53,13 +53,13 @@ const EventView: FunctionComponent<{ event: Event }> = ({ event }) => {
       <Jumbotron className="p-1 container shadow-lg p-3 mb-5 bg-white rounded np">
         <Row>
           <Col xs="6" sm="5">
-            <p className="pointer" onClick={() => displaySubscriber(event.organizerId)}><strong>Organisateur :</strong> {event.organizerUserName}</p>
-            <p><strong>Téléphone : </strong>{event.organizerPhoneNumber}</p>
-            <p className="pointer" onClick={() => displayDescription()}><strong>À savoir : </strong> {event.description.slice(0, 15)}</p>
+            <p className="pointer" onClick={() => displaySubscriber(event.organizerId)}>Organisateur :<strong> {event.organizerUserName}</strong></p>
+            <p>Téléphone : <strong>{event.organizerPhoneNumber}</strong></p>
+            <p className="pointer" onClick={() => displayDescription()}>À savoir :<strong> {event.description.slice(0, 15)} </strong></p>
           </Col>
           <Col xs="6" sm="5">
-            <p><strong>Quand : </strong> {new Intl.DateTimeFormat('fr-FR').format(new Date(event.appointment))} {event.time.slice(0, 5)}</p>
-            <p><strong>Sport : </strong>{event.sportName}</p>
+            <p>Quand :<strong> {new Intl.DateTimeFormat('fr-FR').format(new Date(event.appointment))} {event.time.slice(0, 5)} </strong></p>
+            <p>Sport : <strong>{event.sportName}</strong></p>
             <ButtonDropdown isOpen={dropdownOpen} toggle={() => getSubscribers()}>
               <DropdownToggle caret size="sm">
                 Participants
