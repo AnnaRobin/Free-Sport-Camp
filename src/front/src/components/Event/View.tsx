@@ -88,7 +88,7 @@ const EventView: FunctionComponent<{ event: Event }> = ({ event }) => {
           <ProfileView userId={displayedSubscriberId}></ProfileView>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={() => displaySubscriber(null)}>Fermer</Button>
+          <Button color="secondary" className=" shadow-lg bg-white rounded btn-txt-color" onClick={() => displaySubscriber(null)}>Fermer</Button>
         </ModalFooter>
       </Modal>
       <Modal isOpen={descriptionModal} >
@@ -96,7 +96,7 @@ const EventView: FunctionComponent<{ event: Event }> = ({ event }) => {
           {event.description}
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={() => displayDescription()}>Fermer</Button>
+          <Button color="secondary" className=" shadow-lg bg-white rounded btn-txt-color" onClick={() => displayDescription()}>Fermer</Button>
         </ModalFooter>
       </Modal>
       <Modal isOpen={deleteModal}>
@@ -104,8 +104,8 @@ const EventView: FunctionComponent<{ event: Event }> = ({ event }) => {
           <p>Voulez vous réellement supprimer cet évènement?</p>
         </ModalBody>
         <ModalFooter>
-          <Button color="danger" onClick={() => removeConfirmation()}>Supprimer</Button>
-          <Button color="secondary" onClick={() => setDeleteModal(!deleteModal)}>Annuler</Button>
+          <Button color="danger" className=" shadow-lg bg-white rounded btn-txt-color" onClick={() => removeConfirmation()}>Supprimer</Button>
+          <Button color="secondary" className=" shadow-lg bg-white rounded btn-txt-color" onClick={() => setDeleteModal(!deleteModal)}>Annuler</Button>
         </ModalFooter>
       </Modal>
       {error && <Alert color="danger">{error.message}</Alert>}

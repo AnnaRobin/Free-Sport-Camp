@@ -38,8 +38,8 @@ export const View: FunctionComponent<{}> = () => {
                     <p>Votre compte sera supprimé le premier jour du mois suivant. Si vous voulez le réactiver avant, veuillez contacter l'administrateur.</p>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="danger" onClick={() => removeProfile()}>Supprimer</Button>
-                    <Button color="secondary" onClick={() => setDeleteModal(!deleteModal)}>Annuler</Button>
+                    <Button color="danger" className=" shadow-lg bg-white rounded btn-txt-color" onClick={() => removeProfile()}>Supprimer</Button>
+                    <Button color="secondary" className=" shadow-lg bg-white rounded btn-txt-color" onClick={() => setDeleteModal(!deleteModal)}>Annuler</Button>
                 </ModalFooter>
             </Modal>
         </>
