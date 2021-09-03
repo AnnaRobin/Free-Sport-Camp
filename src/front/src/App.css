@@ -166,8 +166,19 @@ margin: 3% 8%;
 .pagination .page-link{
   color:#bdbdc7;
 }
-#bell{
-  width: 48;
-  height: 48;
+
+
+
+#container{
+  border-radius: 10px;
+  border-style:groove;
+  border-color:sandybrown;
+  border-collapse:initial;
+}
+#insta{
+  color:violet;
+}
+#face{
+  color:darkslateblue;
 }
 
