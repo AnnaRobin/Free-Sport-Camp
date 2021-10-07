@@ -2,12 +2,15 @@ package com.masterpiece.FreeSportCamp.services;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.masterpiece.FreeSportCamp.config.SecurityHelper;
 import com.masterpiece.FreeSportCamp.dtos.ProfileDto;
 import com.masterpiece.FreeSportCamp.dtos.ProfileViewDto;
 import com.masterpiece.FreeSportCamp.dtos.PublicProfileViewDto;
+import com.masterpiece.FreeSportCamp.dtos.UserListViewDto;
 import com.masterpiece.FreeSportCamp.entities.City;
 import com.masterpiece.FreeSportCamp.entities.Event;
 import com.masterpiece.FreeSportCamp.entities.User;
@@ -94,5 +97,9 @@ public class ProfileServiceImpl implements ProfileService {
 			this.userRepository.save(user); // Save the changing(s) to database
 		}
 
+	}
+	
+	public Page<UserListViewDto> getAllUsers(int page, int size) {
+		return userRepository.getAllProjectedBy(PageRequest.of(page, size));
 	}
 }

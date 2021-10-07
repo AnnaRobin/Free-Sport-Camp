@@ -1,13 +1,18 @@
 package com.masterpiece.FreeSportCamp.repositories;
 
+
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.masterpiece.FreeSportCamp.dtos.ProfileViewDto;
 import com.masterpiece.FreeSportCamp.dtos.PublicProfileViewDto;
 import com.masterpiece.FreeSportCamp.dtos.UserAuthDto;
 import com.masterpiece.FreeSportCamp.dtos.UserInfoDto;
+import com.masterpiece.FreeSportCamp.dtos.UserListViewDto;
 import com.masterpiece.FreeSportCamp.entities.User;
 
 /**
@@ -50,13 +55,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	/**
 	 * @param userName
-	 * @return a boolean to verify if the user name is already exist (or not) in the DB
+	 * @return a boolean to verify if the user name is already exist (or not) in the
+	 *         DB
 	 */
 	boolean existsByUserName(String userName);
 
 	/**
 	 * @param email
-	 * @return a boolean to verify if the user name is already exist (or not) in the DB
+	 * @return a boolean to verify if the user name is already exist (or not) in the
+	 *         DB
 	 */
 	boolean existsByEmail(String email);
+
+	Page<UserListViewDto> getAllProjectedBy(Pageable pageable);
 }
