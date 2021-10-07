@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-
+// Component for assemble pages
 interface AppLayoutProps {
   header: React.ReactElement;
   content: React.ReactElement;

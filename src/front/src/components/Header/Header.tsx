@@ -58,6 +58,9 @@ const Header: FunctionComponent<{}> = () => {
             <NavItem>
               <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/publications">Mes Publications </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/list">Liste des utilisateurs </NavLink>
+            </NavItem>
             </>}
           </Nav>
 

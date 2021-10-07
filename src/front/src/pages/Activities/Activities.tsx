@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import { Jumbotron } from 'reactstrap';
-import Paging from '../../components/Paging';
+
 import EventView from '../../components/Event';
 import useSearch from '../../components/Search';
-
+import Paging from '../../components/Paging';
 
 const Activities: FunctionComponent<{}> = () => {
   

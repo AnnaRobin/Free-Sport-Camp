@@ -7,6 +7,7 @@ import { useEvent } from './Hook';
 
 const EventView: FunctionComponent<{ event: Event }> = ({ event }) => {
 
+  // State Hooks
   const [dropdownOpen, setOpen] = useState<boolean>(false);
   const [subscribedStatus, setSubscribedStatus] = useState<boolean>(event.isSubscribed);
   const [displayedSubscriberId, setDisplayedSubscriberId] = useState<number | null>(null);
@@ -14,9 +15,11 @@ const EventView: FunctionComponent<{ event: Event }> = ({ event }) => {
   const [descriptionModal, setDescriptionModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [isEditable, setIsEditable] = useState<boolean>(true);
+  //react rooter
   const history = useHistory();
+  // Custom Hook
   const { subscribeEvent, getEventSubscribers, subscribers, error, remove } = useEvent();
-
+  // Effect Hook
   useEffect(() => {
     setIsEditable(new Date(event.appointment).getTime() > new Date().getTime());
   }, [])
@@ -27,7 +30,7 @@ const EventView: FunctionComponent<{ event: Event }> = ({ event }) => {
   const removeConfirmation = function () {
     if (remove(event.id)) {
       setDeleteModal(!deleteModal);
-      //reload page
+      //reload page 
       history.go(0);
     }
   }

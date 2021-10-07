@@ -3,8 +3,10 @@ import { Button, Container, Row, Col, Modal, ModalBody, ModalFooter, Alert } fro
 import { useHistory } from 'react-router-dom';
 import useProfile from '../../components/Profile/Hook';
 import { ProfileView } from '../../components/Profile/Profile';
+import { profile } from 'console';
+import { ProfileToAdmin } from '../../services/Profile';
 
-export const View: FunctionComponent<{}> = () => {
+export const View: FunctionComponent<{profile: ProfileToAdmin}> = (profile) => {
     const history = useHistory();
     const [deleteModal, setDeleteModal] = useState(false);
     const { remove, error } = useProfile();

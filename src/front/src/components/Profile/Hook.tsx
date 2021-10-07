@@ -47,6 +47,7 @@ export default function useProfile(){
             return false;
         }
     }
+
     return {
         get: ()=>_get(),
         getPublic: (userId:number) => _get(userId),
@@ -56,4 +57,6 @@ export default function useProfile(){
         error,
         prefix
     }
+
+    
 }

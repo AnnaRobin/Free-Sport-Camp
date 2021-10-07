@@ -19,6 +19,7 @@ import { Carousel, CarouselItem, CarouselControl, CarouselIndicators, CarouselCa
         }
       ];
       
+      // Page Mission : carousel & presentation
       const Mission = (props: any) => {
         const [activeIndex, setActiveIndex] = useState(0);
         const [animating, setAnimating] = useState(false);

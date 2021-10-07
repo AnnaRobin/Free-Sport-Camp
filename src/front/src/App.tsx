@@ -10,7 +10,7 @@ import Header from './components/Header';
 import MiniFooter from './components/MiniFooter';
 
 import AppLayout from './components/AppLayout';
- 
+
 import './App.css';
 
 import Search from './pages/Search';
@@ -21,10 +21,11 @@ import Activities from './pages/Activities';
 import Publications from './pages/Publications'
 import Create from './pages/Event';
 import Edit from './pages/Event/Edit';
-import {Password} from './pages/Account/Password';
-import {View}  from './pages/Profile/View';
-import {Edit as ProfileEdit}  from './pages/Profile/Edit';
-import {Public}  from './pages/Profile/Public';
+import { Password } from './pages/Account/Password';
+import { View } from './pages/Profile/View';
+import { Edit as ProfileEdit } from './pages/Profile/Edit';
+import { Public } from './pages/Profile/Public';
+import  List  from './pages/Admin/List';
 
 
 // collects the pages (header / content / footer) and takes care of the routing between them
@@ -33,25 +34,26 @@ const App: React.FunctionComponent<{}> = () => {
     <BrowserRouter>
       <AppLayout
         header={<Header />}
-        content={       
+        content={
           <Switch>
-          <Route exact={true} path="/search" component={Search} />
-          <Route exact={true} path="/inscription" component={Inscription} />
-          <Route exact={true} path="/password" component={Password} />
-          <Route exact={true} path="/activities" component={Activities} />
-          <Route exact={true} path="/publications" component={Publications} />
-          <Route exact={true} path="/connection" component={Connection} />
-          <Route exact={true} path="/event/create" component={Create} />
-          <Route exact={true} path="/event/edit/:eventId" component={Edit} />
-          <Route exact={true} path="/" component={Mission} />
-          <Route exact={true} path="/profile" component={View} />
-          <Route exact={true} path="/profile/edit" component={ProfileEdit} />
-          <Route exact={true} path="/profile/:userId" component={Public} />
+            <Route exact={true} path="/search" component={Search} />
+            <Route exact={true} path="/inscription" component={Inscription} />
+            <Route exact={true} path="/password" component={Password} />
+            <Route exact={true} path="/activities" component={Activities} />
+            <Route exact={true} path="/publications" component={Publications} />
+            <Route exact={true} path="/connection" component={Connection} />
+            <Route exact={true} path="/event/create" component={Create} />
+            <Route exact={true} path="/event/edit/:eventId" component={Edit} />
+            <Route exact={true} path="/" component={Mission} />
+            <Route exact={true} path="/profile" component={View} />
+            <Route exact={true} path="/profile/edit" component={ProfileEdit} />
+            <Route exact={true} path="/profile/:userId" component={Public} />
+            <Route exact={true} path="/list" component={List} />
           </Switch>
-        }   
+        }
         footer={<MiniFooter />}
-      />  
-      </BrowserRouter> 
+      />
+    </BrowserRouter>
   );
 };
 export default App;

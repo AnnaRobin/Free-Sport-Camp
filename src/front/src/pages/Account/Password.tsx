@@ -1,20 +1,28 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { useForm, Controller } from "react-hook-form";
-import { useUserManagement } from '../../components/User/Hook';
-import { PasswordUpdate } from '../../services/User';
 import { useHistory } from 'react-router-dom';
+
+import { PasswordUpdate } from '../../services/User';
+
+import { useUserManagement } from '../../components/User/Hook';
 
 
 export const Password: FunctionComponent<{}> = () => {
+    // State Hook
     const [errorMessage, setErrorMessage] = useState<Error | undefined>(undefined);
+    // Custom Hook
     const { updatePassword, error } = useUserManagement();
+    // React Hook Form
     const { register, control, getValues, handleSubmit, errors, formState: { isSubmitted } } = useForm<any>({
         mode: "onBlur"
     });
+    // React rooter
     const history = useHistory();
+    // params from services/User
     const onSubmit = async (datas: PasswordUpdate) => {
         try {
+            // function from user/hook
             if(await updatePassword(datas)){
                 history.push("/profile");
             }

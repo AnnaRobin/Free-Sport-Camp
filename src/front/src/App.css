@@ -170,4 +170,9 @@ margin: 3% 8%;
   width: 48;
   height: 48;
 }
+#tablehead{
+  color: #e0eff2;
+  background: brown;
+  font: italic bold Georgia, Serif;
+}
 

@@ -3,6 +3,8 @@ import UserHelper from '../../helpers/UserHelper';
 import {EditorParams, EventService} from '../../services/Event';
 import { basicProfile } from '../../services/Profile';
 
+
+// custom hooks for Events
 export function useEvent(){
     const [event, setEvent] = useState<EditorParams | null>(null);
     const [error, setError] = useState<Error | undefined>(undefined);
@@ -10,6 +12,7 @@ export function useEvent(){
 
     const eventService = new EventService();
     
+    // 
     async function _get(id:number): Promise<void>{
         try{
             const results = await eventService.get(id);

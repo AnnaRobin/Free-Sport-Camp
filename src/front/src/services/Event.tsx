@@ -78,7 +78,7 @@ export class EventService {
             throw new Error(err.message);
         }
     }
-   // This part of the code is responsible for the recovery of events according to the 4 criteria
+   // This part of the code is responsible for the recovery all of events where the connected user is subscribed with paging
     public async getSubscribed(params: PageParams): Promise<Page<Event[]>> {
         try{
             const response = await AjaxHelper.fetch(`http://localhost:8585/api/event/getSubscribed?page=${params.page}&size=${params.size}`, 'GET', true, {})
@@ -106,7 +106,8 @@ export class EventService {
             throw new Error(err.message);
         }
     }
-   // This part of the code is responsible for retrieving items from the back
+    
+   // This part of the code is responsible for retrieving the 4(?) criterias from the back
     public async getOptions(): Promise<Options> {
         try{
             const response = await AjaxHelper.fetch('http://localhost:8585/api/event/options', 'GET', true, {});
