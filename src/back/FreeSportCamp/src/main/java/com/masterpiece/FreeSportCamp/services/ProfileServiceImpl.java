@@ -20,7 +20,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
 @Service // defines this class as a service
-public class ProfileServiceImpl implements ProfileService {
+public class ProfileServiceImpl implements ProfileService, AdminProfileService {
 
 	/**
 	 * userRepository is injected by Spring during startup of the application
@@ -88,7 +88,15 @@ public class ProfileServiceImpl implements ProfileService {
 	 * user identifier)
 	 */
 	public void delete() {
-		Optional<User> optional = this.userRepository.findById(SecurityHelper.getUserId());
+		delete(SecurityHelper.getUserId());
+	}
+	
+	
+	/**
+	 * Deactivate a user - if exist - by id
+	 */
+	public void delete(Long id) {
+		Optional<User> optional = this.userRepository.findById(id);
 		if (optional.isEmpty()) {
 			throw new NullPointerException();
 		} else {
@@ -98,6 +106,7 @@ public class ProfileServiceImpl implements ProfileService {
 		}
 
 	}
+	
 	
 	public Page<UserListViewDto> getAllUsers(int page, int size) {
 		return userRepository.getAllProjectedBy(PageRequest.of(page, size));
