@@ -67,5 +67,21 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 */
 	boolean existsByEmail(String email);
 
-	Page<UserListViewDto> getAllProjectedBy(Pageable pageable);
+	
+	//@Query("SELECT new com.masterpiece.FreeSportCamp.dtos.UserListViewDto(u.id,u.fullName,u.userName,u.emali,u.phoneNumber) " 
+	//+ "FROM User u "
+	//+ "WHERE u.enabled = true")
+	Page<UserListViewDto> getAllProjectedByEnabledTrue(Pageable pageable);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

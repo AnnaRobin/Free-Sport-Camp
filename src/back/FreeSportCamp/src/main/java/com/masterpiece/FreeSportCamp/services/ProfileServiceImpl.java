@@ -109,6 +109,6 @@ public class ProfileServiceImpl implements ProfileService, AdminProfileService {
 	
 	
 	public Page<UserListViewDto> getAllUsers(int page, int size) {
-		return userRepository.getAllProjectedBy(PageRequest.of(page, size));
+		return userRepository.getAllProjectedByEnabledTrue(PageRequest.of(page, size));
 	}
 }
