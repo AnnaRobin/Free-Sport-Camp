@@ -2,13 +2,15 @@ import React, { FunctionComponent, useEffect } from 'react';
 import { Table, Jumbotron } from 'reactstrap';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 
-import { useUsers } from '../../components/Search/ListOfUsers';
+
 import Paging from '../../components/Paging';
-import ProfileViewToAdmin from '../../components/Profile/ProfileViewToAdmin';
+//import { useUsers } from '../../components/Admin/ListOfUsers';
+import ProfileViewToAdmin from '../../components/Admin/ProfileViewToAdmin';
+import  useProfileToAdmin  from '../../components/Admin/Hook';
 
 
 const List: FunctionComponent<{}> = () => {
-  const { getAllUsers, profiles, total, currentPage, error } = useUsers();
+  const { getAllUsers, profiles, total, currentPage, error } = useProfileToAdmin();
   const pageSize = 20;
 
   useEffect(() => {

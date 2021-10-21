@@ -2,13 +2,10 @@
  The methods of the service classes encapsulate the endpoints of the back end API.
  The interfaces allow to type the data returned by the above mentioned methods.*/
 import AjaxHelper from '../helpers/AjaxHelper';
-import { PageParams, Page } from './Event';
+
+import { basicProfile , PageParams, Page } from './CommonTypes'
 
 
-export interface basicProfile {
-    id: number;
-    userName: string;
-}
 export interface Profile extends basicProfile {
     presentation: string;
     phoneNumber?: string;
@@ -26,14 +23,6 @@ export interface ProfileParams {
     sex: number;
     birthDate: Date;
 }
-
-export interface ProfileToAdmin extends basicProfile {
-    fullName: string,
-    phoneNumber?: string,
-    email: string
-}
-
-
 
 export class ProfileService {
     // endpoint to retrieve a view of a resource (personal and public profile)
@@ -87,21 +76,6 @@ export class ProfileService {
                 }
         }
     }
-    // endpoint to retrieve a view of a resource (profile for Admin)
-    public async getAllUsers(params: PageParams): Promise<Page<ProfileToAdmin[]>> {
-        try {
-            const response = await AjaxHelper.fetch(`http://localhost:8585/api/admin/?page=${params.page}&size=${params.size}`, 'GET', true, {})
-            if (response.status !== 200) {
-                throw new Error(response.statusText);
-            }
-            return response.json();
-        }
-        catch (err) {
-            throw new Error(err.message);
-        }
-
-    }
-
 }
 
 

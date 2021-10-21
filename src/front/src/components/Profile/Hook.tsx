@@ -19,6 +19,7 @@ export default function useProfile(){
         }
         catch(err){
             setError(err);
+            
         }  
     }
     async function _save(params:ProfileParams): Promise<Boolean>{

@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Button, Container, Row, Col, Modal, ModalBody, ModalFooter, Alert } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
-import useProfile from '../../components/Profile/Hook';
-import { ProfileView } from '../../components/Profile/Profile';
-import { profile } from 'console';
-import { ProfileToAdmin } from '../../services/Profile';
 
-export const View: FunctionComponent<{profile: ProfileToAdmin}> = (profile) => {
+import { ProfileView } from '../../components/Profile/Profile';
+import useProfile from '../../components/Profile/Hook';
+
+
+export const View: FunctionComponent<{}> = () => {
     const history = useHistory();
     const [deleteModal, setDeleteModal] = useState(false);
     const { remove, error } = useProfile();
@@ -16,8 +16,8 @@ export const View: FunctionComponent<{profile: ProfileToAdmin}> = (profile) => {
     const onRemove = function () {
         setDeleteModal(!deleteModal);
     }
-    const removeProfile = function () {
-        if (remove()) {
+    const removeProfile = async function () {
+        if (await remove()) {
             window.location.href = '/';
         }
         else {

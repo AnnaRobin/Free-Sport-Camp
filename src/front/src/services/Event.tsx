@@ -6,7 +6,7 @@ The services folder contains service classes and interfaces.
 
 
 import AjaxHelper from '../helpers/AjaxHelper';
-import {basicProfile} from './Profile';
+import {basicProfile, PageParams, Page} from './CommonTypes';
 
 export interface Option {
     id: number|string;
@@ -35,10 +35,7 @@ export interface Event {
     isSubscribed: boolean;
     isOwner: boolean;
 }
-export interface PageParams {
-    page: number,
-    size: number
-}
+
 export interface SearchParams extends PageParams {
     cityId: number,
     sportId: number,
@@ -46,12 +43,7 @@ export interface SearchParams extends PageParams {
     timeId: number
 }
 
-export interface Page<T> {
-    content: T,
-    totalElements: number,
-    pageable: any,
-    empty: Boolean
-}
+
 
 export interface EditorParams {
     id?: number,

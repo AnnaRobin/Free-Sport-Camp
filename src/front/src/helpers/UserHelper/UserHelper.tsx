@@ -21,6 +21,7 @@ class UserHelper {
     static disconnect(): void {
         localStorage.removeItem("user_name");
         localStorage.removeItem("access_token");
+        console.log("test");
     }
 
     static getToken(): string | null {

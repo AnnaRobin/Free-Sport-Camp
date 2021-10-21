@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import UserHelper from '../../helpers/UserHelper';
 import {EditorParams, EventService} from '../../services/Event';
-import { basicProfile } from '../../services/Profile';
+import { basicProfile } from '../../services/CommonTypes';
 
 
 // custom hooks for Events

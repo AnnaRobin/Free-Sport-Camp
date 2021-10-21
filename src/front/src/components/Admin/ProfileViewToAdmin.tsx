@@ -1,27 +1,23 @@
-
 import React, { FunctionComponent, useState } from "react";
-import { Button, Modal, ModalBody, ModalFooter, Table } from "reactstrap";
+import { Button, Modal, ModalBody, ModalFooter} from "reactstrap";
 import { useHistory } from "react-router-dom";
 
-
-import { ProfileToAdmin } from "../../services/Profile";
+import { ProfileToAdmin } from "../../services/Admin";
 import { ProfileView } from '../Profile/Profile';
-
-import useProfile from "./Hook";
-
+import useProfileToAdmin from "../Admin/Hook";
+ 
 const ProfileViewToAdmin: FunctionComponent<{ profile: ProfileToAdmin }> = ({ profile }) => {
     const [deleteModal, setDeleteModal] = useState(false);
     const [modal, setModal] = useState(false);
     const [displayedSubscriberId, setDisplayUserId] = useState<number | null>(null);
 
-
     const history = useHistory();
 
 
-    const { remove } = useProfile();
+    const { removeAnybody } = useProfileToAdmin();
 
-    const removeConfirmation = function () {
-        if (remove()) {
+    const removeConfirmation = async function () {
+        if (await removeAnybody(profile.id)) {
             setDeleteModal(!deleteModal);
             //reload page 
             history.go(0);
