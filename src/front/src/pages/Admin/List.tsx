@@ -31,7 +31,7 @@ const List: FunctionComponent<{}> = () => {
         <tbody id="resultContainer">
 
           {profiles.length ? profiles.map((profile) => {
-            return (<ProfileViewToAdmin key={profile.id} profile={profile} />)
+            return (<ProfileViewToAdmin key={profile.id} profile={profile}  handleDelete={() => { getAllUsers(currentPage, pageSize);}}/>)
           }) :
             <h2 id="defaultMessage">{error}</h2>
           }

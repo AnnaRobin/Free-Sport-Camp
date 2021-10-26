@@ -6,7 +6,7 @@ import { ProfileToAdmin } from "../../services/Admin";
 import { ProfileView } from '../Profile/Profile';
 import useProfileToAdmin from "../Admin/Hook";
  
-const ProfileViewToAdmin: FunctionComponent<{ profile: ProfileToAdmin }> = ({ profile }) => {
+const ProfileViewToAdmin: FunctionComponent<{ profile: ProfileToAdmin, handleDelete: any }> = ({ profile, handleDelete }) => {
     const [deleteModal, setDeleteModal] = useState(false);
     const [modal, setModal] = useState(false);
     const [displayedSubscriberId, setDisplayUserId] = useState<number | null>(null);
@@ -20,7 +20,8 @@ const ProfileViewToAdmin: FunctionComponent<{ profile: ProfileToAdmin }> = ({ pr
         if (await removeAnybody(profile.id)) {
             setDeleteModal(!deleteModal);
             //reload page 
-            history.go(0);
+            handleDelete();
+           // history.go(0);
         }
     }
 
