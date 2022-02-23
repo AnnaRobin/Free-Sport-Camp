@@ -12,11 +12,20 @@ const Header: FunctionComponent<{}> = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
+  const [admin, setAdmin] = useState<Boolean>(false);
   const toggle = () => setIsOpen(!isOpen);
+
 
   useEffect(() => {
     if (UserHelper.isConnected()) {
       setUserName(UserHelper.getName());
+
+    }
+  }, [])
+
+  useEffect(() => {
+    if (UserHelper.getRole()) {
+      setAdmin(UserHelper.isAdmin());
     }
   }, [])
 
@@ -33,7 +42,7 @@ const Header: FunctionComponent<{}> = () => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar id="main_menu">
-            {!userName &&
+            {!userName && 
             <NavItem>
               <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/" >Notre mission</NavLink>
             </NavItem>
@@ -58,9 +67,12 @@ const Header: FunctionComponent<{}> = () => {
             <NavItem>
               <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/publications">Mes Publications </NavLink>
             </NavItem>
+
+            {admin &&
             <NavItem>
               <NavLink tag={Link} className="font-weight-bolder alert-link color='primary' pointer" to="/list">Liste des utilisateurs </NavLink>
             </NavItem>
+}
             </>}
           </Nav>
 

@@ -16,11 +16,13 @@ class UserHelper {
         localStorage.setItem("access_token", token);
         const decoded = jwtDecode<any>(token);
         localStorage.setItem("user_name", decoded.user_name);
+        localStorage.setItem("authorities", decoded.authorities);
     }
 
     static disconnect(): void {
         localStorage.removeItem("user_name");
         localStorage.removeItem("access_token");
+        localStorage.removeItem("authorities");
         console.log("test");
     }
 
@@ -31,6 +33,13 @@ class UserHelper {
         return null;
     }
 
+    static getRole(): string  {
+        return localStorage.getItem('authorities') || "";
+    }
+
+    static isAdmin(): Boolean {
+        return UserHelper.getRole().includes("ROLE_administrateur");
+    }
 }
 
 export default UserHelper;
