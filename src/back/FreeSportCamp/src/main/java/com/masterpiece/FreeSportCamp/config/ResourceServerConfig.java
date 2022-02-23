@@ -26,6 +26,19 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	// Disable CSRF, no need with JWT if not cookie-based.
 	// Disable CORS if API is public, better to enable in general.
 	// Anonymous is enabled by default.
+    http.httpBasic().disable().csrf().disable()
+	.cors().disable()
+    .sessionManagement()
+	.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+	.authorizeRequests().antMatchers(HttpMethod.GET,"/api/event/**", "/api/profile/**", "/api/user/**").authenticated().and()
+	//.authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll().and()
+	.authorizeRequests().antMatchers(HttpMethod.GET, "/api/admin/").hasRole("administrateur");
+	//.antMatchers("/api/event/**","/api/event/","/api/profile/**","/api/user/password")
+//.hasRole("administrateur").antMatchers(HttpMethod.GET, "/api/admin")
+
+	//.authenticated();
+;
+    /*
 	http.httpBasic().disable().csrf().disable()
 		.cors().disable()
 		.sessionManagement()
@@ -33,7 +46,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		.authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
 		.and().authorizeRequests().antMatchers(HttpMethod.POST, "/api/user").permitAll()
 		.antMatchers("/api/event/**","/api/event/","/api/profile/**","/api/user/password")
+		//.hasRole("xxx").antMatchers(HttpMethod.GET, "/api/admin")
 		.authenticated();
+		*/
     }
 
 }
